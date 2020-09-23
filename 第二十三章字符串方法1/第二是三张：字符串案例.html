@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串案例</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        p{
+            text-indent: 2em;
+        }
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。 <span>这是</span> 一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。
+    </p>
+    <section>
+        <span>查找</span>
+        <input class="search-input" type="text">
+        <button class="search">搜索</button>
+    </section>
+    <section>
+        <span>把</span>
+        <input type="text">
+        <span>替换为</span>
+        <input type="text">
+        <button>确定</button>
+    </section>
+    <section>
+        <button>还原</button>
+    </section>
+</body>
+<script>
+    const searchInput = document.querySelector('.search-input'),//输入框
+        search = document.querySelector('.search'),//点击按钮
+        oP = document.querySelector('p');
+
+    /*
+        点击搜索按钮，
+        获取oP的innerHTML，
+        使用replace，把被所搜的文字，替换成用span标签包裹起来的文字，然后设置样式
+    */
+
+    search.onclick = function () {
+        let value = searchInput.value.trim();//获取到的用户输入的值
+        
+        if( value === '' ){
+            alert('不能搜索空值');
+            searchInput.value = '';
+            return;
+        }
+        let html = oP.innerHTML;//获取oP的innerHTML
+        const reg = new RegExp(value, 'g');
+        //已经替换过的字符串
+        let newString = html.replace(reg, '<span class="red">' + value + '</span>');
+        if(newString === oP.innerHTML){
+            alert('搜索的内容不存在');
+            searchInput.value = '';
+            return;
+        }
+        oP.innerHTML = newString;
+        searchInput.value = '';
+    };
+
+</script>
+</html>

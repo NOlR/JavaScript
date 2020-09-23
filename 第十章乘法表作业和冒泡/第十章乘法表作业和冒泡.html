@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for循环作业</title>
+    <style>
+        /* collapse [塌陷] */
+        table{
+            width: 700px;
+            height: 400px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        tr, td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+    </div>
+</body>
+<script>
+    //99乘法表 document.write()不要用！不要用！
+    //用js创造标签，然后通过append去追加到页面中.
+    var box = document.querySelector('.box');
+    console.log(box);
+
+    //table标签
+    var table_one = document.createElement('table');
+    // table_one.style.cssText = 'width: 700px;height: 400px;text-align: center;border-collapse: collapse;';
+    //一个循环提供tr(行)标签，一个循环提供td(列)标签
+    xiaoxing:
+    for( var i = 1; i <= 9; i++ ){//能创建9个tr标签
+        var tr = document.createElement('tr');
+        // tr.style.border = '1px solid black';
+        for( var k = 1; k <= i; k++ ){//创建td标签 限定条件: 第一次到1结束，第二次到2结束，第三次到3结束
+            var td = document.createElement('td');
+            td.innerText = k + '*' + i + '=' + i*k;//js中加减乘除的运算顺序和数学中一模一样
+            // td.style.border = '1px solid black';
+            tr.append( td );
+        };
+        table_one.append( tr );
+    };
+    box.append(table_one);
+
+    var num = 123;
+    var num_a = 456;
+    //1 * 2 = 2 '123' + '*' = '123*' + 456 = '123*' + '456' = '123*456=56088'
+    // console.log( num + '*' + num_a + '=' + num_a*num );
+
+    //9 8 7 6 5 4 3 2 1
+    var table_two = document.createElement('table');
+    for( var a = 9; a > 0; a-- ){
+        var tr1 = document.createElement('tr');//创建tr
+        for( var b = 1; b <= a; b++ ){  
+            var td1 = document.createElement('td');//创建td
+            td1.innerText = a + '*' + b + '=' + a*b;
+            tr1.append(td1);
+        }
+        table_two.append(tr1);
+    };
+    box.append(table_two);
+
+
+
+    //用for写一个冒泡排序
+    //[2,4,1,3,5] [7,6,5,4,32,2,1] [1,2,3,4,5,6,7]
+    /*
+        冒泡排序：
+            从大到小 -> 5,4,3,2,1
+            第一轮：第一轮走了4次  4 = 数组长度-1
+                对比第一个数字和第二个数字    2,4,1,3,5 拿第一个数字依次和后边的数字进行比较,如果他比后边的数字大就不交换位置，
+                                            如果比后边数字小交换位置结果 4,2,1,3,5 
+                对比第二个数字和第三个数字    4,2,1,3,5 第二次的结果 4,2,1,3,5
+                对比第三个数字和第四个数字  4,2,3,1,5
+                对比第四个数字和第五个数字  4,2,3,5,1
+                d = 0, d < 4
+            第二轮:
+                对比第一个数字和第二个数字 4,2,3,5,1
+                对比第二个数字和第三个数字 4,3,2,5,1
+                对比第三个数字和第四个数字 4,3,5,2,1
+                d = 0, d < 3
+            第三轮:
+                对比第一个数字和第二个数字 4,3,5,2,1
+                对比第二个数字和第三个数字 4,5,3,2,1
+                d = 0, d < 2
+            第四轮:
+                对比第一个数字和第二个数字 5,4,3,2,1
+                d = 0, d < 1
+    */
+    // 一共走了四轮，每轮走了若干次
+    //第一个for循环控制走几轮 ： 数组的长度 - 1
+    var arr = [2,4,1,3,5,234,34457,62,33,5763,456,456,3,543,65,2354,367,234,237,654,53,4,7,967,8,456,3,5,2,4523,45,2345,243];
+    //c: 0 1 2 3 从大到小排序
+
+    //当c等于0的时候， d < length - 1 - c => d < 5 - 1 - 0 => d<4 0 1 2 3
+    //当c等于1的时候， d < length - 1 - 1 => d < 5 - 1 - 1 => d<3 0 1 2 
+    for( var c = 0,length = arr.length; c < length - 1; c++ ){
+        for( var d = 0; d < length - 1 - c; d ++ ){
+            if( arr[d] < arr[d+1] ){//第一次d = 0， d+1 = 1
+                var little = arr[d];//把第零项保存下来 little = 2
+                arr[d] = arr[d + 1];//让第0项的值，等于第1项的值 -> [4,4,1,3,5]
+                arr[d + 1] = little;//让第1项等于2 -> [4,2,1,3,5]
+            }
+        };
+    };
+    console.log(arr);
+
+    var students = [
+        {
+            nickname: '小凡',
+            score: 80
+        },
+        {
+            nickname: 'winner',
+            score: 81
+        },
+        {
+            nickname: '茂茂',
+            score: 59
+        },
+        {
+            nickname: 'sevenday',
+            score: 73
+        },
+        {
+            nickname: ' 一方',
+            score: 62
+        },
+        {
+            nickname: '小梁',
+            score: 91
+        },
+        {
+            nickname: 'tony',
+            score: 77
+        },
+        {
+            nickname: '芽儿呦',
+            score: 100
+        },
+        {
+            nickname: '星',
+            score: 20
+        },
+        {
+            nickname: '备忘鹿',
+            score: 10
+        }
+    ];
+
+    for( var e = 0,length = students.length; e < length - 1; e ++){
+        for( var f = 0; f < length - 1 - e; f++ ){//也就是每轮要对比多少次
+            if( students[f].score < students[f+1].score ){//判断是否需要调换数据的位置
+                var little = students[f];//把整个对象都保存下来
+                students[f] = students[f+1];
+                students[f+1] = little;
+            };
+        };
+    };
+    console.log(students);
+
+    //纯数字的数组使用冒泡进行从小到大排序，都是对象的数组进行从小到大排序
+
+
+
+
+
+
+
+    // var num_b = 1;
+    // var num_c = 2;
+    // //num_b = 2 num_c = 1
+    // var num_d;
+    // num_d = num_b;//num_d = 1 -> 原来b的值
+
+    // num_b = num_c;// 2 2 
+    // num_c = num_d;
+
+    // console.log( num_b, num_c );
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

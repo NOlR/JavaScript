@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="bag">
+			<div class="suger">1</div>
+			<div class="suger">2</div>
+		</div>
+		<script>
+			var bag=document.querySelector('.bag');
+			var sugers_a=document.getElementsByClassName('suger');
+			var sugers=bag.querySelectorAll(".bag>.suger");
+			bag.innerHTML+='<div class="suger">3</div>';
+			console.log(sugers);
+			console.log(sugers_a);
+		</script>
+	</body>
+</html>

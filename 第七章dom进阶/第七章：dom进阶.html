@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom进阶</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 200px;
+            height: 300px;
+            margin-bottom: 10px;
+            background-color: orange;
+        }
+        .son{
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
+            background-color: purple;
+        }
+        .container{
+            width: 300px;
+            height: 300px;
+            background-color: #58a;
+        }
+        .some{
+            width: 300px;
+            height: 500px;
+            margin-top: 10px;
+            background-color: #58a;
+        }
+        .some > div{
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <!-- 我是文字 -->
+        <!-- 我是第一个son是第一个son的文本节点 -->
+        <div class="son">1</div>
+        <!-- <div class="son">我是第一个son</div> -->
+        <!-- 我是第三段文字 -->
+        <div class="son">2</div>
+        <div class="son">3</div>
+        <!-- 我是第二段文字 -->
+        <div class="son">4</div>
+        hello<div>abc</div>world
+        我是文字
+    </div>
+    <div class="container"></div>
+
+    <div class="some">
+        <div class="some_a">韩晓璐</div>
+        <div class="some_a">韩帅路</div>
+    </div>
+
+</body>
+<script>
+    /*
+        如何获取元素:
+            get   HTMLCollection[元素集合] 动态的
+            query NodeList[节点列表] 静态的
+    */
+    // var box = document.querySelectorAll('.box');
+    // var box_a = document.getElementsByClassName('box');
+    // console.log( 'box为', box );
+    // console.log( 'boxs为', box_a );
+    /*
+        有些元素不用获取，直接用就行了
+            body -> 不用获取 document.body body标签
+            html -> 不用获取 document.documentElement html标签
+    */
+    // console.log( document.body );
+    // console.log( document.documentElement );
+
+    // document.body.innerHTML += '<div class="box">2</div>';
+    // console.log( 'box为', box );
+    // console.log( 'boxs为', box_a );
+
+    // var sonList = document.querySelector('.box').querySelectorAll('.son');
+    // console.log(sonList);
+
+    //child[儿子]  Nodes[节点] text文本节点->他是一个文字 
+    // var box = document.querySelector('.box');
+    // var son_s = box.childNodes;//获取他的所有子节点
+    // console.log(son_s);//NodeList 
+
+    // console.log( son_s[0] );
+    // son_s[0] = '我是修改过后的文字';//不能去改
+
+    // //children[儿童们，儿子们]
+    // var sone_a = box.children;
+    // console.log( sone_a );
+
+    // //通过类名直接获取
+    // var box_b = document.querySelectorAll('.box > .son');
+    // var box_c = box.children;//动态的
+    // box.innerHTML += '<div class="son"></div>'
+    // console.log( box_b, box_c );
+
+    // var box = document.querySelector('.box');
+    // var second = box.children[1];
+    // console.log( second );
+    // //获取兄弟元素 first[老大] second[老二]  previous[上一个] Sibling[兄弟] previousElementSibling上一个兄弟元素
+    // var first = second.previousElementSibling;
+    // console.log( first );
+    // //nextElementSibling [下一个兄弟元素]
+    // var third = second.nextElementSibling;
+    // console.log( third );
+    // //通过第二个元素，获取第四个元素
+    // var four = second.nextElementSibling.nextElementSibling;
+    // console.log( typeof four );//object
+    // //下一个兄弟 nextSibling
+    // // console.log( four.nextSibling );
+    
+    // //css里边不能用子元素控制父元素样式
+    // //可以通过子元素来控制父元素 元素.parentNode 父节点
+    // var parent = second.parentNode;
+    // // parent.innerHTML += '<p>我是通过子元素找到父元素之后修改的内容</p>';
+    // console.log( parent );
+    // //parentElement -> 父元素
+    // var father = second.parentElement;
+    // console.log( father );
+    // console.log( '父节点是否等于父元素:', father === parent);
+    // //API Application Interface -> 应用程序接口简称接口   App Store[应用商店] 凡是别人提供给我们的都叫做接口
+
+    // //nodeType 节点类型 1->标签,3->文本节点  nodeName标签名称
+    // console.dir( second.nodeName );//DIV div标签
+    // console.log( box.childNodes[0] );
+
+    //如何用js创造标签
+    var container = document.querySelector('.container');
+    // container.innerHTML += '<p>我是p标签</p>';
+    //document.createElement('标签名');  create[创造]
+    var div = document.createElement('div');
+    div.innerText = '我是div1';
+    console.log( div );//在内存中，不在页面中 -> 还没有添加到文档中，用户看不到
+
+    //元素.appendChild(元素);
+    // container.appendChild(div);
+    // console.log( div );
+
+    var p = document.createElement('p');
+    p.innerText = '我是p标签';
+
+    var section = document.createElement('section');
+    section.innerText = '我是section';
+
+    console.log( p, section );
+    // container.appendChild( p );
+    // container.appendChild( section );
+    //append 和 appendChild都是从尾部添加
+    // container.append( p, section, div );
+
+    //appendChild 会返回被添加的元素 
+    //append 不会返回
+    var result = container.append( p );
+    console.log( result );
+
+    var result_a = container.appendChild(section).innerText += ' 我是新添加的内容';
+    console.log( result_a ); 
+
+    //从中间添加 元素.insertBefore(新元素，老元素)  insert[插入] Before[前边]
+    var some = document.querySelector('.some');
+    var div_a = document.createElement('div');
+    div_a.innerText = '1.1';
+    console.log( div_a );
+
+    // some.insertBefore( div_a, some.children[1] );
+    //some.appendChild( div_a );//一个元素只能用一次
+
+    //父元素.replaceChild( 新元素, 旧元素 ); 拿新元素去替换旧元素
+    var girl = document.createElement( 'div' );
+    girl.innerText = '旱珍珍';
+    some.replaceChild( girl, some.children[1] );
+    console.log( girl );
+    //父元素.removeChild() remove[删除]
+    // var hanxiaolu = some.children[0];
+    // some.removeChild( girl );
+    // some.removeChild(hanxiaolu);
+    // some.remove();//自爆自器
+
+    //通过js创造，添加和删除元素
+    var box1 = document.createElement('div');
+    box1.innerText = 'box1';
+    var box2 = document.createElement('div');
+    box2.innerText = 'box2';
+    // some.append( box1, box2 );
+    //文档流 页面渲染完毕之后会关闭文档流, 如果我们用js修改了页面的内容，会重新打开文档流
+    //非常耗性能
+    //文档碎片 -> fragment碎片
+    var fragment = document.createDocumentFragment();
+    // console.log( fragment );
+    //用来保存多个js创建的标签，然后一次性添加进文档中
+    // 先把box1和box2添加到碎片里边 然后 把碎片添加到文档中
+    fragment.append( box1, box2 );
+    some.appendChild( fragment );
+
+    //if for 三目  朝起早夜眠迟，老易至惜此时； 八小时谋生存八小时谋发展。
+</script>
+</html>

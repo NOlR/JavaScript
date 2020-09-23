@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定时器</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    //js执行代码的顺序 -> 从上到下进行执行
+    //js编译型语言 -> 读一行执行一行 -> 执行之前先通读一遍代码，提取出一些内容，第二遍读的时候再去执行
+    //编译阶段：1.变量提升 -> 找到所有var声明的变量和function声明 提升 -> 提升到当前作用域的顶层
+    //2.把代码归类：同步代码和异步代码 -> 同步代码放到：同步代码队列  异步代码放到->异步代码队列 过一段时间执行
+    // console.log(a);//写在全局
+    // var a = 123;
+    // abc();
+    // function abc() {//函数声明 -> 整个函数的声明都被提前了
+    //     console.log('abc');
+    // };
+
+    //同步代码：之前所学的所有代码都是同步代码
+    /*
+        执行顺序：
+        声明abc
+        声明a
+        声明b
+        执行abc
+        执行for循环
+        console.log('最后');
+    */
+    // let a = 123;//先声明a
+    // let b = 456;//再声明b
+    // function abc() {
+    //     console.log(a, b);
+    // };
+    // abc();
+    // for( let i = 0; i < 10; i++ ){
+    //     console.log(i)
+    // };
+    // console.log('最后');
+    //上一个语句执行结束之前下一个语句不执行
+
+    //都是同步代码 -> 在一个语句没有执行完成之前立马执行下一个语句
+    /*
+        代码的执行顺序：
+            1.声明一个box
+            2.给box绑定了一个点击事件
+            3.执行for循环
+        代码在执行的时候不能插队
+        for循环执行的时间是1s， 在for循环执行的途中点击了box，那么立马会执行ming这个函数
+
+        不能插自己人的队
+    */
+    // const box = document.querySelector('.box');
+    // box.onclick = function ming() {
+    //     console.log('我是box');
+    // };
+    // for( let i = 0; i < 6000; i++ ){//1s
+    //     console.log(`for循环执行了${i}次`);
+    // };
+    
+    // setTimeout( () => {//代码执行到76行的时候开启了一个延时器
+    //     console.log('abc');
+    // }, 0 );//不写相当于写0
+    // console.log('123');
+    // console.log('xyz'); //执行阶段，一边执行同步代码，一边计时
+
+    //编译的时候：先把同步代码和异步代码归类：放到同步代码队列 和 异步代码队列中
+    //执行阶段：先执行同步再执行异步
+
+    //即便500毫秒写在1000毫秒的下边，但是500毫秒还是先打印了出来
+
+    //在执行阶段，所有的定时器和延时器都开始计时了
+    // setTimeout(() => {//我先计时为什么500在我之前打印了
+    //     console.log( '我是1000毫秒' )
+    // }, 1000);
+    // setTimeout( () => {
+    //     console.log('我是500毫秒');
+    // }, 500 );//等待时间是0秒
+    // const box = document.querySelector('.box');//获取box
+    // box.onclick = function ming() {//绑定点击事件
+    //     console.log('我是box');
+    // };
+    // for( let i = 0; i < 7000; i++ ){//for循环 假如说执行时间是1s
+    //     console.log(`for循环执行了${i}次`);
+    // };
+
+    //在for循环执行完成之前点击box -》 执行小明函数(同步)
+
+    //执行同步代码 -> 把已有的执行完成之后 如果同步代码里边新加了任务，就再去执行同步代码里边的任务，直到
+    //所有的同步代码任务都执行完成了之后 再去异步队列里边找
+    //同步代码不能插自己人的队，但是可以插异步代码的队
+
+
+    /*
+        异步：
+        延时器setTimeout( callback, timeout )    timeout[过多少时间之后去执行callback]  callback回调函数
+        定时器setInterval( callback, timeout )
+    */
+    //回调函数 -> 在传实参的时候传的是一个函数 所有的定时器和延时器都有返回值
+    // const ming = () => {
+    //     console.log('ming');
+    // };
+    // const abc = setTimeout( ming, 1000 );//1s = 1000ms  -> 过一秒钟之后去执行小明
+    // console.log(abc);//abc的值为1 1表示的是abc这个延时器他的序号
+    // const some = setTimeout( ming, 100000 );
+    // console.log(some);
+    //序号是用来清除延时器或者定时器的 -> 只执行一次
+    
+    //清除延时器 clearTimeout(延时器的序号)
+    // const edg = setTimeout( () => {
+    //     console.log('我是lgd的中单godv')
+    // }, 2000 );
+    // clearTimeout(edg);//他被清除了
+    //定时器  setInterval(callback, timeout) -> 每隔timeout时间执行以下回调函数 callback
+    // let num = 0;
+    // const a = setInterval( () => {//小刚
+    //     num++;
+    //     console.log(num);
+    //     if( num === 10 ){
+    //         clearInterval(a);
+    //     }
+    //     return num;//打断的是小刚函数的执行
+    // }, 1000 );//每隔1s重新调用以下小刚
+    // console.log(a);//这个定时器的序号是2
+    //num加到10的时候就停止不加了 clearInterval(序号); clear【清除】 Interval[定时器]
+
+
+    //函数a的实参是一个函数b，那么b在函数a内就叫做回调函数
+    // function a(c) {
+    //     c();//现在在函数a里边b不叫做回调函数
+    // };
+    // function b(){
+    //     console.log('我是函数b')
+    // };
+    // a(b);//b是函数b 在函数a里边b叫做回调函数
+
+    //const 和 let都是声明变量的一种方式
+    // const arr = [1,2,3];
+    // arr.forEach( (item, index, array) => {//小明函数
+    //     //现在小明函数叫做回调函数
+    // } );
+
+    //把一个函数(a)作为实参传递给另一个函数(b),那么在函数b里边a就叫做回调函数 -> a是b的回调函数
+    // function d( callback ) {
+    //     console.log(callback)
+    //     callback();
+    // };
+
+    // d( function gang(){} );//小刚函数就叫做回调函数
+
+
+</script>
+</html>

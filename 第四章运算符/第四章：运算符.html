@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js运算符</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        数据类型：
+            Number String undefined null Boolean Object Array
+        运算符 + - * /
+    */
+    // + 
+    //数字 + 数字 = 数学运算
+    // console.log( 1 + 1 );
+    // console.log( 2 + 2 );
+    // //js存储数据是IEE47 -> 双精度浮点数
+    // console.log( 0.1 + 0.2 );//0.30000000000000004
+    //全部乘以100 /100
+    // console.log( (0.1*10 + 0.2*10) / 10 );
+    // console.log( (8.2*100 + 1.1*100)/100 );
+    // console.log( 1.1 * 100 );
+    
+    //NaN Infinity -Infinity
+    //NaN不管和谁运算结果都是NaN
+    // console.log( NaN * 0 )
+    // console.log( Infinity - 100000000000000000000 );//Infinity
+    // console.log( -Infinity / 100000000000000000000 );
+    // console.log( Infinity +  -Infinity );//NaN
+    // console.log( NaN + Infinity );//NaN
+    // console.log( NaN + -Infinity );
+
+    //字符串 + 字符串 = 字符串拼接
+    // var str1 = '旱麓';
+    // var str2 = 'hanlu';
+    // console.log( str1 + str2 );
+    // console.log( str1, str2 );
+
+    //数字加字符串 -> (字符串就是爹)任何数据类型和字符串进进行加法运算都会转为字符串
+    //隐式类型转换 Sring() .toString() -> 隐式类型转换,转化undefined和null用的是String()
+    // console.log( 1 + '2' );
+    // console.log( {name: '小明'} + '123' );//{name: '小明'} -> [object Object]
+    // console.log( {} + '123' );//{name: '小明'} -> [object Object]
+    // console.log( undefined + 'abc' );//undefinedabc
+    // console.log( null + 'abc' );//nullabc
+    // console.log( '1' + [1,2,3] );//"" + '1'
+
+    //所有的运算 Number undefined和null在进行加法运算的时候遇到字符串转字符串，遇到数字转数字
+    // console.log( undefined + null );
+    // console.log( undefined + 1 );//NaN
+    // console.log(  null + 1 );//1
+    // console.log( null + 'abc' );//'null'
+    // console.log( undefined + 'abc' );
+    
+    //Object Array 在运行加法的时候会用 .toString转为字符串
+    //[object Object] + 1
+    /*
+        {}.toString() => "[object Object]"
+        "[object Object]" + 1 => 1.toString() => '1'
+        "[object Object]" + "1" = [object Object]1
+    */
+    // console.log( {age: 5} + 5 );
+    // //"11" [] => "" + 1 -> "1"
+    // console.log( [] + 1 );
+
+    // console.log( undefined + [{}] );//'[object Object]undefined'
+    // console.log( null + [] );
+
+    // console.log( null + '2' );
+    /********* 加法 ************/
+    // 数字 + 数字 => 数学运算
+    // undefined和null  遇数字转数字 遇字符串转字符串
+    // Object , Array 计算加法前 先转为字符串
+    // '字符串' + 其他数据类型 = 字符串是爹
+
+
+    //-
+    //正常数字-正常数字 = 数学运算
+    // console.log( 2 - 3 );
+    // console.log( 0.4*100 - 0.3*100 );
+    // console.log( Infinity - 10000000);
+    // console.log( -Infinity - 10000000);
+    // console.log( NaN - 1 );
+    // console.log( Infinity - Infinity );//NaN
+    //所有数据类型在进行减法运算的时候都会被转为数字 -> Number()
+    // console.log( '123.1a' - 1 );
+    /*
+        Number(undefined) -> NaN
+        NaN - 1 =  NaN
+    */
+    // console.log( undefined - 1 );
+
+    // console.log( null + 5 );
+
+    //Object 和所有数字进行减法运算结果都是NaN
+    // console.log( {} - -100 );
+    //Array -> [] =》 0  [1] => 1 其他全部都是NaN
+    // console.log( ['1'] - 1 );
+
+    // * / 所有东西都会转化成为数字 Number()
+    //数字和 数字运算 =数学运算
+    // console.log( '2' * '3' );
+    // console.log( 'a' * 2 );
+    // console.log( null * 1 );
+    // console.log( {} * 2);//20 * 2
+    // console.log( true * -20 );
+    // console.log( false * 2 );
+    // console.log( false * '2' );//0 * 2 = 0
+    
+    // // / 除法 正数/0 无穷大 Infinity  复数/0 = -Infinity
+    // console.log( 9 / 2 );
+    // console.log( Infinity / Infinity );//NaN
+    // console.log( -Infinity / -Infinity );//NaN
+    // console.log( Infinity / -Infinity );//NaN
+    // console.log( 2 / 0 );//Infinity 
+    // console.log( -2 / 0 );//-Infinity
+
+    // console.log( 0 / 2 );//0
+    // console.log( 1 / 3 );
+    // //NaN / 2 
+    // console.log(  2 / [] );// 2 / 0
+
+    // console.log( true / false );//1 / 0
+    // console.log( true / null );//Infinity
+    // console.log( true / {} );
+
+    /*
+        % 求模 模以 -> 求余数
+        1.所有数据类型转为数字 
+        2.求余数,如果除法的结果是NaN，余数就是NaN,无穷大 % 数字 结果 NaN
+    */
+    // console.log( 5  % 2 );// 5除以2求余数 5 / 2 = 2......1
+    // console.log( [5] % 2 );//5 / 2 = 2....1
+    // console.log( -Infinity % 2 );//NaN
+
+    /*
+        ++ 递增
+        -- 递减
+    */
+    // var num = 123;
+    //++num;//给num+1 前置
+    // num++;//后置
+    // console.log( num );
+    
+    // var obj = {name: '小明'};//NaN + 1 = NaN
+    // ++obj;//++操作符会把后边的数据类型转为数字然后再+1
+    // console.log( obj );
+
+    // var arr = [];
+    // console.log(arr);
+    // ++arr;//++操作符会把后边的数据类型转为数字然后再+1
+    // console.log( arr );
+
+    // var num_a = 123;
+    // var result = ++num_a + 1;// 123+1 = 124  124 + 1=125
+    // console.log('我是num_a', num_a);//124
+    // console.log( '我是result', result );//125
+
+
+    //++操作符如果是后置的，在进行运算的时候先运算再自增
+    // var num_a = 123;
+    // var result = num_a++ + 1;//123 + 1
+    // console.log('我是num_a', num_a);//124
+    // console.log( '我是result', result );//124
+
+
+    // console.log( 1 + 2 * 3 );//7
+
+
+
+    // var num_b = 3;
+    // var result_a = ++num_b * 2;//先自增再参与运算
+    // console.log( result_a ); //8
+    // console.log( num_b ); //4
+
+    // // -- 递减操作符 在原来的基础上-1
+    // var num_c = 123;
+    // --num_c;
+    // console.log( num_c );
+
+    // //前置，先--再运算
+    // var num_d = 123;
+    // var result_b = --num_d + 2;
+    // console.log( result_b );//124
+
+    // //后置，先运算再--
+    // var num_e = 123;
+    // var result_c = num_e-- + 2;
+    // console.log( result_c );//125
+
+
+    //   ||或   &&与   !非  把所有的数据都转化成为布尔值,Boolean();
+    //! 非 -> 先把一个数据转化成为布尔值，然后取反->true变为false，false变为true
+    // console.log( !1 );
+    // //0 NaN undefined null false "" 六个大爷，在用Boolean转化为布尔值的时候是false
+    // console.log( !"" );//true
+    //除了以上六位，其他的所有数据用！结果都为false
+
+
+
+    /*
+        || 寻找生命中的唯一 -> true; 值(value)  value1 || value2
+        从左往右  先把左边的数据转化为布尔值，如果为true停止，如果为false继续找
+    */
+    // console.log( 0 || '花花' );//fasle true
+    // console.log(  null || '' || undefined || false  );//fasles
+    // console.log(  null || '' || undefined || 1  );//1
+
+
+    /*
+        && 通关游戏
+        双截龙 10  1,2,3,4,5
+        从左往右  先把左边的数据转化为布尔值，如果为false，如果为true继续下一关
+    */
+    // console.log(  undefined && 2  );
+    // console.log(  1 && 2 && 'false' && {name:'小明'} );
+</script>
+</html>

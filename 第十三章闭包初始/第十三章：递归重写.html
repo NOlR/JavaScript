@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>递归</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //递归
+    var arr = [1, 'null', true, 4, [5, 6, [7, 8]] ];
+    //i = 0 1 2 3 4
+    // for( var i = 0, length = arr.length; i < length; i++ ){
+    //     if( typeof arr[i] !== 'object' ){
+    //         console.log( arr[i] );
+    //     }else{//如果arr的第i项是一个数组或者对象
+    //         // console.log( arr[i] );
+    //         var result = arr[i];
+    //         for( var a = 0, length = result.length; a < length; a++ ){
+    //             console.log( result[a] );
+    //         };
+    //     };
+    // };
+
+    function fn(arr) {
+        for( var i = 0, length = arr.length; i < length; i++ ){
+            if( typeof arr[i] !== 'object' ){
+                console.log( arr[i] );
+            }else{
+                // console.log( arr[i] );
+                fn( arr[i] );//[5, 6] 1
+            }
+        }
+    };
+    fn( arr );
+
+</script>
+</html>

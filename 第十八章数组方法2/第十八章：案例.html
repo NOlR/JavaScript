@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        table{
+            width: 500px;
+            margin: 50px auto;
+            border-collapse: collapse;
+        }
+        tr,td{
+            height: 40px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+    <p>
+        <button>还原</button>
+    </p>
+    <p>
+        <button>分数从高低底排序</button>
+        <button>分数从低到高排序</button>
+    </p>
+    <p>
+        <input type="text" placeholder="请输入姓名">
+        <input type="text" placeholder="特点">
+        <input type="number" placeholder="分数" min="0" max="100">
+        <button>添加</button>
+    </p>
+    <p>
+        <span>查看第</span>
+        <input type="number" placeholder="开始">
+        <span>到第</span>
+        <input type="number" placeholder="结束">
+        <span>同学</span>
+        <button>确定</button>
+    </p>
+</body>
+<script>
+    var students = [
+        {
+            nickname: '_winner',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: '-茂茂',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: '不远千里か℡',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: '一方',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: '浪人',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: '黎昊东',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: 'Ricky星',
+            property: '大帅比',
+            score: 80
+        },
+        {
+            nickname: '旱麓',
+            property: '大帅比',
+            score: 90
+        },
+        {
+            nickname: '备忘鹿',
+            property: '大帅比',
+            score: 60
+        },
+        {
+            nickname: '王泽',
+            property: '大帅比',
+            score: 70
+        },
+        {
+            nickname: '小凡',
+            property: '大帅比',
+            score: 70
+        },
+        {
+            nickname: 'JavaScript',
+            property: '大帅比',
+            score: 70
+        }
+    ];
+    //render[渲染]
+    var thead = document.querySelector('thead');
+    /* obj一个对象，用来提供表头 ele把生成的标签追加到哪个元素里边 */
+    function render_head( obj, ele ) {
+        var tr = document.createElement('tr');//生成tr标签，用来存放th标签
+        console.log(obj, ele);
+        for(var key in obj){//遍历对象，拿到他里边的所有属性名，放到th标签里边
+            var th = document.createElement('th');//生成th标签
+            th.innerText = key;//设置th标签里边的文字
+            tr.append(th);//把th标签追加到tr标签里边
+        };
+        ele.append(tr);
+    };
+    render_head( students[0], thead );
+
+
+    /*
+        遍历数组
+            遍历的时候生成tr标签 -> 生成几行
+            循环的每一次都再遍历一遍对象，生成td标签，并且把对象里每个属性对应的值，放到
+            td标签里边
+        形参：
+            arr 提供数据的数组
+            ele 把数据渲染到哪个元素里边
+    */
+    var tbody = document.querySelector('tbody');
+    function render_body(arr, ele) {
+        var fragment = document.createDocumentFragment();
+        arr.forEach( item => {
+            var tr = document.createElement('tr');
+            for( var key in item ){
+                var td = document.createElement('td');
+                td.innerText = item[key];
+                tr.append(td);
+            };
+            fragment.append(tr);
+        } );
+        ele.append(fragment);
+    };
+    render_body(students, tbody);
+</script>
+</html>

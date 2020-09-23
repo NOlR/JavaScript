@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+			}
+			table{
+				width: 400px;
+				margin: 50px auto;
+				border-collapse: collapse;
+			}
+			tr,td,th{
+				line-height: 30px;
+				border: 1px solid #000000;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<table></table>
+		<script>
+			var obj=[{nickname:"QAQ",sty:"玩1"},{nickname:"QwQ",sty:"玩2"},{nickname:"QvQ",sty:"玩3"}];
+			
+			var table =document.querySelector("table");
+				var fra=document.createDocumentFragment();
+				
+				var tr=document.createElement("tr");
+				for (var i in obj[0]){
+					var th=document.createElement("th");
+					th.innerHTML=i;
+					tr.append(th);
+				}
+				fra.append(tr);
+				obj.forEach(item=>{
+					var tr=document.createElement("tr");
+					
+					for (var key in item){
+						var td=document.createElement("td");
+						td.innerHTML=item[key];
+						tr.append(td);
+					}
+					fra.append(tr);
+				})
+				
+				table.append(fra);
+				console.log(fra);
+		</script>
+	</body>
+</html>

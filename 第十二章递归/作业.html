@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			
+			var arr_a=[1,2,3,5,6,2,3,1,3,[2,3,5,[3,2,1]]];
+			var result_a=[];
+			
+			function chaijie(arr){
+				for(var i=0,length=arr.length;i<length;i++){
+					if(typeof(arr[i])!=='object'){
+						result_a.push(arr[i]);
+					}
+					else{
+						chaijie(arr[i]);
+					}
+				}
+			}
+			chaijie(arr_a);
+			console.log(result_a);
+			
+			
+			
+			var obj_a={nickname:"Noir",age:"16",far:{eat:["beef","apple"]}};
+			var obj_result={};
+			
+			function objChaijie(obj){
+				for(var i in obj){
+					if(typeof(obj[i])!=="object"){
+						obj_result[i]=obj[i];
+					}
+					else{
+						objChaijie(obj[i]);
+					}
+				} 
+			}
+			
+			objChaijie(obj_a);
+			console.log(obj_result);
+			
+			
+			
+			Fibonacci数列第N项的值
+			function suanfa(a){
+				if(a<=2){
+					return 1;
+				}
+				return suanfa(a-1)+suanfa(a-2);
+						
+			}
+			
+			console.log(suanfa(5));
+			
+			
+		
+		</script>
+	</body>
+</html>

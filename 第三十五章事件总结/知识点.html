@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剩余的知识点</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 500px;
+            height: 500px;
+            margin: 50px auto;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+        }
+        .container{
+            width: 500px;
+            height: 500px;
+            margin: 50px auto;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+        }
+        .container > div{
+            width: 100px;
+            height: 100px;
+        }
+        .container > div + div{
+            margin-top: 10px;
+        }
+        .card1{
+            background-color: orange;
+        }
+        .card2{
+            background-color: #58a;
+        }
+        .card3{
+            background-color: pink;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        window.onload = e => {//花括号里边的代码就会在页面资源完全加载完成之后才去执行
+            const imgs = document.querySelector('img.some_else');
+            console.log(imgs);
+        }
+    </script>
+</head>
+<body>
+    <div class="box">
+        这是一首简单的小情歌，这是一首简单的小情歌。
+        这是一首简单的小情歌，这是一首简单的小情歌。
+    </div>
+    <select>
+        <option value="旱麓">旱麓</option>
+        <option value="茂茂">茂茂</option>
+        <option value="韩安然">韩安然</option>
+        <option value="备忘鹿">备忘鹿</option>
+    </select>
+    <input class="input" type="text">
+    <textarea cols="30" rows="10"></textarea>
+
+    <div class="container">
+        <div class="card1"></div>
+        <div class="card2"></div>
+        <div class="card3"></div>
+    </div>
+    <img class="some_else" src="./images/12345.jpg" alt="小姐姐">
+    <div class="card" style="width: 18rem;">
+        <img src="./images/12345.jpg" class="card-img-top" alt="QQ头像">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+</body>
+<script>
+    /*
+        和鼠标有关的事件：
+            click 左击
+            contextmenu 右击
+
+            mousedonw 鼠标按下 e.button = 0[左键] 1[滚轮点击] 2[右击]
+            mousemove 鼠标滑动
+            mouseup 鼠标抬起
+            mousewheel 滚轮滚动
+
+            touchstart
+            touchmove 
+            touchend
+            touchcancel cancel[取消] -> 意外终止
+        
+            paste 粘贴 -> [通用]
+            copy 复制 -> [通用]
+            cut 剪切 -> [通用]
+            var keyvalue=1;
+
+            ClipboardEvent{
+                target: 内容是从那个元素里边复制过来的,
+                type: 'copy', 复制类型
+                clipboardData: {被复制的东西
+                    files: 文件
+                    items: 除了文件之外的东西
+                }
+            }
+            getData('什么类型的数据')
+
+
+            选择：change -> slect标签选择内容
+                selectedIndex -> 哪一个option标签被选中（下标）
+                slectOptions -> 哪一个option标签被选中（元素本身）
+            焦点:
+                foucus
+                blur
+            输入:
+                input -> 当在标签里边输入内容的时候
+    */  
+    const box = document.querySelector('.box');
+    const input = document.querySelector('.input');
+    const area = document.querySelector('textarea');
+
+    // input.addEventListener('input', e => {
+    //     e.preventDefault();
+    //     console.log(e.target.value)
+    // })
+    // area.addEventListener('input', e => {
+    //     e.preventDefault();
+    //     console.log(e.target.value)
+    // })
+
+    // input.focus();
+    // input.blur();
+
+    // area.focus();
+    // area.blur();
+
+    // input.addEventListener('focus', e => {
+    //     console.log('input被选中')
+    // })
+    // input.addEventListener('blur', e => {
+    //     console.log('input失去焦点')
+    // })
+
+    // let str = '';//被复制的内容
+    // box.addEventListener('copy', e => {
+    //     str = window.getSelection().toString();
+    //     console.log(str);
+    //     // e.preventDefault();
+    //     // return false;
+    //     // alert(123);
+    // });
+    // input.addEventListener('paste', e => {
+    //     // console.log('粘贴')
+    //     e.preventDefault();//不能够粘贴
+    //     console.log(str)
+    //     e.target.value += (str + '。 版权归23期所有同学。' );
+    // })
+    // box.addEventListener('cut', e => {
+    // })
+
+    // const select = document.querySelector('select');
+    // select.addEventListener('change', e => {
+    //     let index = e.target.selectedIndex;
+    //     console.log( 'index->value', e.target.children[index].value )
+
+    //     let option = e.target.selectedOptions;
+    //     console.log(option[0].value)
+    //     console.log(index, option);
+    // });
+    
+    /*  
+        键盘事件：
+            keydown -> 键盘按下
+            keyup -> 键盘抬起
+            keypress -> 键盘按下 press[按压]
+        触发顺序：
+            keydown
+            keypress
+            keyup
+        功能键不会触发：keypress
+            key: 按下去的是哪个键
+            keyCode: 键码，键盘上的每个键都有一个键码
+            在已经按下功能键的时候非功能键的press事件不会触发
+        组合键(功能键+非功能键)：使用keydown事件来做.
+    */
+    // document.addEventListener( 'keypress', e => {
+    //     console.log('keypress:', e)
+    // } )
+    // document.addEventListener( 'keydown', e => {
+    //     console.log('keydown:', e)
+    //     if( e.altKey === true && e.key === 'a' ){
+    //         alert('次组合不存在')
+    //     }
+    // } )
+    // document.addEventListener( 'keyup', e => {
+    //     console.log('keyup:', e)
+    // } )
+    
+    /*
+        事件委托的起源：
+            每个一个元素都绑定一个点击，获取鼠标的其他事件
+            首先找到每一个元素，给他们的某个属性赋值,为一个函数(对象),对象是最占内存的数据类型，对象越多
+            占用的内存也就越多，有可能会卡顿。
+            尽可能减少给每个元素单独绑事件： -> 事件委托(事件冒泡的特性)
+
+        浏览器只会去找一个元素,只创造了一个函数
+    */
+    
+    // const container = document.querySelector('.container');
+    // container.addEventListener('click', e => {
+    //     e.stopPropagation();
+    //     const target = e.target.className;//拿到被点击的那个元素的类名
+  
+    //     switch( target ){//根据类名来判断我点了哪一个标签，做不同的事情
+    //         case 'card1' :
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //                 console.log('我是card1');
+    //         break;
+    //         case 'card2' :
+    //             console.log('我是card2');
+    //         break;
+    //         case 'card3' :
+    //             console.log('我是card3');
+    //         break;
+    //         default :
+    //             console.log('我是container');
+    //     }
+    // });
+
+
+    /*
+        ui事件
+            load -> 监听页面是否加载完成
+            ready -> 监听页面是否加载完成
+            error -> 监听页面是否出错
+        
+        load: 和外部资源有关
+            window, document,img,video,audio document和window是一模一样的
+        ready: 和外部资源有关
+            window, document,img,video,audio
+        正常顺序：
+            window.ready 元素.load window.load
+        
+        先加载html，css和js 再去加载图片，视频，音频
+
+        外部资源：
+            代码：html,css,js -> ready(准备就绪了)
+            图片,视频,音频 -> (所有外部资源全部加载完毕了 -> 加载完毕)
+    */
+    const img = document.querySelector('img');
+    window.addEventListener( 'load', e => {
+        console.log('window加载完毕')
+    } )
+    
+    img.addEventListener( 'load', e => {//img标签的外部资源加载完成
+        console.log('img加载完毕')
+    } )
+
+    img.onerror = function (e) {
+        console.log('图片加载失败')
+    }
+
+    // document.addEventListener('error', e => {
+    //     console.log('页面有资源出错，来自window')
+    // })
+    // img.addEventListener( 'error', e => {
+    //     console.log('图片加载失败')
+    // } )
+
+    // window.onready = function (e){
+    //     console.log(1)
+    //     console.log('window和document准备就绪')
+    // }
+</script>
+</html>

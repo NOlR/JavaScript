@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>循环</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+        .a56{
+            color: #58a;
+        }
+        .pink{
+            color: hotpink;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <ul>
+        <!-- 1 3 5 7男同学，2468女同学 -->
+        <li>韩安然</li>
+        <li>茂茂</li>
+        <li>一方</li>
+        <li>夕颜</li>
+        <li>芽儿呦</li>
+        <li>apig raised</li>
+        <li>家家</li>
+        <li>旱珍珍</li>
+    </ul>
+</body>
+<script>
+    //循环
+    //for(初始条件;结束条件;迭代){代码块}  结束条件 -> 真就运行，假就结束
+    // {//我就是一个代码块，我里边可以写任意多的语句
+    //     console.log(1);
+    //     console.log(2);
+    //     var div1 = document.querySelector('.box');
+    //     console.log(div1);
+    // };
+    //var num = 2
+    // 1 2 3 4
+    //第一次：1,2,4,3 i<5 => true ; i===1
+    //第二次: 2,4,3 i<5 => true; i === 2
+    //第三次: 2,4,3 
+    //结束条件为false for循环后边的代码块不再执行
+    // i = 4 ; 4<5 true 0 1 2 3 4 5
+    // for( var i = 0; i < 5; i++){
+    //     console.log(1);
+    // };
+    // console.log( i );
+    //再for循环括号里边声明的变量i是全局变量 -> 在哪里都可以用
+
+    // for( var i = 0; i < 5; i++ ){//代表永远不会结束
+    //     console.log('for循环里的i值为:', i);
+    // };  
+    // console.log('for循环执行完成之后i的值为', i);
+    // console.log( 123 );
+
+
+
+    // var a = 0; //初始条件
+    // for( ; a < 5;  ){
+    //     console.log('我是初始条件在外边的for循环');
+    //     a++;
+    // };
+
+    // 2 4 6
+    for( var i = 0; i < 10; i += 3 ){//代表永远不会结束
+        console.log('for循环里的i值为:', i);
+    };
+    console.log('for循环执行完成之后i的值为', i);//跳出for循环时i的值
+
+
+    var oLi = document.querySelector('ul').children;
+    console.log( oLi );
+    //0 1 2 3 4 5 6 7 
+    for( var i = 0; i < 8; i++ ){
+        if( i % 2 ){//双数 0
+            oLi[i].classList.add('pink'); 
+        }else{
+            oLi[i].classList.add('a56');
+        }
+    };
+
+    //for循环嵌套for循环
+    //a = 0
+    // var num = 0
+    // for( var a = 0; a < 10; a++ ){//10
+    //     for( var b = 0; b < 9; b++ ){//9
+    //         num ++;
+    //     };
+    // };
+    // console.log( num );
+    //在页面中写入内容
+    // document.write('<h1>abc</h1>');
+    for( var i = 0; i < 3; i++ ){
+        var span = document.createElement('span');
+        span.innerText = '*'
+        document.body.append(span);
+    };
+
+    /*
+        第一次: c = 0 d创造1个
+        第二次：c = 1 d创造2个
+        第三次: c = 2 d创造3个
+    */
+    for( var c = 0; c < 3; c++ ){//我是用来生成div的
+        var div = document.createElement('div');
+        for( var d = 0; d < c + 1; d++ ){//我是用来生成span标签的
+            var span = document.createElement('span');
+            span.innerText = '*';
+            div.append(span);
+        }
+        document.body.append(div);
+    };
+
+    //e = 3 e=2 e=1 
+    for( var e = 3; e > 0; e-- ){
+        var div = document.createElement('div');
+        for( var d = 0; d < e; d++ ){
+            var span = document.createElement('span');
+            span.innerText = '*';
+            div.append(span);
+        }
+        document.body.append(div);
+    };
+</script>
+</html>

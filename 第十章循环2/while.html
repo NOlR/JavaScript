@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>While循环</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //while( 判断条件 ){ 如果判断条件为真，就会走这个代码块里边的代码 }
+    // var i = 0;
+    // while( i < 10 ){
+    //     console.log(i);
+    //     i++;
+    // };
+    
+    //前置判断  后置判断
+    // var i = 0;
+    // do{//不管判断为真还是假都先走一次
+    //     console.log(i);
+    //     i++;//1
+    // }while( i > 10 );
+
+
+    //bom 浏览器对象模型 -> 操作浏览器
+    // alert(123);//阻断后边代码的执行
+    // console.log( 123 );
+    //可以通过prompt来获取用户输入的值,如果点取消获取的是null
+    // var abc = prompt( '123', '456' );
+    // console.log(abc);
+    // var result;
+    // do{
+    //     result = prompt( '万章是否是一个大帅比', '不是' );
+    // }while( result !== '是' );
+
+
+    //switch( 判断什么东西 ){ case balabala: 语句 }
+    var obj = { nickname: '小明', property: '阿姨' };
+
+    //switch 会拿case后边的值 和 switch括号里边的值进行对比，如果为true
+    //不加break要一直走下去
+    switch( true ){
+        case '阿姨':
+            console.log('给阿姨倒一杯卡布奇诺');
+        break;
+        case '叔叔' :
+            console.log('泡一杯茶');
+        break; 
+        default ://default默认
+            console.log('hello 小明');
+    };
+    
+
+</script>
+</html>

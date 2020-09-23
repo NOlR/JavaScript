@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时钟案例</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        body{
+            background-color: #333;
+        }
+        .clock{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            border: 1px solid orange;
+            border-radius: 50%;
+        }
+        .clock > i {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            background-color: white;
+            transform-origin: 2.5px 150px;
+        }
+        .clock > section{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom:0;
+            margin: auto;
+        }
+        .hour{
+            width: 3px;
+            height: 150px;
+            background-image: linear-gradient(
+                to top,
+                transparent 0%,
+                transparent 41%,
+                #58a 0
+            );
+        }
+        .minute{
+            width: 3px;
+            height: 170px;
+            background-image: linear-gradient(
+                to top,
+                transparent 0%,
+                transparent 38%,
+                purple 0
+            );
+        }
+        .second{
+            width: 3px;
+            height: 200px;
+            background-image: linear-gradient(
+                to top,
+                transparent 0%,
+                transparent 35%,
+                orange 0
+            );
+        }
+        .tran{/*计算机自己帮我们生成动画*/
+            transition: 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <section class="clock">
+        <section class="hour"></section>
+        <section class="minute"></section>
+        <section class="second"></section>
+    </section>
+    <div class="box"></div>
+</body>
+<script>
+    const box = document.querySelector('.box');
+
+    //生成表盘上的刻度 一共有60个，每个刻度之间隔6deg
+    const clock = document.querySelector('.clock');
+    //文档碎片 -> 先把所有的i标签放到fragment里边，然后等全局生成之后再放到clock里边
+    const fragment = document.createDocumentFragment();
+    //用i乘以6
+    for( let i = 0; i < 60; i++ ){//让for循环走60次
+        //在每次for循环里边生成i
+        let oI = document.createElement('i');
+        if( i % 5 === 0 ){
+            oI.style.cssText = `width:2px; height: 15px; transform: translate(-200%) rotate(${i*6}deg);`;
+        }else{
+            oI.style.cssText = `width:1px; height: 10px; transform: translate(-200%) rotate(${i*6}deg);`;
+        }
+        fragment.append(oI);
+    };
+    clock.append(fragment);
+
+    //setInterval(callback, 1000); 
+    /*
+        每隔1s种执行以下rotate函数
+        rotate函数要干什么：
+            1. 获取时间
+            2. 设置样式
+    */
+    // const watch_hour = document.querySelector('.hour'),
+    //     watch_minute = document.querySelector('.minute'),
+    //     watch_second = document.querySelector('.second');
+    //因为setInterval是每秒钟执行一次的，所以不能在rotate里边做动画要配合css来做
+    //setInterval即便把页面挂着，或者说已经进入了其他页面 它还在跑
+    //但是此时dom就不会再渲染了,表针不再转动了
+    // const rotate = () => {
+    //     const date = new Date(),
+    //         hour = date.getHours(),//小时
+    //         minute = date.getMinutes(),//获取分钟
+    //         second = date.getSeconds();//获取秒钟
+    //     //假如现在是九点30分 (9 + 30 / 60) = 9.5; 9.5 * 30 = 285deg
+        
+    //     if( second === 0 ){//现在是第60秒
+    //         watch_second.classList.toggle('tran');//删除
+    //     }else{
+    //         if( !watch_second.classList.contains('tran') ) watch_second.classList.toggle('tran');//添加
+    //     }
+    //     //在字符串模板里边如果要引入变量或者写表达式要用${}包裹起来
+    //     watch_hour.style.transform = `rotate(${(hour + minute / 60) * 30}deg)`;
+        
+    //     watch_minute.style.transform = `rotate(${(minute + minute / 60 ) * 6}deg)`;
+
+    //     watch_second.style.transform = `rotate(${second * 6}deg)`;
+    // };
+    // rotate();
+    // setInterval( rotate, 1000 );
+
+    //requestAnimationFrame(callback) 每隔16ms去执行以下
+    /*
+        1.获取时间
+        2.更新dom
+    */ 
+    const watch_hour = document.querySelector('.hour'),//时针
+        watch_minute = document.querySelector('.minute'),//分针
+        watch_second = document.querySelector('.second');//秒针
+    let start = null;//保留开始时间
+    //requestAnimationFrame -> 每隔16.6毫秒去执行一次
+    const rotate = timeStamp => {//timeStamp时间戳
+        if( start === null ) start = timeStamp;//保留开始时间
+        let process = timeStamp - start;//动画已经运行了多少时间
+
+        const date = new Date(),//获取当前日期
+            hour = date.getHours(),
+            minute = date.getMinutes(),
+            second = date.getSeconds(),
+            milliseconds = date.getMilliseconds();
+
+        watch_hour.style.transform = `rotate(${(hour + minute / 60) * 30}deg)`;
+        watch_minute.style.transform = `rotate(${(minute + second / 60) * 6}deg)`;
+        watch_second.style.transform = `rotate(${(second + milliseconds / 1000) * 6}deg)`;
+        //时钟是一直走的，因此永远不用停
+        requestAnimationFrame( rotate );
+    };
+    requestAnimationFrame( rotate );
+    //requestAnimationFrame在离开标签页或者把浏览器挂到后台以后就不会再做动画了
+</script>
+</html>

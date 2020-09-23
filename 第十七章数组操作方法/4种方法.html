@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			var arr_a=[1,2,3,4];
+			
+			function push(arr){
+				if( !Array.isArray(arr) ) return '参数必须是数组';
+				for(var i=1,length=arguments.length;i<length;i++){
+					arr[arr.length]=arguments[i];
+				}
+				return arr.length;
+			};
+			var result_a=push(arr_a,12,3,4,5);
+			console.log(result_a);
+			
+			
+			
+			var arr_b=[3,2,1];
+			
+			function pop(arr){
+				if( !Array.isArray(arr) ) return '参数必须是数组';
+				var num=arr[arr.length-1];
+				arr.length=arr.length-1;
+				return num;
+			}
+			
+			var result_b=pop(arr_b);
+			console.log(result_b);
+			
+			
+			
+			var arr_c=[1,2,3,4];
+			function shift(arr){
+				if( !Array.isArray(arr) ) return '参数必须是数组';
+				var num =arr[0];
+				for(var i=0,length=arr.length;i<length;i++){
+					arr[i]=arr[i+1];
+				}
+				arr_c.length=arr_c.length-1;
+			}
+			shift(arr_c);
+			console.log(arr_c);
+			
+			
+			
+			var arr_d=[1,2,3,4];
+			function unshift(arr){
+				if( !Array.isArray(arr) ) return '参数必须是数组';
+				var arr_length=arr.length+arguments.length-1;
+				var cz=arr_length-arr.length;
+				var def=arr.length;
+				arr.length=arr_length;
+				for(var i=def-1;i>=0;i--){
+					arr[i+cz]=arr[i];
+				}
+				
+				for(var i=0,len=arguments.length-1;i<len;i++){
+					arr[i]=arguments[i+1];
+				}
+				
+				return arr_length;
+			}	
+		unshift(arr_d,1,2,3);
+			console.log(arr_d); 
+		</script>
+	</body>
+</html>

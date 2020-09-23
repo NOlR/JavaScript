@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Ajax</title>
+</head>
+<body>
+    hello everyone!
+    <!-- action你要把数据提交到哪里,在用表单提交数据的时候表单有单独的数据格式，formdat[表单数据] -->
+    <form>
+        <label>注册</label>
+        <input type="text" name="username" value="hanlu" placeholder="用户名">
+        <input type="text" name="passworld" value="hanxiaolu" placeholder="密码">
+        <input type="text" name="hoby" value="basketball" placeholder="用户名">
+        <input type="text" name="eating" value="mongo" placeholder="密码">
+        <input type="text" name="sex" value="boy" placeholder="用户名">
+        <input type="submit" value="注册">
+    </form>
+</body>
+<script>
+    /*
+        1.实例化ajax对象去发送请求
+            GET(获得) POST(添加) PUT(修改数据) DELETE(删除数据)
+        2.open('get', '地址(URL/URI)') url里边的问好后边会被识别为发送过去的数据 键名=键值
+        3.send(发送的数据)
+        4.监听ajax的状态和http的状态
+
+        post请求,在send里边去发送数据
+
+        报错：404你请求的路径不存在
+
+        控制台里边，network里边的headers放的是请求的请求头
+        每一个HTTP请求和相应都会带有相应和请求头的信息，在这些信息里边只有很少的是对我们开发者有用的，大部分不是给我们看的。
+        Response Headers -> 后端返回数据时的请求头
+        Request Headers -> 前端发送请求时的请求头
+        Request Payload -> 前端发送给后端的数据
+
+        前端发送给后端的任何数据必须是字符串
+
+
+        Accept: 浏览器能够处理的内容类型
+        Accept-Encoding: 浏览器能够处理的压缩编码
+        Accept-Language: 浏览器当前设置的语言
+        Connection：和服务器的连接类型
+        Content-Type: 数据类型
+        Host: 域名
+        Origin: 协议+域名
+
+        post请求就是专门为form表单设计的一种提交数据的请求方式: 
+        为什么要给表单单独设计一种提交方式呢？表单的数据格式比较特殊: FormData[表单数据]
+        使用post请求的时候，默认的数据类型就是FormData；
+        用js也可以去创造formdata格式的数据 -> 如果想要在js里边得到表单里边的所有数据，
+        直接 new FormData(表单元素)
+
+
+        xhr.setRequestHeader('键名', '键值')
+    */
+    /*
+        把对象转化成表单数据
+        {
+            nickname: '银时',
+            age: 18
+        }
+    */
+    // const formData2 = new FormData();
+    // formData2.append('nickname', '银时');
+    // formData2.append('age', '18');
+
+
+    // const baseUrl = 'http://localhost:3000';
+    // // //表单元素
+    // // const form = document.querySelector('form');
+
+    // //const formData = new FormData(form);//创造一个表单数据对象 -> 一下子拿到了这个表单里的所有数据
+    
+    // const xhr = new XMLHttpRequest();//实例化ajax对象
+
+    // xhr.open( 'post', `${baseUrl}/formdata` );
+
+    // xhr.send(formData2);
+
+    // xhr.onreadystatechange = function () {
+    //     if( xhr.readyState === 4 ){
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             console.log(xhr.responseText);
+    //         }
+    //     }
+    // }
+
+   //使用post发送数据有两种形式,在路由里边传参(不适用，不规范)
+   //如果使用post发送json对象，需要设置请求头
+    // const baseUrl = 'http://localhost:3000';
+
+    // const obj = { user: 'hanlu' };//我们要发送的数据
+    
+    // const xhr = new XMLHttpRequest();//实例化ajax对象
+    // xhr.open( 'post', `${baseUrl}/concat` );//联系
+    // //我们需要告诉浏览器我们要发送的是对象不是纯文本 -> 通过在发送请求的时候设置请求头里的数据类型
+    // xhr.setRequestHeader('Content-Type', 'application/json');//让浏览器在发送数据的时候已对象的形式发送
+    // xhr.send(JSON.stringify(obj));//把数据发送给后端,把对象序列化一下
+    // xhr.onreadystatechange = function () {
+    //     if( xhr.readyState === 4 ){
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             console.log(xhr.responseText);
+    //         }
+    //     }
+    // }
+
+
+    //const xhr = new XMLHttpRequest();
+    // xhr.open('get', 'http://localhost:3000/wanzhangbh?wife=石原里美');
+    // xhr.send(null);
+    // xhr.onreadystatechange = function () {
+    //     if( xhr.readyState === 4 ){
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             console.log(xhr.responseText);
+    //         }
+    //     }
+    // }
+    // console.log(xhr);
+
+
+
+    /* 
+        ajax的流程
+            实例化ajax对象
+            open('做什么', '去哪里做')
+            send()
+                1.get -> send(null)
+                2.post -> （一）send(表单数据) （二）设置请求头，在请求头里边把数据格式设置为json格式，浏览器才能把 正确的数据发送给后端, send(你要发送的json数据)
+            xhr.onreadystatechange = function () {}监听状态变化，拿到后端返回的数据
+
+        ajax里边的其他事件:
+            error ajax出错的时候要触发的函数
+            load 当ajax返回的时候触发(相当于readystate=4)
+            abort 手动终止ajax对象
+
+        是否携带cookie:
+            xhr.withCredential = true;默认为false
+    */
+    
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('get', 'http://localhost:3000/balabala');
+    xhr.withCredentials = true;//携带上浏览器里边保存的cookie
+    xhr.send(null);
+    xhr.onerror = function () {
+        console.log(xhr.status)
+    }
+    xhr.onload = function () {
+        console.log(xhr.responseText)
+    }
+    //现在只想在readystate为4的时候做一些事情
+    // xhr.onload = function () {
+    //     if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //         console.log(xhr.responseText);
+    //     }
+    // }
+    // xhr.onreadystatechange = function () {//一共会触发3到4次
+    //     if( xhr.readyState === 3 ){
+    //         xhr.abort();//手动终止了数据请求
+    //     }
+    //     if( xhr.readyState === 4 ){
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             console.log(xhr.responseText);//后端返回的数据是无法在前端使用的
+    //         }
+    //     }
+    // }
+    
+    // console.log(xhr);
+
+</script>
+</html>

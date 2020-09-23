@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">  
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">    
+    <script src="https://unpkg.com/swiper/js/swiper.js"> </script>  
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"> </script>
+    <script src="./index.js"></script>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">slider1</div>
+          <div class="swiper-slide">slider2</div>
+          <div class="swiper-slide">slider3</div>
+        </div>
+      </div>
+</body>
+<script>
+    //Symbol
+    //es5里边，对象的属性名都不是唯一的，
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: true,//可选选项，自动滑动
+    });
+    console.log(mySwiper);
+    //对象属性的查找规则：先私有属性，后原型
+    console.log(mySwiper.update);//一个函数，从原型上边找到的
+    mySwiper.update = 123;//修改完成
+    console.log(mySwiper.update);//123  如果私有属性和原型上边的属性名一样，那么用的是私有属性
+
+    //Symbol数据类型(第七种数据类型)，es5有六种数据类型(String, Number, Boolea, Undefined, Null, Object(Object, Array, function)) Symbol构造函数
+    // let s = new Symbol(); 报错，不能加new 调用
+    // let s = Symbol();
+    // console.log(s, typeof s);//Symbol() "symbol" 也是用typeof去进行判断
+    // //s是一个独一无二的值
+    // let y = Symbol();
+    // console.log(y, y === s);
+    // let obj = {nickname: '小明'};
+    // let obj1 = {nickname: '小明'};
+    // console.log( obj, obj1, obj === obj1 );
+
+    //symbol是一个简单数据类型
+    //可以给Symbol传一个字符串实参
+    // let s1 = Symbol('小明');//括号里的实参表示的是对Symbol的描述
+    // let s2 = Symbol('小刚');
+    // let s3 = Symbol('小明');
+    // console.log(s1, s2, s3, s3 === s1);
+    
+    //可以传一个任意类型的数据 -> 只要不是字符串，就都会被转化为字符串
+    // let obj2 = [123, 456];
+    // let s4 = Symbol(obj2);
+    // console.log(s4);
+
+    //Symbol不能和其他任何的数据类型进行计算
+    //一下这些运算都会报错
+    // console.log( s4 + 1 );
+    // console.log( s4 * 1 );
+    // console.log( s4 + 'hello' );
+    // console.log( s4 / true );
+
+    /*
+        Symbol的特点：
+            1.独一无二，长的一样也不相等
+            2.不能参与计算
+            3.是一个简单数据类型
+            4.参数都会被转化成为字符串
+    */
+    //全等 js凡事必有例外
+    // let s5 = Symbol('s5');
+    // let s7 = Symbol('s5');
+    // let s6 = s5;
+    // console.log(s5, s6, s5 === s6, s5 === s7);
+
+    //Symbol当做对象的属性名
+    //es5里边对象的属性名都是字符串, es6里边对象的属性名除了可以是字符串之外，还可以是Symbol类型
+    // let s8 = Symbol('123');
+    // let obj3 = {
+    //     [s8]: '123'
+    // };  
+    // console.log(obj3[s8]);
+
+    // let s9 = Symbol('introduce');
+    // let obj4 = {
+    //     nickname: '小明',
+    //     age: 3,
+    //     [s9]() {
+    //         console.log(this.nickname, this.age)
+    //     }
+    // };
+    // console.log(obj4);
+    // obj4[s9]();
+
+    // let arr = [1,2,3];
+    // console.log(arr);//Symbol.iterator 迭代器
+    // for( let key of arr ){//key表示每一项
+    //     console.log(key)
+    // };
+    // //在for of循环数组的时候，用的就是数组的迭代器
+    // console.log(...arr);
+    // let sym = Symbol('Symbol.iterator');
+    // arr[sym] = 123;
+    // console.log(...arr);
+
+    
+    let p1 = new Person('小明', 3);
+    let int = Symbol('introduce');
+    // p1[int] = function(){
+    //     console.log('我是自己定义的introduce')
+    // };
+    // p1[int]();
+    // p1[intro]();
+    console.log(p1, p1[int], int === intro);
+
+    // let abc = [1,2,3];
+    // let S1 = Symbol('Symbol.iterator');
+    // console.log( abc[S1] )
+    // console.log(abc);
+
+    // //可以手动的把Symbol转为字符串
+    // console.log( int.toString() );//Symbol(introduce)
+    // console.log( int + 'hello' );
+
+    //Symbol类型的数据，如果作为对象的属性，不属于私有属性
+    // let sss = Symbol('abc');
+    // let obj9 = {
+    //     nickname: '小明',
+    //     age: 3,
+    //     [sss]: 'abc'
+    // };
+    // console.log(obj9);
+    // //没有遍历出来，因为Symbol不是私有属性
+    // for( let key in obj9 ){
+    //     console.log( key );
+    // };
+    //业务仔 大公司 vue react改源码
+</script>
+</html>

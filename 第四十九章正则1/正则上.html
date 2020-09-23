@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则</title>
+    <style>
+        p{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p></p>
+    <input type="text">
+</body>
+<script>
+    //1+1+9 = 11
+    const phone_reg = /^1[3-9][0-9]{9}$/;//一共11位 $表示以什么什么结尾
+    const input = document.querySelector('input'),
+        oP = document.querySelector('p');
+    input.oninput = function (e) {//在输入的时候用正则匹配输入的值，如果输入的值不满足电话号码的正则则p标签里边的文字是爆红的
+        console.log(e.target.value)
+        let value = e.target.value.trim();
+        if( !phone_reg.test(value) ){
+            oP.innerText = '请输入11位有效号码'
+        }else{
+            oP.innerText = ''
+        }
+    };
+
+    //写一个邮箱的正则
+
+
+    // let reg_a = /1/;
+    // let reg_b = new RegExp('1');
+    // console.log( reg_a.__proto__ === reg_b.__proto__ )
+    //正则 -> 用来匹配字符串。用户在页面的所有输入都是字符串，为了让用户按照正确的格式去输入。
+    //1.匹配用户输入格式是否正确
+
+    //创建正则： 1.字面量，2.构造函数
+    // let reg1 = /我爱中国/;//在一段字符里边匹配出我是中国
+
+    // console.log( reg1, typeof reg1 );// /我爱中国/ "object"
+
+    //正则的exec方法和test方法可以匹配  test[测试] 返回true或者false 
+    // console.log( reg1.test('我不爱美国') );//false 匹配失败
+    // console.log( reg1.exec('我不爱美国') );//null 匹配失败
+    // console.log( reg1.test('我爱中国，我爱长沙') );//true 通过测试
+    // console.log( reg1.exec('我爱中国,我爱长沙') );//["我爱中国", index: 0, input: "我爱中国，我爱长沙", groups: undefined]
+    //匹配到的字符串 index表示被匹配到的字符的起始下标是多少
+
+    //构造函数的写法: RegExp:regulation[规则的，规律的] expression[表达式]
+    // let reg2 = new RegExp('我爱中国');
+    // console.log(reg2, typeof reg2);
+    // console.log( reg2.test('我不爱美国') );
+    // console.log( reg2.exec('我不爱美国') );
+    // console.log( reg2.test('我爱中国，我爱长沙') );
+    // console.log( reg2.exec('我爱中国,我爱长沙') );
+
+    //两种创建方式的区别:字面量不能进行传参  构造函数可以传参
+    // let str = '小情歌';
+    // let reg3 = /`${str}`/;
+    // let reg4 = new RegExp(str);
+    // console.log( reg3, reg4 );
+    // console.log( reg3.test("`${str}`") );
+    //需要传参的时候用构造函数，不需要传参用字面量
+
+    //模式：正则匹配的模式 i表示忽略大小写
+    // let reg5 = /hello world/i;//我们在正则里边写什么他就去找什么
+    // console.log( reg5.test('hello world') );
+    // console.log( reg5.test('HELLO WORLD') );
+
+    //我们清除的写出我们要什么东西
+    // console.log( '我爱中国，我是旱麓'.includes('我爱中国') );
+
+    /*
+        不知道要匹配的具体值是什么：
+            知道手机号码的格式，11位 手机号码的开头：13 14 15 16 17 18 19 后边九位是任意数字
+    */
+    /*
+        1.在正则里边描述以什么什么开头
+        2.后九位必须是数字
+    */
+    // 正则里边^表示以什么什么开头
+    // let reg7 = /hello/;//只要字符串里边有hello 就行
+    // let reg8 = /^hello/;//必须是以hello进行开头
+    // console.log( reg7.test('world hello'), reg8.test('world hello') );//true false
+
+    // //[] |(或者)
+    // let reg9 = /^1[3456789]/;//以1开头,第二位是3或者。。。。或者9
+    // console.log( reg9.test(13), reg9.test(14),reg9.test(15),reg9.test(16),reg9.test(17),reg9.test(18),reg9.test(19) );//true true true true true true true
+    // console.log( reg9.test(133) );//false
+
+    // //想要13 15 16 1后边没有4就不能-
+    // let reg10 = /^1[3-9]/;//3-9 3到9
+    // console.log( reg10.test(14) );
+
+    // let reg11 = /^我[likelove]/;//我l 我i 我k 我e 按字符去进行分割
+    // console.log(reg11)
+    // console.log( reg11.test('我lay') );
+
+    // let reg12 = /^我like|love/;//我love 或者 我like
+    // console.log( reg12.test('我lake') );
+    // let reg13 = /^13|4|5|6|7|8|9/;//13 14 15 ...
+    // console.log( reg13.test(15) )
+
+    // //我喜欢 或者 我不喜欢
+    // let reg14 = /我[喜欢不喜欢]/;//只能按字符分割
+    // console.log( reg14.test('我喜不欢') );
+
+    //或者是在：我喜欢和不喜欢之间选择
+    // let reg15 = /我喜欢|不喜欢/;//我喜欢 或者 不喜欢
+    // console.log(reg15.test( '我不太喜欢不喜欢' ))
+    // //这一次 或者 是在：喜欢和不喜欢之间选择
+    // let reg16 = /^我(喜欢|不喜欢)/;//我喜欢 或者 我不喜欢  ()分组: 喜欢|不喜欢
+    // console.log( reg16.test('我不喜欢') );
+
+    //这个正则里边的或是在134 和 35之间选择的
+    // let reg17 = /134|35/;
+    // console.log( reg17.test(2335) );//因为在134或者35这两个之间进行一个选择，235里边有35所有返回true
+
+    /*
+        后边是任意9位数字 量词
+        {num} 必须是num个
+        {num,}最少num个
+        {min,max} 最小min个，最大max个
+        +   {1,} 一个到无穷个
+        ?   {0,1} 获取0个或者1个
+        *   {0,}    获取0到无穷个
+    */
+    // let reg18 = /h{3}/;//选中三个连续的h
+    // console.log( reg18.exec('hahhh')  );//null
+
+    // let reg19 = /(ha){3}/;//hahaha 仅仅指前边的一个字符
+    // console.log( reg19.exec('hahahaha') );//null
+    //下标为0表示的是正则整体匹配到的字符串
+    //下标为1表示分组匹配到的字符串
+    // ["hahaha", "ha", index: 0, input: "hahahaha", groups: undefined]
+
+    // let reg20 = /(ha){2}(pa)/;//hahapa
+    // console.log( reg20.exec( 'hapahapa' ) );//null
+    // console.log( reg20.exec( 'hahapa' ) );
+
+    // let reg21 = /(ha){2}pa/;//hahapa
+    // console.log( reg21.exec( 'aaahahapa' ) );
+
+    //haaa....
+    // let reg22 = /ha{3,}/;//最少要有3个a连在一起才能复合条件，如果多余3个也复合条件，并且全部可以拿到
+    // console.log( reg22.exec('aaahaaaaaaa') );
+
+    // let reg23 = /(ha){3,}/;//至少三个ha相连
+    // console.log( reg23.exec('hahahahahahaha') )
+
+    // //{min, max} 可以是min个
+    // let reg24 = /(ha){2,4}/;//获取二到四个连在一起的ha
+    // console.log( reg24.exec('hahahahaha') );//null
+
+    // let reg25 = /(43){0,1}/;//连着出现0个或者1个3  {0,1} 43必须是开头
+    // console.log( reg25.exec('54343') );//表示没有3 ["", index: 0, input: "4", groups: undefined]
+
+    // let reg26 = /(hello)?/;
+    // console.log( reg26.exec('helloworld') )
+
+    // let reg27 = /(中国)?/;
+    // console.log( reg27.exec('中国我爱') );
+
+    // let reg28 = /(abc)+/;//至少出现一次abc +{1,}
+    // console.log( reg28.exec('dabcabcabcabc') );
+
+    // let reg29 = /(abc)*/;//*{0,}零个到无穷个  只有*和括号的时候 -> 必须以分组的内容开头
+    // console.log( reg29.exec('some') );
+
+    // //? {0,1} ?也可以写到量词后边 -> 非贪婪模式
+    // let reg30 = /(abc){2,4}/;//尽可能多的去匹配 -> 贪婪模式
+    // console.log( reg30.exec('someabcabcabcabc') );
+
+
+    // let reg31 = /(abc){2,4}?/;//尽量少的去匹配 -> 非贪婪模式
+    // console.log( reg31.exec('someabcabcabcabc') );
+
+    //$以什么什么结束
+    let some_reg = /hello$/;//必须是以hello结束
+    console.log( some_reg.test('hello world') );
+    console.log( some_reg.test('world hello') );
+
+    //必须是hello 开头 + 5个a +world结尾 15
+    let reg_c = /^(hello)a{5}world$/;
+    console.log( reg_c.test('hello aaaaa world ') );
+    
+    //wdnmd ** w0d0n0m0d
+    
+    /*
+        正则里边
+            ()?开头，那么字符串也必须是分组里的内容开头
+            ()*开头，那么字符串里边必须是分组里边的内容开头
+            ()+开头，无所谓
+    */
+</script>
+</html>

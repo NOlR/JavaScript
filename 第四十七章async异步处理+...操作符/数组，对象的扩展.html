@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组，对象的扩展，Symbol</title>
+    <style>
+        .box{
+            /* 
+                transform是css3样式，ie9的时候还没有css3的transform标准
+                -sevenday-abc: 1;让一个元素变成圆柱体
+            */
+            -ms-transform: translate(100px , 100px);
+            -webkit-transform: translate(100px, 100px);
+            transform: translate(100px, 100px);
+        }
+    </style>
+</head>
+<body>
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <div class="box">4</div>
+</body>
+<script>
+    const {log} = console;
+    //数组的扩展：...操作符(展开操作符) -> 把数组给展开
+    // let arr = [1,2,3,{nickname: '小明'}, [4,5,6]];
+    // arr.forEach( item => {
+    //     console.log(item)
+    // } );
+    // console.log.apply( null, arr );
+    // console.log( ...arr );//把arr数组展开，展开成独立的项
+    //数组的方法 arr.flat(num)
+    // let arr2 = [1, 2, 3, [4, 5, 6]];
+    // log( ...arr2 );
+    // log( arr2.flat(2) );//把多维数组展开成为指定维数的数组
+
+    //...展开运算符 可以展开什么样的数据 只要是有迭代器接口的数据都可以被展开
+    // let str = 'hello';
+    // let num = 123;
+    // let obj = { nickname: '小明', age: 3 };
+    // log( ...str );
+    // log( ...num ); 没有迭代器接口的数据都不能被展开
+    // console.log( ...obj );
+    //string Array&类数组 
+    // function add() {
+    //     console.log( ...arguments );
+    // }   
+    // add( 1,2,23,4,5 );
+    // const boxs = document.querySelectorAll('.box');
+    // const boxs1 = document.getElementsByClassName('box');
+    // log(...boxs);
+    // log( ...boxs1 );
+
+    /*
+        ...操作符可以写在哪些地方：
+            不能单独写:把一个数据展开之后要有放的容器
+            容器：
+                函数传实参的时候
+                函数传形参的时候使用
+                数组里边
+                用在解构赋值([])里边
+    */
+    // let abc = [1,2,3,4,5,6];
+    // let adc = [...abc];//把abc展开，展开之后放到一个新的数组里边
+    // console.log(adc);
+    // //等同于
+    // let adb = abc.slice();
+    // console.log(adb);
+    // let ade = [].concat(abc);//用一个空数组去合并abc
+    // console.log(ade);
+
+
+    //浅拷贝，...操作符用的就是concat bable把高版本代码转化成低版本代码
+    // let some1 = [ {nickname: '小明'} ];
+    // let some2 = [...some1];//把some1给展开，然后放到了一个新的数组里边
+    // console.log( some1, some2 );
+    // some2[0].nickname = '小刚';
+
+    // let some3 = [ [1,2,3, [4,5]], [6, 7] ];
+    // let some4 = [...some3];//把some3的每一项展开，放到一个新的数组里边
+    // console.log(some4);
+    //...操作符可以把类数组转化成为真正的数组
+    // boxs.length = 3;
+    // console.log(boxs);
+    // const boxList = [...boxs];
+    // console.log(boxList);
+    // let result = boxList.pop();
+    // console.log(result);
+
+    //如果在函数的形参前边加了一个... , 那么这个形参叫做函数的rest参数 rest[其余]\
+    //rest参数，把所有剩余的实参都放在一个数组里边，数组的名字是写在...后边的变量名
+    // function agg(...arr) {//函数的形参名字叫做arr
+    //     console.log(arr)
+    // }
+    // agg(1,2,3);//所有的实参都被写入了一个叫做arr的数组里边
+
+    // //上边的写法和下边的是等价的
+    // function age(){
+    //     let arr = [...arguments];
+    //     console.log(arr);
+    // }
+    // age(1,2,3);
+
+    // function sum1() {//返回所有实参相加的结果
+    //     let result = 0;
+    //     for( let i = 0,length = arguments.length; i < length ; i ++ ){
+    //         result += arguments[i]
+    //     };
+    //     log(result)
+    //     return result;
+    // }
+    // sum1(1,2,3,4);
+
+    // function sum2() {
+    //     let arr = [...arguments];
+    //     let result = arr.reduce( (acc, item) => acc + item );
+    //     console.log(result);
+    // }
+    // sum2( 1,2,3,4 )
+
+    // function sum3( ...rest ){//形参里边只有一个rest参数
+    //     return rest.reduce( (acc, item) => acc + item )
+    // }
+    // console.log( sum3(1,2,3,4) );
+
+    // function sum4( a, b, ...rest ){//rest参数把没有形参接收的实参全部放到了一个数组里边
+    //     console.log(a,b,rest);
+    // }
+    // sum4(1,2);
+
+    // //rest形参必须是最后一个形参
+    // function unShift( arr, ...rest) {
+    //     arr = [...rest, ...arr];
+    //     console.log(arr);
+    // };
+    // unShift([4,5,6], 1, 2, 3);
+    
+    
+    // let arr5 = [1,2,3,4,5,6];
+    // let [a1, a2, ...iii] = arr5;//rest项必须是匹配模式里边的最后一项
+    // console.log(a1, a2, iii);
+
+    //对象的扩展 
+    let foo = 'hello world';
+    let obj1 = {
+        foo: foo
+    }
+    log(obj1);
+    //如果属性名和要赋值的变量名一致，可以简写
+    let obj2 = { foo };
+    log(obj2);
+    let username = 'hanlu';
+    let passworld = '123';
+    let userInfo = {
+        username: username,
+        passworld: passworld
+    };
+    let user_info = { username, passworld };
+    log( userInfo, user_info );
+
+    //如果是一个方法
+    let obj3 = {
+        nickname: '小明',
+        age: 3,
+        introduce() {//如果是一个方法可以这样简写 简写的时候是一个function普通函数
+            console.log(this.nickname, this.age)
+        },
+        some: () => {
+            log( this )
+        }
+    };
+    obj3.introduce();
+    obj3.some();
+    console.log(obj3);
+
+    //不但对象的属性值可以是一个变量的值，现在对象的键名也可以是一个变量的值
+    let abb = 'hello world';
+    let obj6 = {
+        [abb]: 123
+    };
+    console.log(obj6);
+
+    //[]里边还可以写表达式 为了给Symbol用的
+    const fn = () => 'fnn';
+    let obj7 = {
+        [true ? 123 : 789]: 456
+    };
+    log(obj7);
+</script>
+</html>

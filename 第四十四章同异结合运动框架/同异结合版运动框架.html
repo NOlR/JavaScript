@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>升级版运动框架</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            border-style:solid;
+            /* transform:  matrix(2,0,0,1,100,100) */
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    const transformArr = ['translateX', 'translateY', 'scaleX', 'scaleY'];//transform数组
+    const box = document.querySelector('.box');
+    /*
+        一个一个动版本的运动框架,同异结合
+    */
+
+    /*
+        let arr = [函数1,函数2,函数3,函数4.....];
+        函数1执行完成之后再执行函数2，再执行函数3
+    */
+    const a = () => {console.log('a')};
+    const b = () => {console.log('b')};
+    const c = () => { console.log('c') };
+    const arr = [a, b, c];
+    // console.log(arr); 
+
+    // arr.forEach( item => {
+    //     item();
+    // } );
+    /*
+        下标    作用                时间
+         0     改变宽度            1000
+         1     改变高度            1000
+         2     改变水平方向距离     1000
+    */
+    const animations = [sport.bind(null, box, 'width', 300, 2000), sport.bind(null, box, 'height', 300, 1000) , sport.bind(null, box, 'translateX', 300, 1000), sport.bind(null, box, 'translateY', 300, 1000)];
+    // console.log(animations);
+    
+    const timearr = [2000, 1000, 1000, 1000];//专门用来存储每个动画运行的时间
+
+    // animations.forEach( (item,index) => {
+    //     if( index === 0 ){//数组里边的第一个函数
+    //         item();
+    //     }else{//如果index不等于0
+    //         let time = timearr.slice(0, index).reduce( (acc, item) => acc + item );
+    //         setTimeout( item,  time)
+    //     }
+    // } );    
+
+    /*
+        sport的参数：
+            ele: 让哪个元素变化
+            attr: 变化什么属性
+            end: 变化到哪里结束
+            timeout: 用多长时间来完成动画
+        
+        总路程：end - 初始属性
+        时间：timeout
+        速度: 总路程 / 时间
+
+        1.获取初始属性:transform属性  和 非transform属性
+    */
+    
+    /*
+        调用move(ele)告诉他要移动那个元素
+    */
+    /*
+        清除定时器
+        往animations里边push
+        往timeArr里边push
+    */
+    function move(ele) {
+
+        return {
+            ele: ele,
+
+            timer: 0,
+
+            animations: [],//要执行的sport函数
+
+            timeArr: [],//所有动画的时间数组
+
+            start: function () {
+            
+                this.animations.forEach( (item, index) => {
+                    if( index === 0 ){
+                        item()
+                    }else{
+                        let time = timearr.slice(0, index).reduce( (acc, item) => acc + item );
+                        setTimeout( item,  time);
+                    }
+                } )
+
+            },//最终去调用这个对象里的animations数组里的所有sport函数
+
+            then: function (option) {//拿到对象，生成sport函数
+                console.log(this.timer)
+                clearTimeout(this.timer);
+
+                this.animations.push( sport.bind(null, this.ele, option.attr, option.end, option.timeout) );//给animations数组添加sport函数
+
+                this.timeArr.push( option.timeout );
+
+                this.timer = setTimeout( this.start.bind(this), 0 );//把执行start变成异步的
+
+            
+
+                return this;
+            }
+        }
+
+    };
+
+    let result = move(box)
+        .then( { attr: 'width', end: 300, timeout: 2000 } )
+        .then( { attr: 'height', end: 300, timeout: 1000 } )
+        .then( { attr: 'translateX', end: 300, timeout: 1500 } )
+        .then( { attr: 'borderWidth', end: 20, timeout: 300 } );
+    
+    console.log('result为:', result)
+    
+    //{ attr: 'width', end: 300, timeout: 1000 }
+    // sport( box, 'width', 300, 1000 );
+    // sport( box, 'height', 300, 1000 );
+    // sport( box, 'translateX', 300, 1000 );
+    // sport( box, 'translateY', 300, 1000 );
+
+    function sport(ele, attr, end, timeout) {
+
+        let initValue = getStyle(ele, attr);//初始值
+
+        let speed = (end - initValue) / timeout;//求速度
+
+        let start = null;//动画的开始时间 
+
+        let transformOrNot = transformArr.includes(attr);//判断是否为transform样式
+
+        function move(timeStamp) {//如何做动画timeStamp[时间戳]
+            //获取元素在transform属性变化前的样式
+            const translateX_init = getStyle(ele, 'translateX'),
+                translateY_init = getStyle(ele, 'translateY'),
+                scaleX_init = getStyle(ele, 'scaleX'),
+                scaleY_init = getStyle(ele, 'scaleY');
+
+            if( start === null ) start = timeStamp;//记录第一次动画运行的时间
+
+            //记录动画已经运行了多久
+            let process = timeStamp - start;
+
+            //让元素动起来 -> transform动起来，非transform动起来
+            if( transformOrNot ){//如果是transform样式
+
+                if( attr === 'scaleX' ){
+                    ele.style.transform = `matrix( ${ initValue + process * speed }, 0, 0, ${scaleY_init}, ${translateX_init}, ${translateY_init})`;
+                }else if( attr === 'scaleY' ){
+                    ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${initValue + process * speed}, ${translateX_init}, ${translateY_init})`;
+                }else if( attr === 'translateX' ){
+                    ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${initValue + process * speed}, ${translateY_init})`;
+                }else{
+                    ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${translateX_init}, ${initValue + process * speed})`;
+                }
+
+            }else{//如果不是transform样式
+                ele.style[attr] = `${ initValue + process * speed}px`;
+            }
+
+            if( process < timeout ){//如果运行时间小于结束时间
+                requestAnimationFrame(move)//让动画继续运行
+            }else{//把元素的值给锁死
+                
+                if( transformOrNot ){//如果是transform样式
+                    if( attr === 'scaleX' ){
+                        ele.style.transform = `matrix( ${ end }, 0, 0, ${scaleY_init}, ${translateX_init}, ${translateY_init})`;
+                    }else if( attr === 'scaleY' ){
+                        ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${end}, ${translateX_init}, ${translateY_init})`;
+                    }else if( attr === 'translateX' ){
+                        ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${end}, ${translateY_init})`;
+                    }else{//'translateY'
+                        ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${translateX_init}, ${end})`;
+                    }
+
+                }else{//如果不是transform样式
+                    ele.style[attr] = `${end}px`;
+                }
+
+            }
+
+        }
+
+        requestAnimationFrame(move);//requestAnimationFrame(callback)callback如果控制动画
+
+
+    };
+
+    /*
+        获取元素的某个属性的值:
+            ele: 获取哪个元素的
+            attr: 哪个属性的值
+        1. transform 样式 translateX translateY scaleX scaleY
+        2. 非transform样式
+    */
+    function getStyle(ele, attr) {
+        let transformStyle = transformArr.includes(attr);//是否是transform样式
+
+        let result = 0;//最终的结果
+
+        if( transformStyle ){//transform样式
+
+            let style = getComputedStyle(ele).transform;//获取元素的transform矩阵，有可能是一个none
+
+            if( style === 'none' ){//没有设置transform样式
+                style = 'matrix( 1, 0, 0, 1, 0, 0 )';
+            }
+
+            style = style.slice(7, -1).split(',');
+
+            //判断给result赋值为数组里的第几项
+            switch( attr ){
+                case 'translateX' :
+                    result = style[4];
+                break;
+                case 'translateY' :
+                    result = style[5];
+                break;
+                case 'scaleX' :
+                    result = style[0];
+                break;
+                case 'scaleY' :
+                    result = style[3];
+                break;
+                default : 
+                    result = 0;
+            }
+        }else{//非transform样式
+            result = getComputedStyle(ele)[attr];
+        }
+
+        return parseFloat(result);
+    }
+
+    // let abc = 'transform';
+    // console.log( window.getComputedStyle(box)[abc] )
+
+    
+</script>
+</html>

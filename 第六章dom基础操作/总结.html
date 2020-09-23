@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		选择器分为
+			1.SelectorAPI(select...)	静态	不会随着HTML内容的更新而改变
+			2.HTML5(get...)				动态	会随着HTML内容的更新而改变
+		两者之前都要加document才能调用
+		
+		1.选择符选择器	特点可通过css选择器来选择元素	比如通过(.div   div   .div>ul   #div1)
+							简单点就是css如何写选择器就怎么写
+			
+			1.querySelector("选择器")
+				根据选择器选择符合的第一个元素，如果没有的话返回null
+				
+			2.querySelectorAll("选择器")
+				根据选择器选择符合的第一组元素，如果没有的话返回null
+				返回的值是Nodelist对象 类数组
+				想要返回集合中的第几个值，可以通过下标的形式调用 如div1[0]
+				
+			selector的选择器可以进行链式操作
+			
+			var div1=document.querySelector("选择器").querySelectorAll("选择器")
+				
+				
+			
+			2.HTML5	
+				1.getElementsByClassName("选择器") 注意不加点
+					通过方法便可得知是通过class来选择元素
+					这里选择的也是一组数据，也是通过下标选择第几个元素
+				
+				2.getElementById("选择器")
+					通过id来选择元素
+					如果页面有相同的id时只选中的是第一个元素
+					
+				3.getElementsByName("选择器")
+					通过Name属性来选择标签 
+					
+				与css选择器一样
+				也可以进行链式操作
+				var div1 = document.getElementsByClassName('选择器')[0].getElementsByClassName('选择器')[1];
+					
+					
+				
+				可以通过js对网页进行修改
+				<div class="div1">
+					<div class="box1">1</div>
+					<div class="box2">2</div>
+				</div>
+				
+				var div1=document.getElementsByClassName("div1");
+					
+					1.innerHTML
+						可以解析代码
+						div1+="<div class="box3">3</div>"
+						即可在下面增加box3
+						
+					2.innerText
+						只会解析文字，解析成字符串,不会变成代码
+	</body>
+</html>

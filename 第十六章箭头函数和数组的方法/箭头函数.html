@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        es6的箭头函数: 
+            箭头函数一定是一个匿名函数：不能加函数名字
+    */
+    // () => {
+    //     console.log(1);
+    // };
+    // // function some(){};
+    // //函数表达式
+    // var fn = function (){
+    //     console.log('我是函数fn')
+    // };
+    // fn();
+    // var fn_a = () => {
+    //     console.log('我是函数fn_a')
+    // };
+    // fn_a();
+
+    // //IIFE (immediate invoked function expreesing) 立即执行函数表达
+    // (function () {
+    //     console.log('我是普通立即执行函数')
+    // })();
+    // //31行的函数和35行的函数是一样的
+    // ( () => {
+    //     console.log('我是箭头立即执行函数');
+    // } )();
+
+    // function foo(a) {
+    //     console.log(a);
+    // };
+    // foo('我是参数a');
+
+    //箭头函数的小括号是用来写形参的
+    /*
+        箭头函数的形参：
+            0个： 小括号必须写
+            1个： 小括号可以省略
+            2个及以上: 小括号必须写
+    */
+    // var foo_a = (b, a) => {
+    //     console.log(b, a );
+    // };
+    // foo_a('我是参数b', '我是箭头函数参数a');
+
+    // //普通函数的形参：arguments    argument[参数] arguments[参数们]
+    // function a(){
+    //     console.log(arguments);
+    // };
+    // a(1,12,3,123,1,'1234',true,null,{nickname: '小明'});
+
+
+    //箭头函数没有arguments参数
+    // var b = () => {
+    //     console.log(arguments)
+    // };
+    // b(1,2,3);
+    // function c(){
+    //     console.log( arguments );
+
+    //     var d = () => {
+    //         console.log(arguments);//根据作用域链找到了上层的arguments
+    //     };
+    //     d()
+    // };
+    // c(1,2,3,4);
+
+    // function e(){
+    //     console.log( arguments );
+
+    //     function f () {
+    //         console.log(arguments);
+    //     };
+    //     f();
+    // };
+    // e(1,2,3,4);
+
+    // var arguments = 1;
+
+    // var g = () => {
+    //     var h = () => {
+    //         console.log(arguments);
+    //         var i = () => {
+    //             console.log(arguments);
+    //         };
+    //         i()
+    //     }
+    //     h()
+    // };
+    // g(1,2,3,4);
+
+    
+    /*
+        this:
+            普通函数: 指向调用函数的主体对象
+            箭头函数: 指向父级的this
+    */
+    // var a = () => {
+    //     console.log(this);
+    // };
+    // a();
+
+    // var b = function () {
+    //     console.log(this);
+    // };
+    // b();
+
+    //箭头函数的this绑定上下文(指向父作用域的this)
+    // var c = function () {
+    //     console.log(this);
+    //     var d = () => {
+    //         console.log(this);
+    //     };
+    //     d();
+    // };
+    // c.call({ nickname: '小明' });
+
+    //回调函数特别适合用箭头函数
+    // var e = () => {
+    //     var f = () => {
+    //         console.log(this);
+    //     }
+    //     f();
+    // }
+    // e();
+    //箭头函数免疫call，apply，bind
+    // var g = () => {
+    //     console.log(this);
+    // };
+    // g.call({ nickname: '小明' });
+    // g.apply({ nickname: '小明' });
+    // g.bind({ nickname: '小明' })();
+
+    // //return 
+    // function some_a() {
+    //     return '我是some_a'
+    // };
+    // console.log( some_a() );
+
+    // var some_b = () => '我是some_b';
+    // console.log( some_b() );
+    //如果箭头函数里边只有一个语句可以不加花括号
+    //如果不加花括号，那么久会return这个语句的结果
+    // var a = 100;
+    // var some_b = () =>  a < 100;
+    // console.log( some_b() );
+
+    //传入一个数字，判断这个数字是否大于100
+    // var morethan100 = num => num > 100;
+    // console.log( morethan100(101) );
+
+    //如果写多个语句，必须加花括号,而且需要返回值的时候要手动return
+    // var f = (a, b) => {
+    //     a ++ ;
+    //     b ++ ;
+    //     return a * b;
+    // };
+    // console.log( f(1,2) );
+
+
+    //函数a返回函数b，函数b又用到了函数a里边的变量
+    // function a(){
+    //     var num = 1;
+    //     return () => { console.log(num) }; 
+    // };
+    // var result = a();
+    // result();
+
+    //箭头函数套箭头函数会不会产生闭包:
+    // var b = () => {
+    //     var str = 'b_3';
+    //     return () => {
+    //         console.log(str);
+    //     };
+    // };
+    // var result_a = b();
+    // result_a();
+
+    //不能当做构造函数，不是使用箭头函数写generator函数
+</script>
+</html>

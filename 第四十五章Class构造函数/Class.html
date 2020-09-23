@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第四十五章Class</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //oo(面向对象) 构造函数 -> 创建有独特方法的对象
+    //构造函数和普通函数没有任何的区别，是否是new调用的
+    function Person() {};//提供一个introduce方法，给其他构造函数继承
+    Person.prototype.introduce = function () {
+        console.log(`hello,我是${this.nickname},今年${this.age}岁，喜欢${this.favorColor}`);
+    };
+
+    //原型式继承 
+    function Hanlu () {};
+    Hanlu.prototype = new Person();
+    let hanlu1 = new Hanlu();
+    console.log(hanlu1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //构造函数就是为了实现其他面向对象里边的类(类型)，class(类)
+    //es5类的写法
+    // function Handsome(nickname, age) {
+    //     this.nickname = nickname;
+    //     this.age = age;
+    // };
+    // Handsome.prototype.introduce = function () {
+    //     console.log(`大家好，我是${this.nickname},今年${this.age}岁`);
+    // }
+    // Handsome.prototype.property = '帅气';
+    // // Object.defineProperty( Handsome.prototype, 'introduce', {
+    // //     value: function () {
+    // //         console.log(`大家好，我是${this.nickname},今年${this.age}岁`);
+    // //     },
+    // //     writable: true
+    // // } );
+    // const obj1 = new Handsome('阿飞', 3);
+    // // obj1.introduce()
+    // console.log(obj1);
+
+    //class es6关键字 构造函数的名字
+    // class Rich{
+    //     //constructor是一个函数，(要接收的实参)
+    //     constructor(nickname, age) {//constructor[构造函数] 对应的就是42行的花括号
+    //         this.nickname = nickname;
+    //         this.age = age;
+    //     }
+    //     //在constructor之外，rich的花括号之内，就是在原型上添加属性
+    //     introduce() {
+    //         console.log(`大家好，我是${this.nickname},今年${this.age}岁`);
+    //     }
+    //     property = '有钱';//property私有属性名，=赋值，'有钱'具体的值
+    // };
+    // // Rich.prototype.some = 'some';//一般不在原型上边储存任何的数据
+    // // console.log(typeof Rich);//function 类就是函数
+    // //必须要加上一个new
+    // const obj2 = new Rich('万章', 5);
+    // obj2.introduce();
+    // const obj3 = new Rich('银时', 6)
+    // obj3.property = '钱花光了';
+    // console.log(obj2,obj3);
+
+    // for( let key in obj2 ){
+    //     console.log( `${key}属性的值为${obj2[key]}` )
+    // }
+    
+    //class 类里边的静态方法和原型方法：
+    // class Tall{
+    //     //如果不需要私有属性，就不写constructor
+    //     // constructor(){} 即便不写，js也会帮我们加这样一行代码
+    //     some() {
+    //         //如何去调用静态方法 -> 通过 类.属性名()进行调用
+    //         // console.log( 'some里的this:', this );
+    //         Tall.abc();
+    //         console.log('我是Tall类的some方法')
+    //     }
+    //     //abc会挂载到Tall这个类上
+    //     static abc() {//static静态  我们写的静态方法不会传递给实例化出来的原型，那么我们为什么要写?
+    //         //静态方法是给了给类的原型上的方法使用的：如果通过实例化出来的原型去调用some方法，some方法成功执行的
+    //         //条件依赖于abc方法
+    //         console.log(this);
+    //     }
+        
+    // };
+    // const tall1 = new Tall();//每次实例化都会生成一个新的对象，那么通过这个对象去调用原型上的方法，this就指向这个
+    // //实例化出来的对象
+    // tall1.some();
+    // // const tall2 = new Tall();
+    // console.log(tall1);
+
+    // function xyz() {};
+    // xyz.else = function () {
+    //     console.log(this)
+    // }
+    // console.dir(xyz)
+    // xyz.else()
+
+
+
+    class Tall{
+        constructor(nickname) {
+            this.nickname = nickname
+        }
+        year() {
+            console.log('我是为了调用static函数存在的');
+            Tall.some.call(this);//主动的把静态方法的this指向变成实例化对象
+        }
+        static some() {
+            console.log(this.nickname)
+        };
+        static abc = 123;//所有静态有关的都挂载在类的身上
+    }
+    const obj4 = new Tall('高高的');
+    obj4.year();
+    console.log(obj4);
+
+
+
+
+    //继承：extends关键字就可以实现继承,extends[继承]
+    class Big{//专门用来提供方法的
+        constructor(a, b) {
+            this.a = a;
+            this.b = b;
+        }
+        talk(){
+            console.log('说话')
+        }
+        drink() {
+            console.log('喝啤酒')
+        }
+        static sum() {
+            console.log('我是父类的静态方法foo')
+        }
+    };
+
+    //让small实例化出来的对象，可以使用Big类的方法
+    //Small去继承Big，那么Big叫做父类，Small叫做子类
+    //当想要给子类添加私有属性的时候，必须在子类的Constructor里边加上super()
+    //super就是去继承父类的方法
+
+    //子类是没有this的，所以需要通过调用以下父类的constructor(使用super)去生成一个this
+    
+    class Small extends Big{
+        //多态 -> 即继承又有独特的方法
+        constructor(x, y) {
+            // console.log(this)
+            super(x, y);//super调用会去执行父类的constructor函数,141行的constructor被调用了
+            // console.log(this);//就是little
+            // this.a = x;
+            // this.b = y;
+            //父类帮我们提供了a和b属性，c d
+            this.c = x;
+            this.d = y;
+        }
+    
+        sleep() {
+            console.log('睡觉');
+            Big.sum();//可以去调用父类的静态方法，因为父类的静态方法就是挂载在父类这个函数身上
+            // Small.qwe()
+            console.log(Small.xxx());
+        }
+        static xxx() {
+            console.log('qwe');
+        }
+    }
+    //little的原型是Small类提供的
+    const little = new Small(1, 2);
+    // little.drink();
+    // little.talk();
+    little.sleep();
+    console.log(little);
+ 
+    class Son extends Big{
+        constructor(x, y) {
+            super(x, y);
+            this.e = x;
+            this.f = y;
+        }
+    };
+    const son1 = new Son(3,4);
+    console.log(son1);
+    //如果使用父类的静态方法 父类.属性()
+
+    
+</script>
+</html>

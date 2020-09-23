@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this和闭包题</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //闭包题终极：
+    function fun(n, o){
+        console.log(o);
+        return {
+            fn: function (m) {
+                return fun(m, n);
+            }
+        };
+    };
+    // var a = fun(1);
+    // a.fn(2);
+    // a.fn(3);
+    // a.fn(4);
+
+    //现在有没有形成闭包,第一没有变量接受它，第二没有继续调用
+    //现在闭包存在于.fn(2)执行结束之前
+    //条件：fn(2)没有执行完成
+    // fun(1).fn(2).fn(3).fn(4);
+    var a = fun(1);
+    var b = a.fn(2);
+    var c = b.fn(3);
+    var d = c.fn(4);
+
+</script>
+</html>

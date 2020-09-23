@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块</title>
+    <!-- <script src='./a.js'></script>
+    <script src="./b.js"></script> -->
+    <!-- 
+        把这个script标签按照模块的规则去进行解析
+        报错:在fill协议下无法使用模块 http:// https://
+     -->
+    <script type="module" src="./some.js"></script>
+</head>
+<body>
+    <button>add</button>
+    <button>acc</button>
+</body>
+<script>
+    /*
+        es6模块系统,每一个js文件都是独立的，其他js文件无法去用别人的东西
+        模块是什么：每个js文件都是一个单独的模块 -> 打通模块之间的壁垒，让他们之间可以相互使用.
+        模块：export(出口) import(进口)
+        statement声明
+            Cannot use import statement outside a module 不能在模块之外去使用import声明
+        type script标签的类型 module[模块]
+    */
+</script>
+</html>

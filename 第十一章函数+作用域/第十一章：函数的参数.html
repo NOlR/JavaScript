@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //函数和作用域 -> 功能
+    // function abc(){
+    //     console.log( '我是函数abc' );
+    // };
+    // console.log( abc );
+    // var xyz = 123;
+    // console.log( xyz );
+    //具名函数： 有名字, 匿名函数: 没有名字
+    //statements -> 声明
+    // function (){}
+    // abc();
+    
+    //匿名 -> 方法：如果一个对象他的某个属性值为函数 -> obj这个对象的abc方法
+    // var obj = {
+    //     abc: function xyz() {
+    //         console.log('我是obj对象里的abc属性，我是一个函数')
+    //     }
+    // };
+    // obj.abc();
+
+    //函数声明和函数表达式
+    // var some = 'some';
+    // var fn = function () {};//函数声明
+    // console.log( fn );
+    // function abc(){//函数表达式
+    //     console.log( '我是函数abc' );
+    // };
+    // abc();
+
+    //函数可以写在哪里：对象，数组
+    // var fn_arr = [ function(){console.log('arr|1')}, function (){console.log('arr|2')}];
+    // console.log(fn_arr);
+    // fn_arr[0]();
+    // if(true){
+    //     function abc(){
+    //         console.log('true')
+    //     }
+    //     abc()
+    // };
+
+    //写完之后立马可以执行函数：立即执行函数 IIFE( immediate invocked function expression )
+    //写立即执行函数的时候 函数名是一个累赘
+    // var a = 1;
+    // (function (){
+    //     console.log('我是第一个立即执行函数');
+    // })();//第二个()表示调用
+    // // ! ~ + -
+    // !function (){
+    //     console.log( 123 )
+    // }();
+    // ~ function (){
+    //     console.log('~')
+    // }();
+    // + function (){
+    //     console.log('+')
+    // }();
+    // - function (){
+    //     console.log('-')
+    // }();
+
+    //函数的参数
+    function fn_a (abc) {//形参 就是函数里的变量
+        //var abc = '我是外边传进来的字符串'
+        console.log( abc );
+    };
+    fn_a('我是外边传进来的字符串');//实参
+
+    function fn_b(a,b,c){//形参可以有无数个
+        console.log( a,b,c );
+    };
+    fn_b(1, 3);//形参和实参是一一对应的关系
+
+    //写一个函数用来计算加法 丑气
+    function sum_abc(abc, xyz, qaz){
+        console.log( abc + xyz + qaz );
+    };
+    sum_abc( 123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123,123 );
+
+    //除了箭头函数，任何一个函数里边都有一个参数叫做 arguments[参数们]  argument[参数]
+    function  fn_c () {
+        console.log(arguments);//保存着所有传入函数的实参,不是一个数组，是一个类数组 -> 可以用for循环，不具备所有数组的超能力
+    };
+    fn_c(1,1,2,3,4,546,6,457,5,67);
+
+    function sum_a(){
+        var result = 0;//result[结果]
+        for( var i = 0,length = arguments.length; i < length; i++){
+            if( typeof arguments[i] === 'number'){
+                result += arguments[i];
+            }
+        };
+        console.log(result);
+    };
+    sum_a(123,2,3334,34,12,42,42,34,23,423,'hello world',41,3,12,53,2445,
+    345,32,534,534,51,[function(){}],242,124,23,423,4,5,75,8,46235,23,346,566,43244,5634);
+
+
+    //递归 
+    function fn_d () {
+        // console.log( fn_d )
+        console.log( arguments );//内存泄漏
+    };
+    fn_d();
+
+    //函数的参数 函数的参数是按值传递的
+    var num = 123;
+    var num_a = num;
+    console.log( num, num_a );//在内存中有两个123
+    var obj = {nickname: '小明', age: 3};//指针 -> 内存地址
+    var obj_a = obj;
+    console.log( obj, obj_a );//内存中只有一个小明
+    num_a = 124;
+
+    var num_b = 333;
+    function handleNum(num){//函数表达式
+        //var num = 333
+        num = 666;
+        console.log(666);
+    };
+    handleNum(num_b);
+
+    var some = {nickname:'小明'};
+    function handleObj(obj){
+        //var obj = some
+        obj.nickname = '小红';
+        console.log(obj);
+    };  
+    handleObj(some);
+
+    var abd = function (a,b) {
+        console.log( a, b );
+    };
+    abd(1,2);
+
+    //arr object function ...属于引用类型，传进去的都是一个指针
+    var arr = [1,2,3];
+    (function (){
+        console.log( arguments );
+    }(arr, 'b'));
+
+
+</script>
+</html>

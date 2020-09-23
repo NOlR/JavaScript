@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        运算符
+            + - * /
+    */
+    // console.log( 1 + 1 );//数学运算 = 2
+    // console.log( true + '1' );//'true1'
+    // console.log( undefined + '1' );//'undefined1'
+    // console.log( null + '1' );//'null1'
+    // console.log( []  + '1');//'1'
+    // console.log( {name: '小明'} + '1' );//'[object Object]1'
+    // //没有和字符串相加，转化成了数字
+    // console.log( true + false );//1
+    // console.log( true + {} );//true + '[object Object]' = 'true[object Object]'
+    // /*
+    //     全传数字
+    //         [1].toString = '1'
+    //         '1' - 1; 1 - 1 = 0
+    // */
+    // console.log( [1] - 1 );//0
+
+    /*  % 求余数*/
+    /* ++递增 --递减  -> 前置和后置  result[结果]*/
+    // var num = 1;
+    // // num++;
+    // // console.log( num );
+    // var result = num-- + 1;//1 + 1,  num = 1 - 1 = 0
+    // console.log( result )
+
+    /*
+        比大小 -> 返回结果为true 和 false
+        > 大于号  判断左边的值是否大于右边的值
+        数字比数字 = 数学运算
+        字符串比字符串 = 字符编码比较
+        对象不管和什么比较都先转为字符串
+        任何数据类型和数字比较都转为数字
+        布尔值，undefined,null转为数字
+    */
+    // console.log( 5 > 3 );//true
+    // console.log( -2 > -1 );//false
+    // //Infinity无穷大 -Infinity负无穷大 
+    // //无穷大比正常能识别的数字都大
+    // console.log( Infinity > -100000000000000 );
+    // //-Infinity 比正常能识别的数字都要小
+    // console.log( -Infinity > 0 );//false
+    // //NaN不管和什么比较结果都是false not a number(不是一个数字)
+    // console.log( NaN > Infinity );//fasle
+    
+    //字符串比字符串 5 > 3 不会转为数字，比较字符编码
+    //所有的字符都有他的字符编码 比较字符编码 一个字符一个字符比
+    // console.log( '旱麓' > '银时' );//false
+    // console.log( '5' > '51' );//fasle
+
+    //'5' > '42'
+    // console.log( ['5'] > '42' );//true
+    //'[object Object]' > '旱麓'
+    // console.log( {} > '旱麓' );//false
+
+    //布尔值 undefined null -》 转为数字
+    // console.log( false > 0 );//0 > -1 [true]
+    //undefined转数字 -> NaN Number(undefined) => NaN
+    // console.log( undefined > -5 );
+    //null转数字 -> NaN Number(undefined) => NaN
+    // console.log( null > -1 );
+
+    //进行大小比较的时候，要么转数字比 要么字符串比 字符串和数字比-》字符串转数字
+    //'[object Object]'  >  1 -> NaN > 1
+    // console.log( {name: 123} > 1 );//fasle
+    //对象和所有数字比较的时候返回的结果都是false
+
+    //'[object Object]' > 1 => NaN > 1
+    // console.log( {} > false );
+
+    //对象和数字在进行比较的时候  -> 先转字符串 
+    //字符串 比 字符串 字符编码
+    //数字 比  数字 数学运算
+    // 字符串 比 数字 数学运算
+
+    // >=   大于或者等于 都是 true  如果不大于也不等于 就是false
+    // console.log( 5 >= 5 );
+    // console.log( '6' >= '51' );
+    // console.log( '51' >= 1 );// 51 > 1
+    // //Number('51a') NaN
+    // console.log( '51a' >= 51 );//NaN >= 51
+
+    /*
+        是否相等 
+            ==(相等) !=(不相等)
+    */
+    /*
+        字符串比较字符串 = 比值(里边的每个字符是否相等)
+        数字和数字比较 直接比值,无穷大和负无穷大等于自己,NaN不等于NaN
+        布尔值转为数字
+        字符串和数字比 字符串转数字
+        undefined 和 null 相等
+        undefined 和 null 不会进行类型转化
+    */
+    // console.log( undefined == null );//true null派生与undefined
+    // console.log( 'hello world' == 'hello world' );//true
+    // console.log( 'hello world' == 'helloworld' );//false
+    // console.log( 99 == 99 );
+    
+    /*
+        引用类型和引用类型比较 比较的是内存地址
+        对象 和 字符串比较 = 对象转字符串
+        对象 和 数字比较 对象转数字
+    */
+    // var obj = {name: '小明'};
+    // var obj1 = {name: '小明'};
+
+    // var arr = [1,2,3];
+    // var arr1 = arr;
+    // console.log( arr == arr1 );
+    
+    // //0624
+    // var obj2 = {name: '旱麓', property: '大帅比'};//0624
+    // var obj3 = obj2;//obj2 把 0624这个地址告诉了 obj3
+    // console.log( obj2 == obj3 );//true
+
+    // === 全等 即要数据类型相同也要值相同 '5' == 5
+    // console.log( '1' == 1 );
+    // console.log( '5' === 5 );
+    // console.log( [1] === 1 );
+    // var obj = { name: '小明' };
+    // var obj1 = {name: '小明'};
+    // console.log( obj === obj1 );//fasle
+    // var arr1 = [1,2,3];
+    // var arr2 = arr1;
+    // console.log( arr1 === arr2 );
+
+
+
+    // *= += -= /= %=
+    // var num = 2;
+    // console.log( num *= 2 );// num = num * 2;
+    // console.log( num );
+
+    // var num1 = 3;
+    // num1 += 2;
+    // console.log( num1 );
+    
+    // var num2 = 9;
+    // num2 %= 3;
+    // console.log( num2 );
+
+
+
+
+
+
+
+
+</script>
+</html>

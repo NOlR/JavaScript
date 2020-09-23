@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math&window</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //
+    // console.log(Math.PI)
+    // //计算园的周长和直径 2πr πr的平方
+    // function zhouchang(r, num) {
+    //     if( num !== undefined ) {
+    //         return parseFloat((2 * Math.PI * r).toFixed(num));
+    //     }else{
+    //         return parseFloat((2 * Math.PI * r));
+    //     }
+    // };
+    // function mianji(r) {
+    //     return parseFloat((Math.PI * r * r).toFixed(2));
+    // }
+    // console.log( zhouchang(10) );//62.83185307179586
+    // console.log( mianji(5) );//62.83185307179586
+
+    /*
+        Math的常用方法： 所有Math的方法如果传的不是一个数字，则会转化成为数组
+            abs(num) 绝对值
+            ceil(num) 向上取整
+            floor(num) 向下取整
+            max(num1, num2, ....)从多个数字里边找到最大的那个
+            min(num1, num2 .....)从多个数字里边找到最小的那个
+            pow(num, x) num的x次方
+            round(num)四舍五入
+            sing(num) 返回这个数字的符号:1(正数) -1(负数) +0(正0) -0(负0) NaN
+            random(传值了也没有) 随机生成一个[0,1)之间的数字,小数部分最多17位 实际有可能是1
+    */
+    // console.log( Math.abs(-1) );//一次只能转化一个
+    // console.log( Math.abs('-1') );//如果不是数组则会被转化成为数字
+    // console.log( Math.abs({nickname: '小明'}) );//NaN NaN求绝对值还是一个NaN
+
+    // console.log( Math.ceil(9.000001) );//向上取整，只要小数部分不是0，永远+1
+    // console.log( Math.ceil(-5.1) );//-5
+
+    // console.log( Math.floor(10.9999999999) );//向下取整 -> 把小数全部舍弃掉
+    // console.log( Math.floor(-10.5) );//-11
+
+    // console.log( Math.max(123,1,645,24,65,13,45,3,5,3,2,42,34) );//645
+    // console.log( Math.min(123,234,2,53,424,-2432,42,423) );//-2432
+
+    // let arr = [123,143,4,6,24,37,3,567867,1,-5,4,52,346,5,4,56,67,3,364,74,535];
+    // //用三种方法找到这个数组里边的最小值
+    // console.log( Math.min(...arr) );//-5
+    // console.log( Math.max(...arr) );//567867
+    // //...操作符：可以写在： 数组，数组匹配模式，形参，实参(rest参数)
+    // console.log( Math.min.apply(null, arr) );//apply是以数组的形式传参，内部会把数组的每一项都变成一个实参
+    // console.log( Math.max.apply(null, arr) );
+
+    //限定最大值和最小值
+    // let num = 5;
+    // num = Math.min( 4, Math.max(-4, num) );//函数在执行的时候，首先会得到所有的实参
+    // console.log( num )//4
+    // //Math.max(-4, 5) 5
+    // //Math.min(4, 5) 4
+
+    // //最大安全整数 Math.pow(2,53) - 1  最小安全整数 Math.pow(-2, 53) + 1
+    // console.log( Math.pow(2.1,50) );//3.2451855365842673e+32
+
+    // console.log( Math.round(5.1) );
+    // console.log( Math.round(5.5) );
+
+
+    // console.log( Math.sign(-5) );//-1 负数
+
+    // //随机生成一个[5,10]之间的值 Math.random() [0,1] * 5 = [0,5] + 5 => [0 + 5, 5 + 5] => [5,10]
+    // //[0,1] * 5 => [0, 5] *2 => [0, 10]
+    // console.log( Math.random() * 5 + 5 ); 
+
+    //生成一个[4, 9]之间的数字 Math.random() 
+    //[0, 1] * 5 => [0,5] + (5-1) => [4, 9]
+    // console.log( Math.random() * 5 + 4 );
+
+    //Math.random() * (max-min) + min
+    // function fn( max, min ){
+    //     return Math.random() * (max - min) + min;
+    // }
+    // console.log( fn(10, 100) );
+
+    //一个歌单里边一共有12首歌，是随机播放的
+    console.log(Math.random() * 11 + 1)// [1, 12] 11.7 11 + 1 =12
+    //[0, 12] 0.5 0 + 1 = 1  3 + 1 = 4  11.9 + 1 = 12
+    console.log( Math.ceil( Math.random() * 12 ) );//0.5 1
+    //如何保证生成过的数字不重复 -> []
+    
+    // do{
+    //     //先执行以下这里的代码
+    // }while()//然后再判断是否停止
+
+    
+
+</script>
+</html>

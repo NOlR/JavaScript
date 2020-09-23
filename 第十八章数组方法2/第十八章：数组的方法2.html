@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组的方法②</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        往数组里边添加数据: push(value1, value2....)从后边添加  unshift(value1,value2...)从数组的前边添加
+        删除数组里某些数据：pop()不接受参数，只删除最后 shift()从前边删除，只删除一个
+        遍历数组的方法：
+            第一个参数 -> 数组里的每一项
+            第二个参数 -> 每一项对应的下标
+            第三个参数 -> 原数组
+            forEach( (item, index, array) => {} ) 没有返回值
+            map( (item, index, array) => {} ) 返回一个新数组
+    */
+    // var arr = [1,2,3];
+    // arr.forEach( item => {
+    //     item *= 2;
+    // } );
+    // console.log(arr);
+    
+    //需要我们自己决定返回什么东西
+    // var result = arr.map( item => item *= 2 );
+    // console.log(result);
+
+    /*
+        数组的排序方法  sort[排序]
+        arr.sort( (a,b) => {} )
+        a后一个值，b前一个值
+        如何排序取决于函数返回的结果
+            大于0： b排到a的前边
+            等于0： 不对调位置
+            小于0： a会排到b的前边
+        结论：
+            a - b 从小到大
+            b - a 从大到小
+        会改变原数组
+    */
+    //如果我们想从大到小排序 [1,2]
+    //前一项比后一项小，对调1和2的位置 [2,1]
+    // var arr = [4,5,3,1,2];
+    //浏览器会传过来两个实参
+    // arr.sort( (a, b) => {
+    //     return b - a;//4 - 5 = -1 < 0[5,4,3,1,2]
+    //     //4 - 3 = 1 > 0  [5,4,3,1,2]
+    //     //3 - 1 = 2 > 0 [5,4,3,1,2]
+    //     //1 - 2 = -1 < 0 [5,4,3,2,1]
+    // } );
+    // console.log(arr);
+    // var result = arr.sort( (a, b) => b - a );
+    // console.log( result === arr );
+    
+    //默认的排序方法是把数组里的每一项都转成字符串，然后比较字符编码
+    // var arr = [10, 5, 7, 60, true, false];
+    // arr.sort();//从小到大排序
+    // console.log(arr);
+
+    // var students = [
+    //     {nickname: '小明', score: 70}, 
+    //     {nickname: '小红', score: 90},
+    //     {nickname: '小刚', score: 80}
+    // ];
+    // students.sort( (a, b) => a.score - b.score );
+
+    //最好不要去改变源数据
+    // var some = students;
+    // some.sort( (a, b) => a.score - b.score );
+    // console.log(some === students);
+
+    //数组的slice方法和concat方法 -> 拷贝  slice[分割，切割]
+    //arr.slice(beign, end)从begin复制到end begin和end都是一个数字,返回新数组
+    // var arr = [1, 2, 3, 4, 5];
+    // var result = arr.slice();//拷贝原数组的所有项
+    // console.log(result);
+
+    // var result_a = arr.slice(1, 4);//[begin, end) [0,2)  4 - 1 =  3
+    // console.log( 'result_a为', result_a );//[0,5) 0 1 2 3 4
+
+    // var arr_a = [6,7,8,9,10];
+    // var result_a = arr_a.slice(-4);//从倒数第四位开始切割
+    // console.log( result_a );
+
+    //如果是一个简单数据类型
+    // var arr_b = [1,2,3,4];
+    // var result_b = arr_b.slice();
+    // result_b[0] = 1.1;
+    // console.log(result_b);
+
+    //如果是一个引用类型的话，复制的是一个地址
+    // var arr_c = [ {hello : 'world'}, {hi: 'say'} ];
+    // var result_c = arr_c.slice();
+    // result_c[0].hello = 'hello world';
+    // console.log(result_c);
+
+    //arr.concat(arr1, arr2, arr3) -> 合并多个数组 concat[合并] 
+    // var a = [1,2,3];
+    // var b = [4,5,6];
+    // var c = [7,8,9];
+    // var a_s = a.concat( b, c );
+    // console.log(a_s);//[1, 2, 3, 4, 5, 6, 7, 8, 9]
+    // a_s[0] = 100;
+    // console.log(a_s);
+    
+    // //拷贝引用类型就是再拷贝地址
+    // var d = [ { nickname: '小明' } ];
+    // var e = [ { nickname: '小刚' } ];
+    // var f = d.concat(e);
+    // console.log(f);//[ {nickname: '小明'}, { nickname: '小刚' } ];
+    // f[0].nickname = '小鹏';
+    // console.log(f);
+
+    //slice和 concat都叫做浅拷贝 -> 如果拷贝的是对象，那么拷贝的是地址
+    //深拷贝 -> 拷贝的不是地址
+    //JSON这个对象的 stringify方法 -> 把一个对象序列化
+    // var obj = {nickname: '小明'};
+    // var some = JSON.stringify(obj);
+    // console.log(some);
+    //parse 把被序列化了的对象字符串转成对象
+    // var obj_a = JSON.parse(some);// -> 反序列化
+    // console.log(obj_a);
+    // console.log( obj_a === obj );
+    // obj_a.nickname = '小刚';
+
+    // var arr_x = [1, 2, 3];
+    // var g = JSON.stringify( arr_x);
+    // console.log( typeof g );
+    // var h = JSON.parse(g);
+
+    //深拷贝函数 deep[深的] Copy[拷贝]
+    /*
+        判断传进来的参数的数据类型如果是：
+            数组 -> 返回一个数组
+            对象 -> 返回一个对象
+            简单数据类型 -> 不走了return
+        
+        123 'number' true true  ture return
+        [],{} 'object'
+        function 'function' 'function' !== 'function' false
+
+        如果传进来的数据不是一个引用数据类型，直接return; 引用数据类型：数组，对象,function
+        typeof 数组，对象 =》 'object' ; function  'function'
+        123 'number' true 
+        function 'function' true
+        既不是函数也不是对象和数组
+        function abc() {};
+        'function' true
+        'function' !== 'function'
+    */
+    function deepCopy(obj) {
+        //如果传进来的不是对象类型的数据 直接打断函数执行
+        if( typeof obj !== 'object' && typeof obj !== 'function' ) return '传进来的数据必须是对象';
+        return JSON.parse( JSON.stringify(obj) );
+    };
+    var arr = [1,2,3, {nickname: '小明'}];
+    var result = deepCopy(arr);
+    console.log(result);
+    /*
+        如果做不出作业：
+            1.先把上课的知识点 -》 看看书
+            2.逻辑结构 -> 我怎么样才能实现最终的效果
+            3.拆分结果：
+    */
+</script>
+</html>

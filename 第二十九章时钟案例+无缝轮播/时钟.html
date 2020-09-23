@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			body{
+				background-color: #7E7E7E;
+			}
+			.clock{
+				width: 300px;
+				height: 300px;
+				border: 3px solid #1B1B1B;
+				border-radius: 50%;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				margin: auto;
+			}
+			.scale{
+				width:2px;
+				height:5px;
+				background-color: gold;
+				position: absolute;
+				top:0;
+				left: 50%;
+				transform-origin: 0px 150px;
+				transform: rotate();
+			}
+			.hour{
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom:0;
+				margin: auto;
+				width: 4px;
+				height: 100px;
+				background-image: linear-gradient(
+					to top,
+					transparent 0%,
+					transparent 35%,
+					#2C8DFB 0
+				);
+			
+				
+			}
+			.minute{
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom:0;
+				margin: auto;
+				width: 4px;
+				height: 150px;
+				background-image: linear-gradient(
+					to top,
+					transparent 0%,
+					transparent 35%,
+					green 0
+				);
+				
+			}
+			.second{
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom:0;
+				margin: auto;
+				width: 4px;
+				height: 200px;
+				background-image: linear-gradient(
+					to top,
+					transparent 0%,
+					transparent 35%,
+					white 0
+				);
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="clock">
+			<div class="hour"></div>
+			<div class="minute"></div>
+			<div class="second"></div>
+		</div>
+		<script>
+			let clock=document.querySelector(".clock");
+			let fragment=document.createDocumentFragment();
+			for(let i=0;i<60;i++){
+				let scale=document.createElement("div");
+				scale.classList.add("scale");
+				if(i%5===0){
+					scale.style.cssText=`width:4px; height:10px; transform:rotate(${i*6}deg)`;
+				}else{
+					scale.style.cssText=`transform:rotate(${i*6}deg)`;
+				}
+				fragment.append(scale);
+			};
+			clock.append(fragment)
+			
+			let hour_title=document.querySelector(".hour");
+			let minute_title=document.querySelector(".minute");
+			let second_title=document.querySelector(".second");
+			let time=()=>{
+				let now_time=new Date();
+				let hour=now_time.getHours();
+				let minute=now_time.getMinutes();
+				let second=now_time.getSeconds();
+				let minsecond=now_time.getMilliseconds();
+				hour_title.style.transform=`rotate(${(hour+minute/60)*30}deg)`;
+				minute_title.style.transform=`rotate(${(minute+second/60)*6}deg)`;
+				second_title.style.transform=`rotate(${(second+minsecond/1000)*6}deg)`;
+				console.log(hour,minute,second);
+				
+				requestAnimationFrame(time);
+			}
+			time();
+			
+		</script>
+	</body>
+</html>

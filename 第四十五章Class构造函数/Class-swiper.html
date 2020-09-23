@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .container{
+            width: 100%;
+            overflow: hidden;
+        }
+        .swiper-wrapper{
+            display: flex;
+            width: 100%;
+        }
+        .swiper-wrapper > .swiper-slide{
+            width: 100%;
+            flex-shrink: 0;
+            line-height: 200px;
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            font-weight: 600;
+        }
+        .swiper-slide:nth-of-type(1){
+            background-color: orange;
+        }
+        .swiper-slide:nth-of-type(2){
+            background-color: purple;
+        }
+        .swiper-slide:nth-of-type(3){
+            background-color: #58a;
+        }
+        .transition{
+            transition: .4s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">1</div>
+            <div class="swiper-slide">2</div>
+            <div class="swiper-slide">3</div>
+        </div>
+    </div>
+</body>
+<script>
+    class Swiper {
+        constructor(className, options) {
+            this.nodelist = {
+                container: document.querySelector(className)
+            };
+            this.options = options;
+            this.init();
+        }
+        init() {//初始化：
+            this.nodelist.wrapper = this.nodelist.container.querySelector('.swiper-wrapper');
+            this.nodelist.slides = this.nodelist.wrapper.querySelectorAll('.swiper-slide');
+            Object.assign( this.options, {
+                width: -this.nodelist.container.offsetWidth,
+                maxMove: this.nodelist.container.offsetWidth * this.nodelist.slides.length,
+                index: 0
+            } );
+            Swiper.drag.call(this, this.nodelist.wrapper);
+            console.log(this);
+        }
+        static drag(ele) {
+            let positionX = 0,
+                isClick = false;
+                this.options.moveX = 0;
+            ele.addEventListener('mousedown', e => {
+                e.stopPropagation();
+                this.nodelist.wrapper.classList.remove('transition');
+                positionX = e.clientX;
+                isClick = true;
+            })
+            document.addEventListener('mousemove', e => {
+                if( !isClick ) return;
+                e.stopPropagation();
+                this.options.moveX += e.clientX - positionX;
+                ele.style.transform = `translateX(${this.options.moveX}px)`;
+                positionX = e.clientX;
+            })
+            document.addEventListener('mouseup', e => {
+                e.stopPropagation();
+                this.nodelist.wrapper.classList.add('transition');
+                //判断，如果超过了宽度的一半，滑动到下一张，如果没有超过复原
+
+                if( -this.options.moveX > (this.options.index * -this.options.width + -this.options.width / 3)  ){
+                        this.options.index = Math.min( this.options.index + 1, this.nodelist.slides.length - 1 );
+                }else{
+                    this.options.index = Math.max( this.options.index - 1, 0 );
+                }
+                this.options.moveX = this.options.index * this.options.width;
+                ele.style.transform = `translateX(${this.options.moveX}px)`;
+                isClick = false;
+            })
+        }
+    }
+
+    const mySwiper = new Swiper('.container',{
+
+    });
+</script>
+</html>

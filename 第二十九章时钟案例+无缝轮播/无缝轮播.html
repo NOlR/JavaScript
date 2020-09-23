@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.wrapper{
+				width: 1000px;
+				height: 400px;
+				box-shadow:0 0 10px 5px rgba(0,0,0,0.2);
+				margin: 100px auto;
+				overflow: hidden;
+			}
+			.wrapper > .picbox{
+				width: 100%;
+				height: 100%;
+				display: flex;
+			}
+			.wrapper > .picbox> li{
+				flex-shrink: 0;
+				width: 100%;
+				height: 100%;
+				
+			}
+			.wrapper > .picbox> li>img{
+				float: left;
+				width: 100%;
+				height: 100%;
+			}
+			.tran{
+			    transition: 1s ease-in-out;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<ul class="picbox">
+				<li>
+					<img src="./img/1.jpg" alt="1" />
+				</li>
+				<li>
+					<img src="./img/2.jpg" alt="2" />
+				</li>
+				<li>
+					<img src="./img/3.png" alt="3" />
+				</li>
+				<li>
+					<img src="./img/4.jpg" alt="4" />
+				</li>
+			</ul>
+		</div>
+		<script>
+			let picbox=document.querySelector(".picbox");
+			let firstele=picbox.firstElementChild.cloneNode(true);
+			picbox.append(firstele);
+			
+			let index=0;
+			let move=()=>{
+				let width=parseFloat(window.getComputedStyle(picbox).width);
+						index++;
+						console.log(11,index);
+						//picbox.style.marginLeft=`${index*-width}px`;
+						//console.log(index);
+						if(index===4){
+							picbox.style.marginLeft=`${index*-width}px`;
+							setTimeout(()=>{	
+								picbox.classList.remove("tran");
+								picbox.style.marginLeft=`0px`;
+								index=0;
+							},1000)
+						}
+						else{
+						//	console.log(index);
+							picbox.classList.add("tran");
+							picbox.style.marginLeft=`${index*-width}px`;
+						//	console.log(index*-width);
+						}
+			}
+			
+			setInterval(move,2000);
+		</script>
+	</body>
+</html>

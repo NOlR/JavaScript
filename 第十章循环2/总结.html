@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			1.for循环
+			
+				格式 for(语句1(定义);语句2(条件);语句3){
+					语句块
+				}
+				
+				先执行语句1,然后进行语句2的判断如果满足则运行语句块
+					接着进行语句3,然后判断语句2,除非条件不满足则跳出循环
+					
+					语句1只会被执行一次！可以省略(不推荐)
+					
+				
+			嵌套for循环
+				即for循环里面还有一个for循环
+				for(var i=1;i<=3;i++){
+					for(var j=1;j<=3;j++){
+						
+					}
+				}
+				改循环一共运行9次,外部循环一次,内部循环3次
+				
+				注意for循环中定义的变量只能在for循环中使用,括号外就无法使用(局部变量)
+					如果条件一直满足则会死循环
+					条件如果第一次不满足,则不会进入语句块循环
+					
+				字符串也可以用for循环遍历每个字母
+				
+				
+				2.for in 循环
+					主要用于遍历对象,属于迭代语句
+					对象的属性没有顺序,通过 for-in 循环输出的属性名的顺序是不可预测的(根据浏览器而定)
+				for var 变量 in 对象{
+					
+				}
+				使用for in 遍历对象之前,最好用确定对象的值是不是null或undefined 不然会报错,现在不会,会直接不执行语句
+				
+				var a={name:"x",age: 8};
+				
+				for (var i in a){
+					console.log(a.i);		//注意不能用.的形式来选择对象里的属性
+					console.log(a[i]);		//用[]来选择
+				}
+				也可以遍历字符串,数组
+				
+				
+				label语句
+					写在循环前面可以与break与continue来使用,一般与for循环使用
+					
+					start:for(var j=1;j<=3;j++){
+						
+					}
+					
+				break和continue语句
+					break 语句会立即退出循环，强制继续执行循环后面的语句
+					
+					continue 语句虽然也是立即退出循环，但退出循环后会从循环的顶 部继续执行
+					
+					如果是for循环嵌套,内部写break或continue只会对内部有效,不会对外部有影响
+					
+				break 和 continue 语句都可以与 label 语句联合使用，从而返回代码中特定的位置
+				
+				var num = 0; 
+		outermost:for (var i=0; i < 10; i++) { 
+					for (var j=0; j < 10; j++) { 
+						if (i == 5 && j == 5) { 
+							break outermost;
+									} 
+								num++; 
+							} 
+				} alert(num);//55
+				
+				当if条件为true时,会执行break语句 将外部循环停止掉
+				
+					continue outermost;时
+					//95
+				
+				
+				3.switch语句
+					switch(语句){
+						case 值1:
+							语1;
+							break;
+						case 值2:
+							语2;
+							break;
+						case 值3:
+							语3;
+							break;
+						default:
+							语4
+					}
+					如果语句的值等于case里的值,则会执行相对于的语句
+					遇到break会跳出循环,如果省略 break 关键字, 就会导致执行完当前case后，继续执行下一个case
+					如果都不匹配就执行default语句
+					
+				4.do while循环语句
+					该循环属于一种先执行后测试的语句
+					所以循环体内的代码至少会被执行一次
+					
+				while语句
+					属于先判断后执行的语句
+					所以可能循环体不会被执行一次
+					
+		</script>
+	</body>
+</html>

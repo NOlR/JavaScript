@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组的方法复习</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //数组的方法
+    //字面量 声明引用数据类型 直接用const或者let let some = null;
+    const arr = [1,2,3];
+    //构造函数 和 函数
+    const arr1 = new Array(2);
+    console.log(arr1);
+    const arr2 = Array('2');
+    console.log(arr2);
+    //Array.of()
+    const arr3 = Array.of(3);
+    console.log(arr3);
+
+    //遍历数组 -> forEach map
+    //不能通过item来改变简单数据类型
+    const arr4 = [1, 2, 3, {nickname: '小明'}, 5];
+    //只是使用数组里边的数据
+    arr4.forEach( (item, index, array) => {
+        item.nickname = '小刚'
+    } );
+    // map 遍历数组 可以通过item来操作数组里边的每一项 -> 返回一个新的数组
+    //需要返回新数据的时候
+    const arr5 = [1,2,3,4,5];
+    const arr6 = arr5.map( item => item *= 2 );
+    const arr7 = arr5.map( function (item) {
+        return item *= 2;
+    } );
+    console.log(arr6, arr7);
+
+    //从数组里边找某个数据
+    const arr8 = [ 1, 2, 3, 4, 5, 6,3, { nickname: '小明' }, [1,2,3], [1,2,3] ];
+    /*
+        去数组里边找3
+            find -> 返回找到的数据,找不到返回undefined,惰性，找到一个就结束
+            findIndex -> 返回找到的数据的下标,没有找到返回-1
+            indexOf -> 返回找到的数据的下标
+            lastIndexOf -> 返回找到的数据的下标,返回最后一个,找不到返回-1
+            includes -> 数组中是否有某个值，有返回true，没有返回false
+            some( (item, index, array) => {} ) -> 有没有某个数据，有返回true没有返回false
+    */
+    // === 1.数据类型相同 2.值也相同 
+    // const result = arr8.find( (item, index, array) =>  item[0] === 1 );
+    // console.log(result);
+    //const result1 = arr8.findIndex( item => item.nickname === '小刚' );//-1没有找到
+    //只能找简单数据类型 如果是一个负数表示从倒数第几位开始查找
+    //const result2 = arr8.indexOf( 3, -5 )
+    //lastIndexOf只能查找简单数据类型 -> 从右往左找
+    //const result3 = arr8.lastIndexOf(3, -2);
+    //console.log(result3);
+    //includes  -> 找简单数据类型的值
+    // const result4 = arr8.includes(-5);
+    // console.log(result4);
+    //some -> 找引用类型的值
+    // const result5 = arr8.some( item => item.nickname === '小明' );
+    // console.log(result5);
+    
+
+    //合并数组 arr.concat(arr1, arr2) -> 把arr，arr1，arr2的数据全合并到一个新的数组里边
+    // const some = [1, 2, 3, {nickname: '小明'}],
+    //     some1 = [4, 5, 6],
+    //     some2 = [7, 8, 9];
+    // const result6 = some.concat( some1, some2 );
+    // console.log( result6 );
+    // const result7 = [].concat(some);
+    // console.log(result7);
+
+    const some = [1, 2, 3, {nickname: '小明'}];
+    //浅拷贝 -> 复制值的时候如果是简单数据类型，创建一个新值，如果是引用类型复制地址
+    // const result8 = [].concat(some);
+    // console.log(result8);
+    // result8[3].age = 123;
+    // result8[0] = 2;
+    // console.log(result8);
+
+    //JSON.stringify(引用数据类型) 生成一个对象字符串
+    const some3 = JSON.parse( JSON.stringify( some ) );
+    console.log(some3);
+
+    //arr.slice(start, end) start[默认为0]
+    const abc = some.slice(1, 4);// end - start = 4 - 1 = 3
+    console.log(abc);
+
+    //splice(开始下标, 删除几个, value1, value2 ....) 翩然俊雅,举止不凡
+    const some4 = ['hello world', 123, true, false, null, undefined, { some: 'abc' }, [1,2,3] ];
+    // delete some4[1];
+    // console.log(some4);
+    // some4.splice(1);
+    // some4.splice(1, 1, 456, 789)
+    some4.splice(1,0,0);
+
+    const some5 = some4.keys();
+    console.log(some5);
+
+
+    //fill reverse sort join filter flat every  reduce reduceRight
+    //fill(value, start, end)[填充] 给数组填充某个值
+    const some6 = [1,2,'hello world', [1,2,3]];
+    // some6.length += 10;
+    // some6.fill(1, 3)
+    console.log( some6 );
+    //用填充可以更方便的修改数组里的某一项
+    some6.fill({nickname: '小明'}, 2, 3);//3 - 2
+    //reverse() 反转数组
+    some6.reverse();
+    //arr.join('标签符号')  把数组里的每一项都转成字符串，然后拼接起来
+    console.log(some6);
+    //join和toString的不同在于 join可以随意选择标点符号
+    const res = some6.join('&');
+    console.log(res);
+    //arr.flat(num) -> 将数组扁平化 num默认为1
+    const some7 = [ 1, 2, 3, [4, 5, [ 4.1, 4.2 ] ], [6, 7] ];
+    const qwe = some7.flat(2);
+
+    //every( (item, index, array) => {} ) 判断一下数组里边的值是否都能通过测试
+    const some_a = qwe.every( item => item > 7 );
+    //filter( (item, index, array) => {} ) [过滤] -> 从源数据里过滤出复合条件的数据
+    const some_b = [//冒泡
+        {nickname: '小明', age: 13},
+        {nickname: '小刚', age: 15},
+        {nickname: '小红', age: 7},
+        {nickname: '小兰', age: 5}
+    ];
+    const some_c = some_b.filter( item => item.age <= 7 );
+
+
+    /*
+        a是后一个，b是前一个
+        arr.sort( (a, b) => {} )[排序]
+        小到大 a - b 后一个 - 前一个
+        大到小 b - a
+        如果差值 > 0  a被排到b的后边(后一个排到前一个的后边)
+        如果差值 < 0 a被排到b的前边(后一个被排到了前一个的前边)
+        如果差值 = 0 不调换位置
+    */
+    const abd = some_b.sort( (a, b) => a.age - b.age );
+    console.log( abd );
+
+    //reduce 都接受四个参数  acc累计器 从左往右走
+    //arr.reduce( (acc, item, index, array) )
+    const result9 = qwe.reduce( (acc, item) => acc + item, 0 );//aac的默认值为0
+    const result_a = some_b.reduce( (acc, item) => acc + item.age, 0 )
+    //reduceRight() 从右往左
+
+
+</script>   
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+			}
+			table{
+				width: 300px;
+				margin: 50px;
+				border-collapse: collapse;
+				
+			}
+			tr,td{
+				text-align: center;
+				line-height: 30px;
+				border: 2px solid #000000;
+			}
+		</style>
+	</head>
+	<body>
+		<table>
+			<thead></thead>
+			<tbody></tbody>
+		</table>
+		<p>
+			<button id="reduction">还原</button>
+		</p>
+		<p>
+			<button id="highToLow">分数从高到低</button>
+			<button id="lowToHigh">分数从低到高</button>
+		</p>
+		<p class="form">
+			<span>姓名</span><input class="input_name" type="text" name="nickname" placeholder="" />
+			<span>成绩</span><input class="input_score" type="number" name="socre" max="100" min="0" />
+			<button id="add">添加</button>
+			<button id="clean1">清空</button>
+		</p>
+		<p>
+		    <span>查看第</span>
+		    <input class="start_num" type="number" min="0" placeholder="开始">
+		    <span>到第</span>
+		    <input class="end_num" type="number" min="0" placeholder="结束">
+		    <span>同学</span>
+		    <button id="determine">确定</button>
+			<button id="clean2">清空</button>
+		</p>
+		<p>
+			<button id="socre_sum">查看成绩总和</button>
+			<span id="socre_result_sum"></span>
+		</p>
+		<p>
+			<button id="socre_avg">查看平均分</button>
+			<span id="socre_result_avg"></span>
+		</p>
+		<p>
+			<button id="over60">显示及格分以上的学员</button>
+			<button id="over90">显示优秀分以上的学员</button>
+			<button id="over95">显示特优分以上的学员</button>
+			<button id="down60">显示不及格分的学员</button>
+		</p>
+		
+		
+		<script>
+			var data=[
+				{nickname:"张三",
+				socre:90},
+				{nickname:"李四",
+				socre:70},
+				{nickname:"乖乖",
+				socre:60},
+				{nickname:"Lemon",
+				socre:100},
+				{nickname:"老言",
+				socre:75},
+				{nickname:"凉夏",
+				socre:55},
+				{nickname:"无水清荷",
+				socre:70},
+				{nickname:"An玖",
+				socre:65},
+				{nickname:"不甜",
+				socre:95}
+			]
+			
+			var thead=document.querySelector("thead");
+			var tbody=document.querySelector("tbody");
+			
+			
+			function add_thead(obj,ele){
+				var tr=document.createElement("tr");
+				for (var key in obj){
+				var th=document.createElement("th");
+				th.innerHTML=key;
+				tr.append(th);
+				}
+				ele.append(tr);
+			}
+			add_thead(data[0],thead);
+			
+					
+			function add_tbody(obj,ele){
+				var fra=document.createDocumentFragment();
+				obj.forEach(item=>{
+					var tr=document.createElement("tr");
+					for (var key in item){
+						var td=document.createElement("td");
+						td.innerHTML=item[key];
+						tr.append(td);
+					}
+					fra.append(tr);
+					ele.append(fra);
+				})	
+			}
+			add_tbody(data,tbody);
+			
+			function deepcopy(obj){
+				if(typeof obj==='object'&&typeof obj==='function') return "请传入对象或函数"
+				return JSON.parse(JSON.stringify(obj));
+				
+			}
+			
+			function deletedate(ele){
+				ele.innerHTML="";
+			}
+			
+			
+			var reduction=document.getElementById("reduction");
+			reduction.onclick=()=>{
+				deletedate(tbody);	
+				add_tbody(data,tbody);
+			}
+			
+			var copyobj=deepcopy(data);
+			//console.log(copyobj);
+			var highToLow=document.getElementById("highToLow");
+			highToLow.onclick=()=>{
+				copyobj.sort((a,b)=>b.socre-a.socre)
+				deletedate(tbody);
+				add_tbody(copyobj,tbody);
+				//console.log(copyobj);
+			}
+			
+			var lowToHigh=document.getElementById("lowToHigh");
+			lowToHigh.onclick=()=>{
+				copyobj.sort((a,b)=>a.socre-b.socre);
+				deletedate(tbody);
+				add_tbody(copyobj,tbody);
+			}
+			
+			
+			 var collectData = document.querySelectorAll('.form > input');
+			var add=document.getElementById("add");
+			add.onclick=()=>{
+				var newdata={};
+				collectData.forEach((item)=>{
+					if(item.value===""){
+						alert(item.name+"不能为空");
+						return;
+					}
+					else{
+						newdata[item.name]=item.value;
+					}
+				})
+				console.log(newdata);
+				
+				var keyname=Object.keys(newdata);
+				if(keyname.length==2){
+					copyobj.push(newdata);
+				}
+				deletedate(tbody);
+				add_tbody(copyobj,tbody);
+			}
+			
+			var clean1=document.getElementById("clean1");
+			var input_name=document.querySelector(".input_name");
+			var input_score=document.querySelector(".input_score");
+			clean1.onclick=()=>{
+				input_name.value="";
+				input_score.value="";
+			}
+			
+			
+			var start_num=document.querySelector(".start_num");
+			var end_num=document.querySelector(".end_num");
+			var determine=document.getElementById("determine");
+			determine.onclick=()=>{
+				var start=start_num.value;
+				var end=end_num.value;
+				if(start===""||end===""){
+					alert("开始数字和结束数字不能为空");
+					return;
+				}
+				else if(start>end){
+					alert("开始数字不能超过或等于结束数字");
+					return;
+				}else{
+					var px=copyobj.slice(start-1,end);
+					deletedate(tbody);
+					add_tbody(px,tbody);
+				}
+			}
+			
+			var clean2=document.getElementById("clean2");
+			clean2.onclick=()=>{
+				start_num.value="";
+				end_num.value="";
+			}
+			
+			
+			function sco(obj){
+					return obj.reduce((acc,item)=>socre=acc+parseInt(item.socre),0);
+			}
+			
+			let socre_sum=document.getElementById("socre_sum");
+			let socre_result=document.getElementById("socre_result_sum");
+			socre_sum.onclick=()=>{
+				let socre=sco(copyobj);
+				socre_result.innerText=socre;
+			}
+			
+			let socre_avg=document.getElementById("socre_avg");
+			let socre_result_avg=document.getElementById("socre_result_avg");
+			socre_avg.onclick=()=>{
+				let socre=(sco(copyobj)/copyobj.length).toFixed(2);
+				socre_result_avg.innerText=socre;
+				
+			}
+			
+			function filterSocre(num){
+				let socre={};
+				socre=copyobj.filter((item)=>item.socre>=num);
+				return socre;
+			}
+			
+			let over60=document.getElementById("over60");
+			let over90=document.getElementById("over90");
+			let over95=document.getElementById("over95");
+			let down60=document.getElementById("down60");
+			over60.onclick=()=>{
+				deletedate(tbody);
+				add_tbody(filterSocre(60),tbody);	
+			}
+			
+			over90.onclick=()=>{
+				deletedate(tbody);
+				add_tbody(filterSocre(90),tbody);
+			}
+			over95.onclick=()=>{
+				deletedate(tbody);
+				add_tbody(filterSocre(95),tbody);
+			}
+			
+			down60.onclick=()=>{
+				let socre={};
+				socre=copyobj.filter((item)=>item.socre<60);
+				deletedate(tbody);
+				add_tbody(socre,tbody);
+			}
+		</script>
+	</body>
+</html>

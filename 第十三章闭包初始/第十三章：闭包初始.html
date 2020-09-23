@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //闭包就是允许我们在函数之外去访问函数内部的变量 
+    // function fn() {
+    //     var num = 1;
+    //     return num;//return 是按值返回的
+    // };
+    // console.log( fn() );
+    // console.log( num );
+    // console.log( num );
+    // function fn_a() {
+    //     console.log( num );
+    // };
+    // fn_a();
+
+    //条件：函数a返回了一个函数b，函数b要用到函数a里边的变量
+    // var num = 2; //即便现在没有人使用num这个变量，但是不排除以后有人要用，所以，不会被当做垃圾回收掉。
+    // var num = 3;
+    // console.log(num);
+
+    //我们引入的每一个库里边都声明了很多很多的变量
+    // (function (){
+    //     var num = '我是立即执行函数里边的num';
+    //     console.log( num );
+    // })();
+    // function fn(){
+    //     var num = 1;
+    //     return function () {
+    //         console.log( num );
+    //     };
+    // };
+    // var result = fn();
+    // result();
+
+    //作用域 : 规定我们可以访问哪些变量 -> 作用域链
+    //函数在执行的时候会在内存区域中开辟一块空间 -> 作用域
+    // function foo(){
+    //     var str = '我是一个字符串';//在foo函数没有执行的时候计算机的内存中没有str这个变量
+    //     console.log( str );
+    // };
+    // foo();//在内存中开辟一块空间，然后这个空间交给这个函数来使用
+    //函数一旦执行完成，执行函数时所用的内存就会被释放
+    //在没有执行foo函数的时候，内存中没有str这个变量
+    //执行foo 开辟一块内存，声明变量str，打印str，函数功能执行完了
+    //把这块内存释放掉，内存中不再有str这个变量
+    //foo();
+    //为什么要把内存释放: str变量只能在函数foo里边使用,函数foo执行完成之后，功能已经实现了，str变量没有存在的必要的。
+    //如果这时候把str变量保存在内存中，但是又没有人可以使用它，它就是在浪费内存，因此js的垃圾收集器会把str变量当做垃圾回收掉。
+    //把这块内存节省出来。
+
+    //薛定谔的猫：世界上存在一只猫，它从来没有被人撸(摸)过。
+    // function abc(){
+    //     function xyz(){};
+    // };
+    // abc();
+    /*
+        abc正在执行：内存中有xyz这个函数 
+        abc执行结束: 内存中没有xyz这个函数
+        作用域链是：函数在执行的时候，可以使用哪些变量， 规则： 只能用自身作用域和上层作用域的变量
+    */
+    //闭包： 让函数在执行完成之后不释放内存；或者可以理解为：函数执行完成之后阻止作用域被销毁。
+
+
+
+    //如何实现闭包：函数a返回了一个函数b，函数b要用到函数a里边的变量 
+    var num = 456;
+    function a() {//函数a返回了函数b，在函数b里边使用了函数a里的num变量
+        var num = 123;
+        return function b() {
+            console.log( num );
+        } 
+    };
+    var result = a();
+    result();
+</script>
+</html>

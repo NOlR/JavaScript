@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无缝轮播</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .container{
+            width: 800px;
+            height: 300px;
+            margin: 50px auto;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+            overflow: hidden;
+        }
+        .container > ul{
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .container > ul > li{
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .container > ul > li > img{
+            width: 100%;
+            height: 100%;
+        }
+        /* 过渡效果的类名 */
+        .tran{
+            transition: 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <ul class="tran">
+            <li>
+                <img src="http://i0.hdslb.com/bfs/archive/1ca7405f0dd981297d0c5aa5de2491384524c984.jpg" alt="1">
+            </li>
+            <li>
+                <img src="http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20190510/a7c5631360c04cbf8e1e8a3f07a27506.jpeg" alt="2">
+            </li>
+            <li>
+                <img src="http://img4.imgtn.bdimg.com/it/u=2489651858,967768676&fm=26&gp=0.jpg" alt="2">
+            </li>
+            <li>
+                <img src="http://i1.hdslb.com/bfs/archive/d019b53dafe9ecb67a21837ef8c80602a56ee121.jpg" alt="2">
+            </li>
+        </ul>
+    </section>
+</body>
+<script>
+    const container = document.querySelector('.container');
+    const ul = document.querySelector('.container > ul');
+    // ul.style.transform = `translate(-3200px)`
+    //先克隆第0个li
+    const first = ul.firstElementChild.cloneNode(true);
+    //把第0个li添加到最后
+    ul.append(first);
+    //记录现在到哪一张图片了
+    let index = 0;
+
+    /*
+        获取轮播图的宽度:width
+        一个记录现在移动多哪个图片的数字: index
+        宽度应该移动多少呢？ index * width
+    */
+    const move = () => {
+        const width = parseFloat( window.getComputedStyle(ul).width );//每次执行轮播的时候都会去获取一下宽度
+        //以防页面被改变了宽度之后，移动的距离不合适
+        index ++;//让index+1
+        console.log(index);
+        if( index === 4 ){//如果index为4，那么表示该走最后一张了(被克隆的那一张)
+            ul.style.transform = `translate(${index * -width}px)`;//移动
+            //移动完成之后把ul的style的transform里的translate变为0
+            setTimeout( () => {
+                ul.classList.remove('tran');//把过渡类名给删掉
+                ul.style.transform = `translate(0px)`;//这次移动要等1s种之后再去执行
+                index = 0;//重置index，因为在79行的代码执行完成之后，现在已经是第0张图片了
+            }, 1000 )
+        }else{
+
+            if( !ul.classList.contains('tran') ) ul.classList.add('tran');//如果没有过渡类名就加上
+
+            ul.style.transform = `translate(${index * -width}px)`;//移动
+        }
+    };
+    setInterval(move, 2000);
+
+
+
+    /*
+        假如说一共有4张图片；把第一张图片克隆下来，加入到原来的轮播图中，现在一共有5张
+        1-> 2 -> 3 -> 4 -> 1 第四张的下一张如何变成第一张呢？
+        从4走到1之后，没有过度的，把容器的translate变为0
+        在现有技术条件下全世界的无缝轮播用的都是这样一种思想，没有第二种思想
+    */
+
+
+
+
+
+
+
+
+
+    //获取一个元素的css样式 window.getComputedStyle(获取哪个元素的css样式)
+    //判断一个对象是不是Object类型 使用 数据/变量 instanceof Object  Object[后边的这个大写开头的Object是一个函数]
+    // console.log( parseFloat( window.getComputedStyle(ul).width ) );
+    //元素.cloneNode(true/false) 默认为false -> 克隆一个元素 true深度克隆，false非深度克隆
+    // false非深度克隆 -> 不克隆后代元素
+    // true深度克隆 把后代元素也克隆
+    // const newElement = container.cloneNode(true);
+    // console.log(newElement);
+</script>
+</html>

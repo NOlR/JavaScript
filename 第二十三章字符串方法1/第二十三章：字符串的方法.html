@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串的方法</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    //字符串的方法 "" '' ``包裹起来的字符在这三个符号里边可以写任意的字符
+    // let str = 'hello world';//字面量
+    // let str_a = String('hello world');//通过String函数创建字符串
+    // //字符串的包装对象
+    let str_b = new String('hello world');//构造函数
+    console.log( str_b );
+    // // console.log( 'str:', str );
+    // // console.log( 'str_a:', str_a );
+    // // console.log( 'str_b:', str_b, typeof str_b );//typeof str_b => object
+    // //没有任何区别
+    // const box = document.querySelector('.box');
+    // //innerText会把后边的数据转化成一个字符串
+    // box.innerText = str_b;
+    // console.log( str + 5,  str_a + 6, str_b + 7 );
+    // //把字符串包装对象转化成为一个普通的字符串 valueOf toString toLocalString
+    // // console.log( str_b.toString() );
+
+    // //只要看到一个字符串就会把这个字符串转化成为包装对象,然后再使用
+    // let a = 'hello world';
+    // //{"hello world"} .some = [1,2,3]
+    // a.some = [1,2,3];//String {"hello world"} 
+    // //只要使用了字符串，浏览器都会创建一个字符串包装对象，然后进行使用，使用完成之后立马销毁
+    // console.log( a.some );//又创建一个字符串包装对象{"hello world"}
+
+    // /*
+    //     a.some = [1,2,3] 创建一个字符串包装对象，然后给这个对象设置some属性值为[1,2,3]
+
+    // */
+    // console.log( a.some = [1,2,3], a.some );
+
+    // let str_c = new String('hello xiaoming');
+    // console.log(str_c);
+    // //字符串的所有方法都在字符串包装对象上边
+    // //通过下标来获取字符串里的某个字符
+    // console.log( str[6] );
+    // //str.charAt(下标) -> 获取某个下标的字符
+    // console.log( str.charAt(1) );
+
+    let b = 'hello world';
+    //可以使用for和for in来遍历
+    // for( let i = 0,length = b.length; i < length; i++ ){
+    //     console.log( b[i] );
+    // };
+    // for( let key in b ){
+    //     console.log(b[key])
+    // };
+
+    //String.fromCharCode(num1, num2 .....)  fromCharCode来自字符编码
+    let result = String.fromCharCode(65,66,67);//65,66,67这三个字符编码对应的字符是
+    console.log(result);//'ABC' 是字符串
+    //String.fromCodePoint(num1, num2...)
+    console.log( String.fromCodePoint(65,66,67) );
+
+    //str.charCodeAt(下标)把指定下标转化成为一个字符编码
+    // 不约而同
+    let c = '小明：上周日我在公园问一个漂亮姐姐，约吗？小姐姐回答：不约而同';
+    console.log( c.charCodeAt(0),c.charCodeAt(1) );
+    //str.codePointAt(下标)把指定下标转化成为一个字符编码
+    console.log( c.codePointAt(0) );
+    // for( let key in c ){
+    //     console.log( c.codePointAt(key) )
+    // };
+
+    //str.concat(str1, str2.....)把多个字符串合并成同一个字符串,返回新的字符串
+    let d = 'hello',
+        e = ' world',
+        f = ' hi';
+    console.log( ''.concat(d, e, f) );
+
+    /*
+        字符串里任何字符和任何字符之间都是以空字符串链接的
+        字符串的查找方法:
+          返回true或者false:
+            str.endsWith('字符串', 字符串的长度) -> 判断某个字符串是不是以。。结尾的
+            str.startsWith('字符串',从下标几开始)
+            str.includes('字符串', 起始下标) 从起始下标开始判断某个字符或字符串是否在str里边
+          返回下标: 有返回下标，有返回下标，没有返回-1
+            indexOf('字符/字符串', 起始下标)  -> 从左往右
+            lastIndexOf('字符/字符串', 起始下标) -> 从右往左
+          返回数组：
+            match(正则) 传一个字符串进去 浏览器会自动转化为正则
+            matchAll(正则)
+          查找并替换
+            replace(正则, '替换成什么字符')
+    */
+    let g = 'hello world!';//不能传负数
+    //判断前5个字符是否是以d结尾的
+    console.log( g.endsWith('d', 5) );//false -> 严格区分大小写
+    //从下标3开始，判断是否是以o开头的
+    console.log( g.startsWith('o', 3) );  
+    console.log( g.includes(' ', 6) );
+
+    console.log( g.indexOf('o', 6) );
+    console.log( g.lastIndexOf('o', 6) );
+
+    //match[匹配] 去字符串里边匹配某个字符/字符串
+    //0： 匹配到的字符串
+    //index: 找到的字符串的下标
+    //input 原字符串
+    let reg = new RegExp('hello', 'gi');//这种写法叫做正则 -> 正则就是用来匹配字符串的
+    let h = 'hello world!Hello world!hello world!hello world!';
+    console.log( h.match('hello') );
+    console.log( h.matchAll(reg) );//返回迭代器对象
+
+    //replace(reg, 替换成什么文字)
+    let j = 'hello world!HELLO world!hello world!hello world!';
+    let reg_a = new RegExp('hello', 'gi');
+    console.log( j.replace( reg_a, '' ) );
+
+    /*
+        去掉空格,返回新字符串
+            trim() 删除前边和后边的空格
+            trimLeft()/trimStart() -> 删除字符串开始的空格
+            trimEnd()/trimRight() -> 删除字符串结尾的空格
+    */
+    let k = ' hello world ';
+    console.log( k.trim() );
+    console.log( k.trimRight().trimStart() );
+    console.log( k.trimStart() );
+</script>
+</html>

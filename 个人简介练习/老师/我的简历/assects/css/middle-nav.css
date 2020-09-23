@@ -1,0 +1,87 @@
+.middle-nav{
+    max-width: 80px;
+    min-width: 80px;
+    border-top: 10px solid #8c53ff;
+    box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+}
+.middle-nav > .search{
+    line-height: 24px;
+    border: 1px solid rgba(0,0,0,.1);
+    padding: 18px 0;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-align: center;
+}
+.middle-nav > .search > i{
+    font-size: 20px;
+    font-weight: 900;
+}
+.middle-nav > ul > li{
+    position: relative;
+    padding: 19px 0;
+    margin: 0 20px 4px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 5;
+}
+.middle-nav > ul > li > .bubble{
+    position: absolute;
+    top: 12px;
+    left: 50px;
+    width: 0;
+    line-height: 24px;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 2px;
+    background-color: #333;
+    border-radius: 5px;
+    transition: .3s ease;
+}
+.middle-nav > ul > li > .bubble > span{
+    display: none;
+}
+.middle-nav > ul > li > .bubble > a{
+    display: none;
+    color: white;
+    letter-spacing: 2px;
+}
+.middle-nav > ul > li > .bubble:before{
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 11px;
+    border: 7px solid transparent;
+    border-right-color: #333;
+    opacity: 0;
+    transition: .3s ease;
+}
+.middle-nav > ul > li:hover > section{
+    width: auto;
+    padding: 5px;
+}
+.middle-nav > ul > li:hover > section > span{
+    display: block;
+}
+.middle-nav > ul > li:hover > section > a{
+    display: block;
+}
+.middle-nav > ul > li:hover > section:before{
+    opacity: 1;
+}
+.middle-nav > ul > li.some:after{
+    position: absolute;
+    content: "";
+    left: 5px;
+    right: 5px;
+    bottom: -2px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.middle-nav > ul > li:hover{
+    background-color: rgba(0,0,0,0.05);
+}
+.middle-nav > ul > li > i{
+    font-size: 22px;
+    font-weight: 900;
+}

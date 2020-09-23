@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style:none;
+        }
+        section{
+            margin: 0 auto;
+        }
+        .big{
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+        }
+        .middle{
+            width: 150px;
+            height: 150px;
+            background-color: purple;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            /* padding: 20px; */
+            /* border: 10px solid purple; */
+            background-color: #58a;
+            /* transform: translate(100px, 2000px); */
+        }
+    </style>
+</head>
+<body>
+    <section class="big">
+        <section class="middle">
+            <section class="box"></section>
+        </section>
+    </section>
+</body>
+<script>
+    /*
+        js中的事件：
+            0级事件
+            2级事件
+            3级事件
+        没有1级事件
+        0级和2级事件 -> 用来和用户进行交互的
+        3级事件 -> 页面内容发生变动的时候
+        交互：用鼠标用键盘操作电脑 -> 交互
+        0级事件和2级事件 -> 写法不同， 2级事件有捕获，0级没有
+    */
+    /*
+        鼠标事件
+            1.点击 -> 左点击，右点击，滚轮点击
+            2.滚轮：滚动事件
+    */
+    
+    //讲：事件的共性，常用的事件
+    const box = document.querySelector('.box');
+
+    //MouseEvent鼠标事件对象
+    //左点击 -> 元素.onclick 
+    // box.onclick = function () {//左点击鼠标的时候，触发这个函数
+    //     console.log(arguments);//只要arguments的长度不为0，就表明有实参传了进来
+    //     console.log(1);
+    // };
+
+    //左双击 -> 元素.ondblclick dbl是double的缩写表示两次
+    // box.ondblclick = function () {
+    //     console.log( '双击了box' )
+    // };
+    //双击的时候单击事件也会触发
+
+    //右击事件 -> 元素.oncontextmenu  context[上下文] menu[菜单]
+    // box.oncontextmenu = function () {
+    //     console.log( '右击了鼠标' );
+    // };
+
+    //在事件执行的时候，浏览器会给事件函数传递一个参数,是一个对象 -> 事件对象[鼠标事件对象，键盘事件对象]
+    // box.onclick = function (e) {
+    //     console.log(e);
+    //     if( e.altKey === true && e.shiftKey === true ){
+    //         this.style.backgroundColor = 'purple';
+    //         // console.log(box)
+    //     }else{
+    //         console.log('左击了盒子');
+    //     }
+    // };
+    /*
+        方向：浏览器渲染出来的元素相当于一个倒影
+        鼠标事件里边的属性：
+            跟键盘有关的属性：
+                altKey: false / true 键盘上的alt键
+                ctrlKey: false / true 是否在按下ctrl键的同时左击
+                metaKey: false / true 按着meta键左击
+                shiftKey： false / true 是否按着shift键去点击
+            和鼠标有关的：
+                button：0,1,2 -》 0代表鼠标的左键，1代表滑轮，2代表右键
+            和位置有关:
+                    client[客户]->距离浏览器可视区域的水平方向坐标和竖直方向坐标
+                clientX 
+                         -> clientX:47,clientY:52 -> 点下去的那个点，距离浏览器左上角是45px和52px
+                clientY
+
+                距离元素左上角x像素，y像素
+                offsetX
+                         -> offsetX:40,offsetY:50 -> 表示距离元素左上角40px，50px
+                offsetY
+
+                    page页面 -> 包括滚动条
+                pageX
+                        -> pageX:47,pageY:2000 -> 距离页面左上角是47px，2000px
+                pageY
+
+                    screen屏幕
+                screenX
+                        ->screenX: 204, screenY:203 -> 距离浏览器屏幕左上角204px，203像素
+                screenY
+
+            和元素有关:
+                target[目标] -> 谁被我交互了
+    */
+
+    // box.onclick = function (e) {//左击事件
+    //     console.log(e);
+    //     console.log( '我点击了:', e.target );
+    // };
+    // box.oncontextmenu = function (e) {//右击事件
+    //     console.log( e );
+    //     console.log('我右击了', e.target);
+    // };
+
+    //箭头函数版：箭头函数里边的this指向父级作用域的this
+    box.onclick = e => {//小明
+        console.log(e);
+        // console.log('你点击了我');
+        // console.log( this );
+        if( e.altKey === true ){
+            e.target.style.backgroundColor = 'pink';
+        }else{
+            e.target.style.backgroundColor = '#58a';
+        }
+    };
+
+    
+
+</script>
+</html>

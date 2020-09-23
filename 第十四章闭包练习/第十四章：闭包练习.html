@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包练习题</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+        .box + .box{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">0</div>
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+</body>
+<script>
+    //函数a返回(return)函数b，函数b在函数a之外执行，并且会用函数a里边的变量这时候闭包就形成了。
+    // function a() {
+    //     var num = 1;
+    //     return function b(){
+    //         console.log(num);//在函数b没有执行之前，浏览器是不是去找num这个变量的值
+    //     };
+    // };
+    // var result = a();
+    // result();
+
+    // //return可以return任意的数据,return是按值返回的
+    // function c() {
+    //     var str = 'hello world';
+    //     return {
+    //         some : str//'hello wolrd'
+    //     };
+    // };
+    // var result_b = c();
+    // // console.log( result_b.some );
+
+    // function d() {
+    //     var arr = [1,2,3];
+    //     return function e(){
+    //         console.log(arr);
+    //     };
+    // };
+    // var res = d();//必须有人知道这个函数
+    //d()();//存在闭包，但是存在的时间非常少
+    //不形成闭包
+    // console.log(e)
+
+        //执行xyz：声明变量some， 创建一个函数abb，执行abb
+    // function xyz() {
+    //     var some = 'xyz_some';
+
+    //     function abb(){
+    //         return some;
+    //     };
+
+    //     return abb();//是否return了一个函数,
+    // };
+    // var result = xyz();
+    // console.log( result );
+
+    // function test () {
+    //     var num = 100;
+    //     function a () {
+    //         num ++;
+    //         console.log( num );
+    //     };
+    //     function b() {
+    //         num --;
+    //         console.log(num);
+    //     };
+    //     return [a, b];
+    // };
+    // var result = test();
+    // result[1]();
+    // result[0]();
+
+    //es5里边只有函数作用域和全局作用域
+    // function test_a(){
+    //     var arr = [];
+    //     for( var i = 0; i < 5; i++ ){
+    //         arr[i] = function () {
+    //             document.write(i);
+    //         };
+    //     };
+    //     return arr;
+    // };
+    // var result_c = test_a();
+    // for( var i = 0; i < 5; i++ ){
+    //     result_c[i]()
+    // };
+    // for(var a = 0; a < 1;a ++ ){}
+    // console.log(a);
+
+    //点击事件 -> 鼠标点击元素的时候去做一件事情 onclick[当点击的时候]
+    // var one = document.querySelector('.box');
+    // one.onclick = function () {//这个函数只能在用鼠标点击了one这个元素的时候触发
+    //     one.style.backgroundColor = '#58a';
+    // };
+
+    // var boxs = document.querySelectorAll('.box');
+    // console.log( boxs );
+    // console.time() 不应该为元素身上乱绑属性
+    // for( var i = 0; i < boxs.length; i++ ){
+    //     //当i=0， a = 0
+    //     (function (a){//小明 函数的形参，就是函数里的变量
+    //         boxs[a].onclick = function(){//小刚
+    //             console.log(a);
+    //         };
+    //     })(i);
+    // };
+    // console.timeEnd()//打印出这段代码用了多久执行完成
+    //点击盒子的时候变量i在全局 i = 4
+    // function abc(a){
+    //     //var a = 1
+    // };
+    // abc(1);
+    
+    // function some(abc){
+    //     console.log(abc);
+    // };
+    // some(123);
+    // //立即执行函数，自己就会执行
+    // (function (xyz){
+    //     console.log(xyz)
+    // })('我是函数foo123');
+
+
+    //闭包的终极面试题:
+    //形参和实参一一对应
+    function fun(n, o) {
+        console.log(o);
+        return {
+            fn: function(m) {
+                return fun(m, n);//传了m和n两个实参，1 1 fun(1,1)
+            }
+        };
+    };
+    // var a = fun(1);
+    // a.fn(1);//1
+    // a.fn(2);//1
+    // a.fn(3);//1
+    // a.fn(4);//1
+
+    var result_b = fun(1).fn(2).fn(3).fn(4);
+
+    //函数声明
+    function abc() {
+        console.log('abc');
+    }
+    var some = function () {}//表达式
+
+
+
+
+
+
+
+
+</script>
+</html>

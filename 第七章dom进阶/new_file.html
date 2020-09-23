@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="box">
+			12321321
+			<div class="sbx">131212</div>
+			<div class="sbx">2</div>
+			<div class="sbx">3</div>
+		</div>
+	</body>
+	<script>
+		var ele_box=document.querySelector(".box");
+		var son_box=ele_box.childNodes;
+		// console.log(son_box);
+		
+		var box_a=document.querySelectorAll('.box > .sbx');
+		var box_c=ele_box.children;
+		// console.log(box_a);
+		//ele_box.innerHTML+='<div class="sbx">4</div>';
+		// console.log(box_c);
+		
+		//console.log(son_box.length);
+		// console.log(son_box[0].nodeName);
+		// console.log(son_box[0].nodeType);
+		// console.log(son_box[0].nodeValue);
+		
+		// var lastNode=document.createElement('div');
+		// lastNode.innerText='我是lastNode';
+		// ele_box.appendChild(lastNode);
+		 console.log(ele_box.firstElementChild);
+	</script>
+</html>

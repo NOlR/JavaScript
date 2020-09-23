@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象和数字的方法</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //Object.defineProperty() Object.getOwnPropertyDescriptor()
+    /*
+        配置项:
+        {
+            value: ,值
+            writable: true,是否可写 -> 可以改成false
+            enumerable: ,是否可枚举
+            configurable: false,是否可以配置 -> 锁
+        }
+    */
+    // const obj = {
+    //     nickname: '小明'
+    // };
+    // Object.defineProperty(obj, 'age', {
+    //     value: 3,
+    //     writable: true,
+    //     enumerable: true,
+    //     configurable: false//在锁锁上的时候，可写是true
+    // });
+    // console.log( obj );
+    // Object.defineProperty(obj, 'age', {
+    //     writable: false//在锁已经锁上的情况下 把可写变为false
+    // });
+    // Object.freeze(obj);
+    //Object.isFrozen(obj) 判断一个对象是否被冻住了
+    // console.log( Object.isFrozen(obj) );
+
+    //密封 Object.seal(obj)把一个对象封闭 -> 不能添加新的属性
+    // const obj1 = { nickname: '小明' },
+    //     arr = [1,2,3];
+    // Object.seal( obj1 );
+    //nickname的详细配置 封闭之前锁是开着的 -> 封闭之后把锁锁上,同时可写和可枚举都不能再改配置了
+    // console.log( Object.getOwnPropertyDescriptor(obj1, 'nickname') );
+    // console.log( Object.getOwnPropertyDescriptor(obj1, 'nickname') );
+    // obj1.nickname = '小刚';//nickname是可以改的 密封后如果原来是可写的，那么就可写
+    // console.log(obj1);
+    // obj1.age = 3;
+    //第一，把对象的所有属性的锁都给锁上， 第二：阻止对象添加新的属性
+    //判断一个对象是否被封闭了 Object.isSealed(obj);
+    // console.log( Object.isSealed(obj1) );
+
+    // Object.seal(arr);
+    // console.log(arr);
+    // arr[3] = 4;
+    // console.log(arr);
+    // arr[0] = 1.5;
+    //冻上之后，所有属性不能改值，同时不能添加新属性
+    //密封：不能添加新的属性，如果原属性可写，依然可写
+    // const obj3 = {name:'小刚'};
+    // console.log( Object.isSealed(obj3) );
+    // console.log( Object.isFrozen(obj3) );
+
+
+
+
+    //obj.hasOwnProperty('属性名') 判断对象身上是否有某个属性 返回true或者false 
+    // const obj4 = { nickname: '小明',age: 3, hobbies: ['sing', 'jump', 'rap', 'basketball'] };
+    // Object.defineProperty( obj4, 'sex', {
+    //     value: 'boy'
+    // } );
+    // console.log( 'obj4', obj4);
+    // console.log( obj4.hasOwnProperty('toString') );//fasle 只能去私有属性里边找
+    // console.log( 'toString' in obj4 );//in判断对象身上是否有某个属性
+
+    // //Object.entries() 获取所有可枚举属性的键值对数组
+    // let result = Object.entries(obj4);//sex属性没有被放进去
+    // console.log('result:', result);
+    // const arr2 = [1,2,3];
+    // console.log( Object.entries(arr2) );
+
+    // //把键值对格式的数组转化为一个对象  浅拷贝
+    // //Object.fromEntries() 
+    // const abc = Object.fromEntries(result);
+    // console.log( 'abc', abc);
+
+    // const arr3 = [ ['world', 'hello'] ];//格式错误
+    // console.log( Object.fromEntries(arr3) );
+
+
+
+
+
+
+    //拷贝：拷贝别的对象身上的属性
+    //Object.assign(obj1, obj2) ->  把对象2里边的属性合并到1
+    // const arr4 = [1,2,3],
+    //     arr5 = [4,5,6];
+    // console.log( arr4.concat(arr5) );
+
+    //对象里边的属性是无序的
+    const obj5 = { nickname: '小明', sex: 'girl' },
+        obj6 = {
+            sex: 'boy', 
+            hobbies: ['sing', 'jump', 'rap', 'basketball'],
+            sayName: function(){
+                console.log(this.nickname)
+            }
+        },
+        obj7 = { sex: 'girl' };
+    Object.assign(obj5, obj6, obj7);
+    console.log(obj5);//用obj6和obj7去改变obj5 ,如果没有这个属性就添加这个属性，如果有这个属性就重新赋值->后边的覆盖前边的
+    obj5.sayName();
+    
+    Object.defineProperty( obj5, 'age', {
+        value: 3
+    } );
+
+    //拷贝一下obj5 把所有obj5里边有的可枚举私有属性都给前边的这个空对象
+    const obj8 = Object.assign( {}, obj5 );
+    console.log(obj8);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

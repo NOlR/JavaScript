@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        body{
+            background-color: #333;
+        }
+        .default{
+            /* 千万不要用css设置canvas的宽高 */
+            /* width: 500px;
+            height: 500px; */
+            border: 1px solid orange;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- canvas的默认宽高是300 * 150 -->
+    <canvas class="default" width="500" height="500"></canvas>
+</body>
+<script>
+    //画图的 画布
+    const canvas_default = document.querySelector('.default');
+    //1.获取canvas上下文对象 -> 告诉浏览器这个画布是3d的还是2d的
+    const default_context = canvas_default.getContext('2d');
+    console.log(default_context)
+    //矩形，弧线，路径, 2d里边唯一自带的一个形状是矩形(Rect);
+    //fillRect() strokeRect()  stroke(描边) -> x, y, 宽度, 高度
+    //2d上下文对象身上有一个fillStyle的属性
+    default_context.fillStyle = '#58a';//一定要设置一个字符串 颜色的单词，rgba(),rgb(),十六进制
+    default_context.fillRect(10, 10, 50, 50);
+
+    default_context.fillStyle = 'orange';
+    default_context.fillRect(30, 30, 50, 50);
+
+    default_context.fillStyle = 'pink';
+    default_context.fillRect(50, 50, 50, 50);
+
+    default_context.strokeStyle = 'cyan';
+    default_context.strokeRect(300, 300, 50, 50);
+
+    default_context.strokeStyle = 'red';
+    default_context.strokeRect(480, 480, 50, 50);//超出去的就会被隐藏掉
+
+    //clearRect(x, y, width, height)清除矩形 把canvas指定区域变成透明的
+    default_context.clearRect(60, 60, 10, 10);
+</script>
+</html>

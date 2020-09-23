@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义滚动条</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        body{
+            user-select: none;
+        }
+        .box{
+            position: relative;
+            width: 500px;
+            height: 500px;
+            line-height: 1.6em;
+            padding: 0 10px;
+            margin: 50px auto;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+            border-radius: 5px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .box:hover > .scroll_bar{
+            opacity: 1;
+        }
+        .scroll_bar{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            border-radius: 5px;
+            background-color: orange;
+            opacity: .2;
+            transition: .5s linear;
+        }
+        .slide{
+            width: 10px;
+            height: 50px;
+            background-color: #58a;
+            border-radius: 5px;
+        }
+        .some{
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+            border: 10px solid purple;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <!-- <section class="some"></section> -->
+    <section class="box">
+        <p>
+            ——此开卷第一回也。作者自云：曾历过一番梦幻之后，故将真事隐去，而借
+            通灵说此《石头记》一书也，故曰“甄士隐”云云。但书中所记何事何人?自己又
+            云：“今风尘碌碌，一事无成，忽念及当日所有之女子：一一细考较去，觉其行止
+            见识皆出我之上。我堂堂须眉诚不若彼裙钗，我实愧则有馀，悔又无益，大无可如
+            何之日也。当此日，欲将已往所赖天恩祖德，锦衣纨之时，饫甘餍肥之日，背父
+            兄教育之恩，负师友规训之德，以致今日一技无成、半生潦倒之罪，编述一集，以
+            告天下；知我之负罪固多，然闺阁中历历有人，万不可因我之不肖，自护己短，一
+            并使其泯灭也。所以蓬牖茅椽，绳床瓦灶，并不足妨我襟怀；况那晨风夕月，阶柳
+            庭花，更觉得润人笔墨。我虽不学无文，又何妨用假语村言敷演出来?亦可使闺阁
+            昭传。复可破一时之闷，醒同人之目，不亦宜乎？”故曰“贾雨村”云云。更于篇
+            中间用“梦”“幻”等字，却是此书本旨，兼寓提醒阅者之意。
+            　　看官你道此书从何而起?说来虽近荒唐，细玩颇有趣味。却说那女娲氏炼石补
+            天之时，于大荒山无稽崖炼成高十二丈、见方二十四丈大的顽石三万六千五百零一
+            块。那娲皇只用了三万六千五百块，单单剩下一块未用，弃在青埂峰下。谁知此石
+            自经锻炼之后，灵性已通，自去自来，可大可小。因见众石俱得补天，独自己无才
+            不得入选，遂自怨自愧，日夜悲哀。一日正当嗟悼之际，俄见一僧一道远远而来，
+            生得骨格不凡，丰神迥异，来到这青埂峰下，席地坐谈。见着这块鲜莹明洁的石头，
+            且又缩成扇坠一般，甚属可爱。那僧托于掌上，笑道：“形体倒也是个灵物了，只
+            是没有实在的好处。须得再镌上几个字，使人人见了便知你是件奇物，然后携你到
+            那昌明隆盛之邦、诗礼簪缨之族、花柳繁华地、温柔富贵乡那里去走一遭。”石头
+            听了大喜，因问：“不知可镌何字?携到何方?望乞明示。”那僧笑道：“你且莫问，
+            日后自然明白。”说毕，便袖了，同那道人飘然而去，竟不知投向何方。
+            　　又不知过了几世几劫，因有个空空道人访道求仙，从这大荒山无稽崖青埂峰下
+            经过。忽见一块大石，上面字迹分明，编述历历。空空道人乃从头一看，原来是无
+            才补天、幻形入世，被那茫茫大士、渺渺真人携入红尘、引登彼岸的一块顽石；上
+            面叙着堕落之乡、投胎之处，以及家庭琐事、闺阁闲情、诗词谜语，倒还全备。只
+            是朝代年纪，失落无考。后面又有一偈云：
+            无才可去补苍天，枉入红尘若许年。
+            此系身前身后事，倩谁记去作奇传?
+            空空道人看了一回，晓得这石头有些来历，遂向石头说道：“石兄，你这一段故事，
+            据你自己说来，有些趣味，故镌写在此，意欲闻世传奇。据我看来：第一件，无朝
+            代年纪可考；第二件，并无大贤大忠、理朝廷、治风俗的善政，其中只不过几个异
+            样女子，或情或痴，或小才微善。我纵然抄去，也算不得一种奇书。”石头果然答
+            道：“我师何必太痴!我想历来野史的朝代，无非假借汉、唐的名色；莫如我这石头
+            所记不借此套，只按自己的事体情理，反倒新鲜别致。况且那野史中，或讪谤君相，
+            或贬人妻女，奸淫凶恶，不可胜数；更有一种风月笔墨，其淫秽污臭最易坏人子弟。
+            至于才子佳人等书，则又开口‘文君’，满篇‘子建’，千部一腔，千人一面，且终
+            不能不涉淫滥。在作者不过要写出自己的两首情诗艳赋来，故假捏出男女二人名姓；
+            又必旁添一小人拨乱其间，如戏中的小丑一般。更可厌者，‘之乎者也’，非理即文，
+            大不近情，自相矛盾。竟不如我这半世亲见亲闻的几个女子，虽不敢说强似前代书
+            中所有之人，但观其事迹原委，亦可消愁破闷；至于几首歪诗，也可以喷饭供酒。
+            其间离合悲欢，兴衰际遇，俱是按迹循踪，不敢稍加穿凿，至失其真。只愿世人当
+            那醉馀睡醒之时，或避事消愁之际，把此一玩，不但是洗旧翻新，却也省了些寿命
+            筋力，不更去谋虚逐妄了。我师意为如何？”
+            　　空空道人听如此说，思忖半晌，将这《石头记》再检阅一遍。因见上面大旨不
+            过谈情，亦只是实录其事，绝无伤时诲淫之病，方从头至尾抄写回来，闻世传奇。
+            从此空空道人因空见色，由色生情，传情入色，自色悟空，遂改名情僧，改《石头
+            记》为《情僧录》。东鲁孔梅溪题曰《风月宝鉴》。后因曹雪芹于悼红轩中，披阅十
+            载，增删五次，纂成目录，分出章回，又题曰《金陵十二钗》，并题一绝。即此便
+            是《石头记》的缘起。诗云：
+            满纸荒唐言，一把辛酸泪。
+            都云作者痴，谁解其中味!
+            　　《石头记》缘起既明，正不知那石头上面记着何人何事?看官请听。按那石上
+            书云：当日地陷东南，这东南有个姑苏城，城中阊门，最是红尘中一二等富贵风流
+            之地。这阊门外有个十里街，街内有个仁清巷，巷内有个古庙，因地方狭窄，人皆
+            呼作“葫芦庙”。庙旁住着一家乡宦，姓甄名费字士隐，嫡妻封氏，性情贤淑，深
+            明礼义。家中虽不甚富贵，然本地也推他为望族了。因这甄士隐禀性恬淡，不以功
+            名为念，每日只以观花种竹、酌酒吟诗为乐，倒是神仙一流人物。只是一件不足：
+            年过半百，膝下无儿，只有一女乳名英莲，年方三岁。
+            　　一日炎夏永昼，士隐于书房闲坐，手倦抛书，伏几盹睡，不觉朦胧中走至一处，
+            不辨是何地方。忽见那厢来了一僧一道，且行且谈。只听道人问道：“你携了此物，
+            意欲何往？”那僧笑道：“你放心，如今现有一段风流公案正该了结，这一干风流
+            冤家尚未投胎入世。趁此机会，就将此物夹带于中，使他去经历经历。”那道人道：
+            “原来近日风流冤家又将造劫历世，但不知起于何处，落于何方？”那僧道：“此
+            事说来好笑。只因当年这个石头，娲皇未用，自己却也落得逍遥自在，各处去游玩。
+            一日来到警幻仙子处，那仙子知他有些来历，因留他在赤霞宫中，名他为赤霞宫神
+            瑛侍者。他却常在西方灵河岸上行走，看见那灵河岸上三生石畔有棵绛珠仙草，十
+            分娇娜可爱，遂日以甘露灌溉，这绛珠草始得久延岁月。后来既受天地精华，复得
+            甘露滋养，遂脱了草木之胎，幻化人形，仅仅修成女体，终日游于离恨天外，饥餐
+            秘情果，渴饮灌愁水。只因尚未酬报灌溉之德，故甚至五内郁结着一段缠绵不尽之
+            意。常说：‘自己受了他雨露之惠，我并无此水可还。他若下世为人，我也同去走
+            一遭，但把我一生所有的眼泪还他，也还得过了。’因此一事，就勾出多少风流冤
+            家都要下凡，造历幻缘，那绛珠仙草也在其中。今日这石正该下世，我来特地将他
+            仍带到警幻仙子案前，给他挂了号，同这些情鬼下凡，一了此案。”那道人道：“果
+            是好笑，从来不闻有‘还泪’之说。趁此你我何不也下世度脱几个，岂不是一场功
+            德？”那僧道：“正合吾意。你且同我到警幻仙子宫中将这蠢物交割清楚，待这一
+            干风流孽鬼下世，你我再去。如今有一半落尘，然犹未全集。”道人道：“既如此，
+            便随你去来。”
+            　　却说甄士隐俱听得明白，遂不禁上前施礼，笑问道：“二位仙师请了。”那僧道
+            也忙答礼相问。士隐因说道：“适闻仙师所谈因果，实人世罕闻者，但弟子愚拙，
+            不能洞悉明白。若蒙大开痴顽，备细一闻，弟子洗耳谛听，稍能警省，亦可免沉沦
+            之苦了。”二仙笑道：“此乃玄机，不可预泄。到那时只不要忘了我二人，便可跳出
+            火坑矣。”士隐听了，不便再问，因笑道：“玄机固不可泄露，但适云‘蠢物’，不
+            知为何，或可得见否？”那僧说：“若问此物，倒有一面之缘。”说着取出递与士隐。
+            士隐接了看时，原来是块鲜明美玉，上面字迹分明，镌着“通灵宝玉”四字，后面
+            还有几行小字。正欲细看时，那僧便说“已到幻境”，就强从手中夺了去，和那道
+            人竟过了一座大石牌坊，上面大书四字，乃是“太虚幻境”。两边又有一副对联道：
+            假作真时真亦假，
+            无为有处有还无。
+        </p>
+        <section class="scroll_bar">
+            <!-- slide[滑块] -->
+            <div class="slide"></div>
+        </section>
+    </section>
+</body>
+<script>
+
+    /*
+        总结：
+            moveY变量 决定 内容区域滚动多少距离
+
+            radio变量 = 内容区已经滚动的距离 / 内容区域总共可以滚动多少距离
+
+            滑块移动 = radio * 滑块可以滚动的距离
+    */
+
+    //获取标签
+    const box = document.querySelector('.box'),
+        oP = document.querySelector('.box > p'),
+        scroll_bar = document.querySelector('.box > .scroll_bar'),
+        slide = document.querySelector('.box > .scroll_bar > .slide');
+    /*
+        设置滑块的高度 = 滑道的高度 /  p标签的高度 * 滑道的高度
+        鼠标滑轮在box里边滚动，让内容和滑块跟着滚
+            在滑轮滚动的时候要限定p标签能够滚动的最大距离 [0, -2075]
+    */
+    slide.style.height = scroll_bar.offsetHeight / oP.offsetHeight * scroll_bar.offsetHeight + 'px'; 
+
+    let moveY = 0,//保存滚动距离
+        content_maxMove = oP.offsetHeight - scroll_bar.offsetHeight,//内容区域最大的滚动距离
+        slide_maxMove = scroll_bar.offsetHeight - slide.offsetHeight,//滑块最大滚动距离
+        radio = 0;//radio[比例] -> 记录内容区滚动的距离和可滚动距离的比例
+
+    console.log(content_maxMove)
+    box.addEventListener('mousewheel', e => {
+        e.stopPropagation();//阻止冒泡
+        if( e.wheelDelta > 0 ){//鼠标往下滚 内容往上走
+            moveY += 45;//自定义每次滚动多少px
+            moveY = Math.min(moveY, 0);//moveY不能大于0
+            slide_move()
+            oP.style.transform = `matrix(1,0,0,1,0,${moveY})`;
+        }else{//鼠标往上滚 内容向下走
+            moveY += -45;
+            moveY = Math.max(moveY, -content_maxMove);//moveY不能小于-2075
+            slide_move()
+            oP.style.transform = `matrix(1,0,0,1,0,${moveY})`;
+        }
+    })
+
+    //拖着滑块跑
+    let click = false,//记录滑块是否被点中
+        mousePosition = 0;
+
+    slide.addEventListener('mousedown', e => {//click在鼠标抬起来之后才算点击了
+        e.stopPropagation();//阻止冒泡
+        click = true;
+        mousePosition = e.clientY;//记录鼠标点下去时y轴的坐标
+    })
+    document.addEventListener('mousemove', e => {//鼠标滑动
+        e.stopPropagation();//阻止冒泡
+        if( !click ) return;//如果没有选中slide就直接返回
+        //拖着滑块走的时候，让内容动也让滑块自己动
+        // console.log('鼠标拖动了:', -(e.clientY - mousePosition))
+        moveY += -(e.clientY - mousePosition) * 4;
+        moveY = Math.min( Math.max(  -content_maxMove, moveY ), 0);//moveY的值限定在[-2075, 0]
+        oP.style.transform = `matrix(1,0,0,1,0,${moveY})`;
+        slide_move();
+        mousePosition = e.clientY;
+    })
+    document.addEventListener( 'mouseup', e=> {//鼠标抬起
+        e.stopPropagation();//阻止冒泡
+        click = false;
+    } )
+
+
+    function slide_move () {//这个函数之所以能让滑块移动时因为radio改变
+        radio = moveY / content_maxMove;//content_maxMove 固定值
+        //slide_maxMove的值是固定的
+        slide.style.transform = `matrix(1,0,0,1,0,${radio * -slide_maxMove})`
+    };
+
+
+
+
+    /*
+        获取元素宽度和高度的简便方法：offsetWidth offsetHeight clientWidth clientHeight
+        offset 宽/高 + padding + border
+        client 宽/高 + padding
+        Math.min(num1, num2....)找出所有实参里边最小的数字
+        Math.max(num1,num2.,.,,,,)找到所有数字里边最大的那一个
+        Math.abs(num) 返回num的绝对值
+    */ 
+    // const some = document.querySelector('.some')
+    // // console.log(window.getComputedStyle(some).width)
+    // const offsetHeight = some.offsetHeight,
+    //     offsetWidth = some.offsetWidth,
+    //     clientWidth = some.clientWidth,
+    //     clientHeight = some.clientHeight;
+    // console.log( 'offsetWidth:', offsetWidth )
+    // console.log( 'offsetHeight:', offsetHeight )
+    // console.log( 'clientWidth:', clientWidth )
+    // console.log( 'clientHeight:', clientHeight )
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			.backcolor{
+				display: inline-block;
+				background-color: orange;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<p>你为什么这么好看 你为什么这么好看 你为什么这么好看 
+		你为什么这么好看 你为什么这么好看 你为什么这么好看 
+		你为什么这么好看 你为什么这么好看 你为什么这么好看 
+		你为什么这么好看 你为什么这么好看 你为什么这么好看 你为什么这么好看 </p>
+		<div>
+			<span>查找</span>
+			<input type="text" />
+			<button>确定</button>
+			<button>还原</button>
+		</div>
+		<br />
+		<div>
+			<span>替换</span>
+			<input type="text" placeholder="原数据" />
+			<span>变为</span>
+			<input type="text" placeholder="新数据"/>
+			<button>确定</button>
+			<button>还原</button>
+		</div>
+	<script>
+		 const P=document.querySelector("p");
+		 const select_data=document.querySelector("div").querySelector("input");
+		 const select_button=document.querySelector("div").querySelectorAll("button")[0];
+		 const select_reset=document.querySelector("div").querySelectorAll("button")[1];
+		 const replace_old_data=document.querySelectorAll("div")[1].querySelectorAll("input")[0];
+		 const replace_new_data=document.querySelectorAll("div")[1].querySelectorAll("input")[1];
+		 const replace_button=document.querySelectorAll("div")[1].querySelectorAll("button")[0];
+		  const replace_reset=document.querySelectorAll("div")[1].querySelectorAll("button")[1];
+		 let select_cont=[];
+		
+		let collect_new_data=[];
+		let collect_old_data=[];
+		select_button.onclick=()=>{
+			let selectData=select_data.value.trim();
+			if(selectData==="")
+			{
+				alert("请输入要查询的内容");
+				return;
+			}
+			select_cont.push(selectData);
+			let data=P.innerHTML;
+			const reg=new RegExp(selectData,'g');
+			console.log(reg);
+			let newdata = data.replace(reg,'<span class="backcolor">'+selectData+'</span>');
+			P.innerHTML=newdata;
+			select_data.value="";
+			console.log(P.innerHTML);
+			
+		}
+		
+		select_reset.onclick=()=>{
+			if(select_cont.length===0) return;
+			const str=select_cont.pop();
+			const reg=new RegExp('<span class="backcolor">'+str+'</span>','g');
+			let restdata=P.innerHTML.replace(reg,str);
+			P.innerHTML=restdata;
+		}
+		
+		replace_button.onclick=()=>{
+			let old_data=replace_old_data.value.trim();
+			let new_data=replace_new_data.value.trim();
+			if(old_data===""||new_data===""){
+				alert("原数据或新数据不能为空");
+				return;
+			}
+			collect_old_data.push(old_data);
+			collect_new_data.push(new_data);
+			const reg=new RegExp(old_data,"g");
+			P.innerHTML=P.innerHTML.replace(reg,new_data);
+			//console.log(old_data,new_data);
+			replace_old_data.value="";
+			replace_new_data.value="";
+		}
+		
+		replace_reset.onclick=()=>{
+			if(collect_new_data.length===0||collect_old_data.length===0) return;
+		//	console.log(collect_new_data,collect_old_data);
+			const new_str=collect_new_data.pop();
+			const old_str=collect_old_data.pop();
+			const reg=new RegExp(new_str,"g");
+			P.innerHTML=P.innerHTML.replace(reg,old_str);
+		}
+	</script>
+	</body>
+</html>

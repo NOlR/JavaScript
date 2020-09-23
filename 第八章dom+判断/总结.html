@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			dom操作
+				1.元素的创建
+				var ele_div=document.createElement("div");
+										//创建元素		("元素标签")
+				
+				2.查看元素的类名
+					1.className
+					2.classlist	(推荐)
+						1.可以实现类名的添加
+							classlist.add("类名")(不加点)
+							可以连续增加多个,用,相隔开 .add("类名1","类名2");
+							
+						2.类名删除
+							classlist.remove("类名")
+							与添加相同也可连续删除多个
+							
+						3.类名修改
+							classlist.replace("旧类名","新类名");
+								用新类名替换旧类名
+								
+						4.toggle属性
+							classlist.toggle("类名")
+								改方法为如果classlist有该"类名"则删除,没有进行添加
+								
+					
+				3.修改元素属性
+					注意:元素的属性会直接再加行内属性中,
+						无法向css的样式中添加
+						1.
+						ele_div.style.cssText='width: 500px;height: 500px;'
+						
+						2.
+						ele_div.style.height='500px'
+						
+						
+				4.删除属性
+					1.removeProperty()
+					ele_div.style.removeProperty("属性名");
+					
+					2.或者可以使用
+					.style.属性名使其为空
+					
+							
+		</script>
+	</body>
+</html>

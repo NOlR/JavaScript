@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组的方法</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //声明一个数组 4种
+    //可以通过构造函数的方式来声明数组
+    /*
+        只传一个参数:
+            如果是一个数字： 代表新创建数组的长度
+            如果不是一个数字： 传入的实参就是数组里的数据
+    */
+    var arr = new Array({nickname: '小敏'});
+    console.log( arr );
+
+    //直接通过Array
+    var arr_b = Array(10);
+    console.log(arr_b);
+
+    var arr_a = [10];//字面量,语法糖
+    console.log(arr_a);
+
+    var arr_c = [1,2,3];
+    console.log(arr_c);
+    //length属性能不能够遍历出来
+    for( var key in arr_c ){
+        console.log(key);
+    };
+    //length属性是课读的
+    console.log( arr_c.length );
+    //length属性是否可写
+    arr_c.length = 1;
+    console.log(arr_c);
+    arr_c.length = 3;
+    console.log(arr_c);
+    arr_c[1] = 'hello world';
+
+
+    var arr_d = [1,2];
+    console.log(arr_d);
+    arr_d[2] = 3;
+    console.log(arr_d);
+    arr_d[4] = 5;
+</script>
+</html>

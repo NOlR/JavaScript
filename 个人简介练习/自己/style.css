@@ -1,0 +1,172 @@
+ul, li {
+  margin: 0px;
+  padding: 0px;
+  list-style: none; }
+
+a {
+  text-decoration: none; }
+
+body {
+  background-color: #ededed; }
+
+.wrapper {
+  width: 1200px;
+  margin: 50px auto;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1); }
+  .wrapper .left {
+    float: left;
+    width: 320px;
+    border-top: 10px solid #32c1fb;
+    box-sizing: border-box;
+    border-top-left-radius: 10px; }
+    .wrapper .left .logo {
+      display: block;
+      margin: 50px;
+      width: 220px;
+      height: 60px;
+      margin-bottom: 10px; }
+      .wrapper .left .logo img {
+        height: 100%; }
+    .wrapper .left .introduction {
+      color: #888;
+      padding-left: 50px;
+      line-height: 30px;
+      font-weight: 300; }
+    .wrapper .left .nav {
+      margin-top: 25px;
+      position: relative; }
+      .wrapper .left .nav .zuosanjiao {
+        position: absolute;
+        left: 0px;
+        top: 15px; }
+        .wrapper .left .nav .zuosanjiao .s1 {
+          border-bottom: 10px solid #ededed;
+          border-right: 10px solid transparent; }
+        .wrapper .left .nav .zuosanjiao .s2 {
+          border-top: 10px solid #ededed;
+          border-right: 10px solid transparent; }
+      .wrapper .left .nav a .navtitle {
+        color: #666;
+        font-weight: 600;
+        font-size: 18px;
+        padding-left: 50px;
+        line-height: 52px;
+        transition: 0.2s ease; }
+        .wrapper .left .nav a .navtitle .xiasanjiao1 {
+          position: absolute;
+          left: 145px;
+          top: 79px; }
+          .wrapper .left .nav a .navtitle .xiasanjiao1 .s1 {
+            float: left;
+            transition: 0.5s ease;
+            border-top: 5px solid #cacaca;
+            border-left: 5px solid transparent; }
+          .wrapper .left .nav a .navtitle .xiasanjiao1 .s2 {
+            float: left;
+            transition: 0.5s ease;
+            border-top: 5px solid #cacaca;
+            border-right: 5px solid transparent; }
+        .wrapper .left .nav a .navtitle .xiasanjiao2 {
+          position: absolute;
+          left: 115px;
+          top: 130px; }
+          .wrapper .left .nav a .navtitle .xiasanjiao2 .s1 {
+            float: left;
+            transition: 0.5s ease;
+            border-top: 5px solid #cacaca;
+            border-left: 5px solid transparent; }
+          .wrapper .left .nav a .navtitle .xiasanjiao2 .s2 {
+            float: left;
+            transition: 0.5s ease;
+            border-top: 5px solid #cacaca;
+            border-right: 5px solid transparent; }
+        .wrapper .left .nav a .navtitle:hover {
+          background-color: #f5f5f5;
+          color: black; }
+        .wrapper .left .nav a .navtitle:hover > .xiasanjiao1 > .s1 {
+          border-top: 5px solid #b1b1b1; }
+        .wrapper .left .nav a .navtitle:hover > .xiasanjiao1 > .s2 {
+          border-top: 5px solid #b1b1b1; }
+        .wrapper .left .nav a .navtitle:hover > .xiasanjiao2 > .s1 {
+          border-top: 5px solid #b1b1b1; }
+        .wrapper .left .nav a .navtitle:hover > .xiasanjiao2 > .s2 {
+          border-top: 5px solid #b1b1b1; }
+      .wrapper .left .nav a .home {
+        color: black; }
+    .wrapper .left .avatar {
+      margin-top: 40px;
+      width: 260px;
+      height: 270px;
+      border-top: 10px solid #32c1fb;
+      border-right: 10px solid #8c53ff;
+      border-bottom: 10px solid #ddd;
+      border-radius: 0 240px 240px 0; }
+      .wrapper .left .avatar img {
+        display: block;
+        padding: 10px 10px 10px 0;
+        width: 250px;
+        height: 250px;
+        border-radius: 0 240px 240px 0; }
+    .wrapper .left .self {
+      margin: 40px 0 40px 40px; }
+      .wrapper .left .self h3 {
+        color: #333;
+        font-size: 22px;
+        font-weight: 600; }
+      .wrapper .left .self .jieshao {
+        min-width: 220px;
+        max-width: 220px;
+        font-size: 16px;
+        font-weight: 300;
+        color: #888; }
+    .wrapper .left .left_title1 {
+      padding: 30px 50px 30px 50px;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee; }
+      .wrapper .left .left_title1 P {
+        margin-top: 0px;
+        font-size: 16px;
+        font-weight: 600; }
+      .wrapper .left .left_title1 .title1 li {
+        margin-bottom: 15px; }
+        .wrapper .left .left_title1 .title1 li span {
+          color: #999;
+          font-size: 13px;
+          margin-bottom: 15px;
+          font-weight: 300;
+          line-height: 1.4em;
+          vertical-align: baseline; }
+        .wrapper .left .left_title1 .title1 li i {
+          font-size: 12px;
+          vertical-align: baseline; }
+    .wrapper .left .left_title2 {
+      padding: 30px 50px; }
+      .wrapper .left .left_title2 P {
+        margin-top: 0px;
+        font-size: 16px;
+        font-weight: 600; }
+      .wrapper .left .left_title2 .title2 li {
+        margin-bottom: 15px; }
+        .wrapper .left .left_title2 .title2 li span {
+          color: #999;
+          font-size: 13px;
+          margin-bottom: 15px;
+          font-weight: 300;
+          line-height: 1.4em;
+          vertical-align: baseline; }
+        .wrapper .left .left_title2 .title2 li i {
+          font-size: 12px;
+          color: #999;
+          vertical-align: baseline; }
+  .wrapper .middle {
+    float: left;
+    width: 80px; }
+  .wrapper .right {
+    float: left;
+    width: 800px; }
+  .wrapper::after {
+    content: "";
+    display: block;
+    clear: both; }

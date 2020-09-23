@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则案例</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        body{
+            background-color: #333;
+        }
+        p.some{
+            color: red;
+        }
+        article{
+            width: 500px;
+            line-height: 1.8em;
+            margin: 50px auto 10px;
+            text-indent: 2em;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
+            background-color: white;
+        }
+        img{
+            display: block;
+            width: 100%;
+        }
+        .comments{
+            width: 500px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+        .comment{
+            margin-top: 10px;
+            background-color: white;
+            border-bottom: 1px solid orange;
+        }
+        .em_err{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p class="em_err"></p>
+    <input type="text" placeholder="请输入你的邮箱" class="email">
+    <article>
+        <p>下面这位是我老婆，诸君拔剑吧！</p>
+        <img src="./diya.jpg" alt="迪亚">
+    </article>
+    <div class="comments">
+        <input class="comment" type="text" placeholder="此评论必火...">
+        <button>发送</button>
+    </div>
+    <!-- comment评论 -->
+</body>
+<script>
+    //屏蔽脏字的正则 wdnmd sb 傻吊 傻屌 脑残 
+    let clean_reg = /(w[\s\d_\-+!@#&$]*d[\s\d_\-+!@#&$]*n[\s\d_\-+!@#&$]*m[\s\d_\-+!@#&$]*d)|(s[\s\d_\-+!@#&$]*b)|(傻[\s\d_\-+!@#&$]*吊)|(傻[\s\d_\-+!@#&$]*屌)|(脑[\s\d_\-+!@#&$]*残)/i;//i 忽略大小写
+    
+    let arr = [
+        /w[\s\d_\-+!@#&$]*d[\s\d_\-+!@#&$]*n[\s\d_\-+!@#&$]*m[\s\d_\-+!@#&$]*d/i, 
+        /傻[\s\d_\-+!@#&$]*吊/,
+        /傻[\s\d_\-+!@#&$]*屌/,
+        /脑[\s\d_\-+!@#&$]*残/,
+        /s[\s\d_\-+!@#&$]*b/i
+    ];
+
+    //str.replace(reg,'被替换成什么字符') 把字符串里边的内容进行替换，
+
+    const btn = document.querySelector('button'),
+        com_input = document.querySelector('.comment'),
+        com_container = document.querySelector('.comments');
+    btn.onclick = e => {
+        let value = com_input.value.trim();
+        //正则验证 -> 把不好的评论变成***
+        arr.forEach( item => {
+            value = value.replace(item, '***')
+        } )
+        let p = document.createElement('p');
+        p.classList.add('comment')
+        p.innerText = value;
+        com_container.append(p);
+        com_input.value = '';
+    };
+
+    //邮箱的正则验证
+    const email = document.querySelector('.email'),
+        em_err = document.querySelector('.em_err');
+    let email_reg = /^[0-9a-zA-Z]+[\-_\d]*[\da-zA-Z]+@[0-9a-z]{2,}\.com$/;
+    email.oninput = e => {
+        let value = e.target.value.trim();
+        if( !email_reg.test(value) ){
+            em_err.innerText = '请输入正确的邮箱格式'
+        }else{
+            em_err.innerText = ''
+        }
+    }
+
+    /*
+        2164484212@qq.com
+        merchantliang@gmail.com
+        han_lu@icloud.com
+        han1l2u@163.com
+        seven-day@microsoft.com
+        wq901200@hotmail.com
+    */
+    
+
+    console.log( email_reg.exec('2164484212@qq.com') );
+
+    console.log( email_reg.exec('merchantliang@gmail.com') );
+
+    console.log( email_reg.exec('han_lu@icloud.com') );
+
+    console.log( email_reg.exec('han1l2u@163.com') );
+
+    console.log( email_reg.exec('seven-day@microsoft.com') );
+
+    console.log( email_reg.exec('wq901200@hotmail.com') );
+</script>
+</html>

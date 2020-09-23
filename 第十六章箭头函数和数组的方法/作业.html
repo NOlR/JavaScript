@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作业</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .container{
+            width: 800px;
+            height: 400px;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+        .container > ul {
+            display: flex;
+            width: 3200px;
+            height: 400px;
+            transition: .4s ease-in-out;
+        }
+        .container > ul > li{
+            width: 800px;
+            height: 400px;
+        }
+        .container > ul > li > img{
+            width: 100%;
+            height: 100%;
+        } 
+        .btn-container{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 800px;
+            height: 40px;
+            margin: 0 auto;
+        }
+        .btn-container > span{
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: white;
+            background-color: orange;
+            border-radius: 8px;
+        }
+        .some{
+            background-color: #58a !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul>
+            <li>
+                <img src="./images/01.png" alt="小姐姐1">
+            </li>
+            <li>
+                <img src="./images/02.jpg" alt="小姐姐2">
+            </li>
+            <li>
+                <img src="./images/03.jpg" alt="小姐姐3">
+            </li>
+            <li>
+                <img src="./images/04.jpeg" alt="斯威夫特">
+            </li>
+        </ul>
+    </div>
+    <div class="btn-container">
+        <span class="some">第一张图片</span>
+        <span>第二张图片</span>
+        <span>第三张图片</span>
+        <span>第四张图片</span>
+    </div>
+</body>
+<script>
+    var uL = document.querySelector('.container > ul');
+    var span_list = document.querySelector('.btn-container').children;
+    
+    var index = 0;
+    for( var i = 0,length = span_list.length ; i < length; i++ ){
+        ( (a) => {
+            span_list[a].onclick = () => {
+                //让ul标签水平方向移动
+                uL.style.transform = 'translate(' + a * -800 + 'px)';
+                //点击span标签的时候让自己的背景颜色变成蓝色
+                span_list[index].classList.remove('some');
+                index = a;
+                span_list[index].classList.add('some');
+            }
+        })(i);
+    };
+
+
+    // for( var i = 0,length = span_list.length ; i < length; i++ ){
+    //     (function (a){
+    //         span_list[a].onclick = function () {
+    //             //让ul标签水平方向移动
+    //             uL.style.transform = 'translate(' + a * -800 + 'px)';
+    //             //点击span标签的时候让自己的背景颜色变成蓝色
+    //             span_list[index].classList.remove('some');
+    //             index = a;
+    //             span_list[index].classList.add('some');
+    //         };
+    //     })(i);
+    // };
+    /*
+        点击第0个：
+            index = 0 ，给第0个span标签删除some类名，然后让index = a(0) ，给第0个span标签加some类名
+        点击第3个：
+            index = 0; 给第0个span标签删除some类名，然后让index = a(3)，给第3个span标签加some类名
+        点击第1个
+            index = 3 给第0个span标签删除some类名 然后让 index = a(1) 给第1个span标签加some类名
+    */
+
+
+
+    // for( var i = 0,length = span_list.length ; i < length; i++ ){
+    //     (function (a){
+    //         span_list[a].onclick = function () {
+    //             //让ul标签水平方向移动
+    //             uL.style.transform = 'translate(' + a * -800 + 'px)';
+    //             //点击span标签的时候让自己的背景颜色变成蓝色
+    //             // this.classList.add('some');
+    //             for( var i = 0,length = span_list.length; i < length; i++ ){
+    //                 //先清除每个span标签的背景颜色
+    //                 span_list[i].classList.remove('some');
+    //             };
+    //             //再给自己设置一个背景颜色
+    //             this.classList.add('some');
+    //         };
+    //     })(i);
+    // };
+
+    // var a = 2;
+    //"translate('+  + 'px)"
+</script>
+</html>

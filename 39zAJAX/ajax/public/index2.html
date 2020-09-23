@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p class="font"></p>
+        <input class="username" type="text" name="username" placeholder="请输入你的用户名">
+        <input class="passworld" type="text" name="username" placeholder="请输入你的密码">
+        <button class="btn">提交</button>
+    </div>
+
+</body>
+<script>
+    /*
+        ajax -> 用来在js里边去向后端请求数据
+
+        创建一个ajax对象 -> new XMLHTTPRequest() -> 用HTTP协议请求数据(向后端请求)
+        XML数据格式 ->  发送和请求XML这种数据格式 -> 不单单可以发送和接受xml数据，任意数据类型都可以接收
+        所有用于发送请求的函数，和所有后端返回的数据都放在这样的一个对象里边.
+
+        xhr.open( '请求方式', '请求地址' ) 必须是字符串
+        请求方式:GET(获取[也叫做查])   POST(增)     DELETE(删)    PUT(改) -> 规范
+        xhr.send('数据') 发送到后端的数据 -> 如果什么都不发送写一个null
+
+        请求http://localhost:3000/的时候返回了一个html文件
+            http ://          localhost   :  3000    /   -> 整体叫做URL
+            协议  固定格式     域名(ip地址)    端口    根路径(接口)
+        
+        readyState:准备状态
+            0:未初始化 -> ajax对象还没有创建成功
+            1:启动 -> 已经调用了open方法，但是还没有调用send方法
+            2:发送 -> 已经调用了send方法，他正在去后端拿数据的路上。
+            3：接收 -> 已经接收到部分相应数据
+            4: 完成 -> 已经接收了所有数据，返回回来。
+        4表示回来了，但是并不一定说明他拿到了数据。
+
+        status:http请求的状态码 从100到600而且一定是一个整数
+            看到[200,300)之间的任意一个整数说明一切正常
+            300重定向: 304[正常]->去缓存里边拿数据 也是重定向.
+            400:前端出错误
+            看到500就知道是后端出问题了
+        
+        response 和 responseText：存放着返回回来的数据
+        最基本的请求流程就写好了
+
+        在使用get请求的情况下如果想要发送数据：
+            可以把要发送的数据写在send里边，但是这不是常用的方式;
+            在请求路径里边直接发送数据,给路径添加参数
+
+            路径?属性名=属性值&属性名=属性值......
+    */
+
+    const username = document.querySelector('.username'),
+        passworld = document.querySelector('.passworld'),
+        btn = document.querySelector('.btn'),
+        font = document.querySelector('.font');
+    
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            let user = username.value.trim();
+            let pas = passworld.value.trim();
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('get', `http://localhost:3000/login/?username=${user}&passworld=${pas}`);
+            xhr.send(null);
+            xhr.onreadystatechange = function () {
+                if( xhr.readyState === 4 ){
+
+                    if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+                        // console.log(xhr.responseText);
+                        font.innerText = xhr.responseText;
+                    }else{
+                        console.log(xhr.status);
+                    }
+                }  
+            }
+
+        })
+
+    // const xhr = new XMLHttpRequest();
+    // xhr.open('get', 'http://localhost:3000/wanzhang');
+    // xhr.send(null);
+    // xhr.onreadystatechange = function () {
+    //     if( xhr.readyState === 4 ){
+
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             console.log(xhr.responseText);
+    //         }else{
+    //             console.log(xhr.status);
+    //         }
+    //     }  
+    // }
+    // console.log(xhr);
+
+
+
+
+
+
+
+
+    // const xhr = new XMLHttpRequest();//创建一个助理\
+    //告诉他你去哪儿帮我买什么东西
+    // xhr.open('get', 'http://localhost:3000/wanzhang');
+    // //你告诉他好了，可以去买了。
+    // xhr.send(null);//让助理去买东西
+    // //主动的去接收返回回来的数据
+    // xhr.onreadystatechange = function () {//当准备状态改变的时候
+    //     // console.log('现在的状态是:', xhr.readyState);
+    //     if( xhr.readyState === 4 ){//判断状态是否为4，为4表示他回来了
+
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){//请求的状态
+    //             console.log(xhr.responseText);
+    //             // console.log('成功拿到数据');
+    //         }else{//回来了，但是没有拿到数据
+    //             console.log(xhr.status);//如果没有拿到数据，就可以根据状态码来判断是谁的问题
+    //         }
+    //     }  
+    // }
+    // console.log(xhr);
+</script>
+</html>

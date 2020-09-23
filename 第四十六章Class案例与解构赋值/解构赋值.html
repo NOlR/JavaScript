@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构赋值</title>
+</head>
+<body>
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <div class="box">4</div>
+    <div class="container">container</div>
+</body>
+<script>
+    //解构赋值，允许以一定的模式去字符串，数字，数组，对象里边取出想要的值
+    // let a = 1,b = 2,c = 3;
+    // console.log(a, b, c);
+    // //使用解构赋值 左边的是匹配模式，右边是一个数组,根据下标去匹配数组里边对象的项
+    // let [x, y, z] = [1, 2, 3];//声明三个变量，三个变量的值是数组里对应的项
+    // console.log(x, y, z);
+
+    // let arr = [{nickname: '小明'}, 5, 'hello'];
+    // let d = arr[2];
+    // console.log(d);
+    // let [,,e] = arr;
+    // console.log(e);
+
+    // let [f,,g] = arr;
+    // console.log(f, g);//解构
+    // let obj = arr[0];
+    // obj.age = 3;
+    // console.log(obj, arr);
+
+    // let [h] = [];
+    // console.log(h);
+
+    //解构高维数组: 下标一一对应原则
+    // let arr = [1, [ [2, 3] ] ];
+    // let [p, [ [, a] ] ] = arr;
+    // console.log( p, a );
+
+    // let [a, b] = '1';//iterable可迭代,只要能用for循环去遍历就有迭代器接口
+    // console.log(a, b);
+
+    //可以在解构赋值的时候写默认值
+    // let arr = [1, 2];
+    // let [a, b, c = {nickname: '小明'}] = arr;//解构出arr里边下标为2的这一项，没有，会返回一个undefined，
+    //一旦是undefined就会走到默认值,解构的时候值不能是一个undefined，
+    // console.log(a,b,c);
+
+    //在给解构赋值设置默认值时，不但可以设置任意的数据类型，还可以是一个表达式
+    // function add() {
+    //     console.log('我是add');
+    //     return 123;
+    // };
+    // let arr1 = [1, 2, undefined];
+    // let [x, y, z = add()] = arr1;//默认值是惰性求值
+    // console.log(x, y, z);
+
+    // let [q, w, e = true ? 'true' : 'false'] = arr1;
+    // console.log(q,w, e);
+
+    // let [ a, b = a ] = [ 'hello', undefined];
+    // console.log(a, b);
+    // const box = document.querySelectorAll('.box');
+    // console.log(box);
+
+    // let [ box1, box2, box3, box4 ] = box;
+
+    // console.log( box1, box2, box3, box4 );
+
+    //对象的解构赋值:
+    //解构模式里边的变量名对应对象里边的属性名
+    // let {foo, bar} = { foo: 'foo', bar: 'bar' };
+    // console.log(foo, bar);
+    // let {b, a} = {a:'foo', b: 'bar'};
+    // console.log(b, a);
+
+    //可以去指定变量名
+    //{ 属性名: 变量名 }
+    // let {user: username, psd: password } = {user:'hanlu', psd: '123'};
+    // console.log( username, password );
+
+    //如果没有这个属性，就会赋值为undefined, 搞一个默认值
+    //当匹配模式匹配出来的值全等于 undefined的时候，就会使用默认值
+    // let {x, y = '小刚'} = { x: '小明', y: undefined };
+    // console.log(x, y);
+
+    // let obj1 = {
+    //     p: [
+    //         'hello',
+    //         { icon: 'word' }
+    //     ]
+    // };
+    //匹配的时候必须结构一致, 只要保证结构一致，就一定能够解构出来
+    // let { p: [ hello, {icon} ] } = obj1;
+    // console.log(hello, icon);
+
+    // const node = {
+    //     local: {
+    //         start: {
+    //             line: 'line',
+    //             column: 'column'
+    //         }
+    //     }
+    // };
+    //{ local: { start: { line:'line', column: 'column' } } }
+    // const { local:{start :{ line: line1, column: column1 } } } = node;
+    // console.log( line1, column1 );
+
+    // const { log } = console;
+    // log('我是解构出来的log');
+
+    //querySelector里边的this必须指向document
+    // const { querySelector } = document;
+    // const $ = querySelector.bind(document);
+    // console.log( $('.container') );
+
+    //函数的形参也可以使用解构赋值
+    // const { log } = console;
+    //数组被传递给了形参，形参是一个匹配模式，就会立马去匹配到对应的下标
+    //[x, y = 0] = [0 , 0] 中 [x, y = 0]是匹配模式，[0 , 0]匹配模式的默认值
+    //只要我们传的不是undefined，匹配模式的默认值就不会启用
+    // let [x, y = 0] = [0 , 0]
+    //如果传值  let [x, y = 0] = 实参
+    //let [x, y = 0] = []
+    // function add( [x = 0, y = 0] = [0 , 0] ) {
+    //     log(x + y);
+
+    // };
+    // add([]);
+
+    // function sum({nickname = '小明', age = 3} = { nickname: '小明', age: 3 }) {
+    //     log(nickname, age)
+    // };
+    // sum();
+
+    // function request({url, method = 'get', timeout = 0, handleTimeout, withCredentials}) {
+    //     const xhr = new XMLHttpRequest();
+    //     console.log( timeout, method );
+    // };
+    // request( {
+    //     url: 'localhost:3000/wanzhangbg',
+    //     handleTimeout: function(){},
+    //     withCredentials: true
+    // } );
+</script>
+</html>

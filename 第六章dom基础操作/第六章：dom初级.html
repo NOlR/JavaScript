@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .container{
+            width: 200px;
+            height: 500px;
+            background-color: orange;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: #58a;
+        }
+        .box + .box{
+            margin-top: 10px;
+        }
+        .bag{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            color: white;
+        }
+        .suger{
+            background-color: purple;
+        }
+        .suger1{
+            background-color: #58a;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="container">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+    <div class="box">4</div> -->
+    <!-- <span>我是span标签</span>  -->
+    <!-- <div class="some">
+        <h1>1</h1>
+    </div>
+    <h1>2</h1>
+    <div id="abc">我是id为abc的元素</div> -->
+    <!-- <div id="abc">我是第二个id为abc的元素</div> -->
+
+    <!-- name属性要唯一 -->
+    <!-- <input type="text" name="username" placeholder="请输入你的用户名"> -->
+    <!-- 自定义属性 -->
+    <!-- <div name="hanlu">旱麓</div> -->
+
+
+
+
+
+    <!-- 静态方法获取 -->
+    <div class="bag">
+        <div class="suger">第一颗糖</div>
+        <div class="suger suger1">第二颗糖</div>
+        
+    </div>
+    <p>
+        我是p标签
+    </p>
+    <!-- <div class="suger">
+        <span>第三颗糖</span>
+    </div> -->
+
+
+
+
+
+
+</body>
+<script>
+    // 通过css选择器来选择
+    //document.querySelector() 通过选择器来查询元素
+    // var container = document.querySelector( '.container' );
+    // console.log( container );
+    // //document.querySelector('选择器') 只找第一个
+    // var box = document.querySelector( '.container > .box' );
+    // console.log(box);
+
+    // var boxs = document.querySelectorAll( '.container > .box' );
+    // console.log(boxs);//NodeList 类数组 不是数组
+    // console.log( boxs[2] )
+    // var box1 = document.querySelector( '.container' ).querySelector('.box');
+    // console.log(box1);
+
+
+    /*
+        document.getElementsByTagName('标签名')            通过标签名来选择
+            get[得到] Elements[元素] By[通过] TagName[标签名] -> 通过标签名来选择标签
+            HTMLCollection[标签集合](类数组,只能获取到标签)  NodeList[节点列表](标签和文字)
+        document.getElementsByClassName('类名')
+    */
+    // var divList = document.getElementsByTagName('div');
+    // console.log( divList );
+    // console.log( divList[1] );
+    // //undefined如果返回一个undefined则表示，页面中没有span标签
+    // var span = document.getElementsByTagName('span')[0];
+    // console.log(span);//HTMLCollection[标签集合]
+    // //获取h1标签
+    // var h1 = document.getElementsByTagName('h1');//只能写标签名
+    // console.log(h1)
+
+    // var divList = document.getElementsByClassName('box');//不用加.
+    // console.log( divList );
+    //链式操作 
+    // var boxs = document.getElementsByClassName('container')[0].getElementsByClassName('box')[1];
+    // console.log( boxs );
+
+    /*
+        通过id来获取元素 -> 页面中id是唯一的
+        document.getElementById('container')[0]
+    */
+    // var abc = document.getElementById('abc');
+    // console.log(abc);
+
+    /*
+        通过name属性来获取元素
+        document.getElementsByName('name');
+    */
+    // var input = document.getElementsByName('username');
+    // console.log(input);
+    
+    
+    // var hanlu = document.getElementsByName('hanlu');
+    // console.log(hanlu);
+
+    /*
+        区别：
+            query: NodeList[节点列表](标签和文字) -> 静态方法
+                css选择器
+            get: HTMLCollection[标签集合](类数组,只能获取到标签) -> 动态方法
+                类名，标签名，name或者id
+        共同点：
+            都能进行链式操作
+    */
+    // var boxs = document.querySelector('.container').getElementsByClassName('box');
+    // console.log( boxs );
+
+    var bag = document.querySelector('.bag');
+    var sugers = document.querySelectorAll('.bag > .suger');
+    // console.log( bag, sugers );
+    //Element.innerHTML inner[里边的] HTML[结构]
+    // console.log( bag.innerHTML );//字符串
+
+    //去修改 写在innerHTML里的标签会被转义为真正的标签
+    // bag.innerHTML = '<div>我是修改后的内容</div>';
+    // bag.innerHTML += '<div class="suger">我是第&nbsp;&nbsp;&nbsp;&nbsp;三颗糖</div>';
+    // console.log(sugers);
+
+    // var sugers_a = bag.getElementsByClassName('suger');
+    // console.log(sugers_a);
+
+    // bag.innerHTML = "";
+
+    //innerText 更改文字
+    // var oP = document.querySelector('p');
+    // console.log( oP.innerText );
+    // // oP.innerText = '';
+    // oP.innerText += ' hello world';
+    // // oP.innerText += 'some'; 
+    // //innerText 不会转义标签
+    // oP.innerText += '<div class="suger">我是第三颗糖</div>';
+    // var obj = {name: '小明'};
+    // //所有的数据都会被转化成为字符串
+    // oP.innerText += obj;
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

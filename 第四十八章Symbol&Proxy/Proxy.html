@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy</title>
+</head>
+<body>
+    <p></p>
+</body>
+<script>
+    //原生js就是这样去解析代码的
+    let obj = { nickname: '小明', age: 3 };
+    obj.nickname = '小刚';//设置
+    console.log( obj.nickname );//. 获取对象的一个属性
+    function abc() {
+        console.log('我是abc')
+    };
+    abc();
+    //Proxy[代理] 就可以重新定义JavaScript里边的一些行为 元变成，修改编程语言本身
+    class Person{
+        constructor(nickname, age){
+            this.nickname = nickname;
+            this.age = age;
+        }
+    };
+    console.log( new Person('小明', 3) );
+    
+    //Proxy能重新定义 对象({}) 和函数的一些行为
+    let obj1 = { nickname: '小刚', age: 3 };//可以重新定义小刚对象的.(获取)行为 get
+    //Proxy的写法:  new Proxy(origin, handler) origin[源对象] handler({})[要重新定义哪些行为]
+
+    let p1 = new Proxy( obj1, {
+        get(target, prop, receiver){//获取行为 重新定义行为写在函数里边 target[源对象]
+            console.log( target, prop, receiver );//被传了三个实参
+            return 36
+        }
+    } );
+    console.log( p1.nickname, p1.introduce );//我们要通过Proxy返回的对象才能使用重新定义的行为
+    //undefined是get函数执行完成之后的结果
+
+    //通过get拦截器，生成dom结构
+    //React.createDom('div', 'hello world');//创造出来一个div标签，里边的文字是hello world
+    // const dom = new Proxy( { nickname: '旱麓' }, {//handlear
+    //     get( target, prop ) {
+    //         return function (abc) {
+    //             console.log(abc)
+    //         }
+    //     }
+    // } );
+    // console.log(dom.div);//想要创建一个div标签
+    
+    //结果  dom.div('123') 创建一个div标签，然后div标签里边的内容是123
+    // dom.h1('456') 创建一个h1标签，然后h1标签里边的内容是456
+    // let dom = {
+    //     div(abc) {
+    //         const div = document.createElement('div');
+    //         div.innerText = abc;
+    //         return div;
+    //     },
+    //     h1(xyz){
+    //         const h1 = document.createElement('h1');
+    //         h1.innerText = xyz;
+    //         return h1;
+    //     }
+    // };
+    // console.log( dom.div( '123' ) );
+    // console.log( dom.h1('4456') );
+
+    // const dom1 = new Proxy( {}, {
+    //     get(target, prop){
+    //         return function (abc) {//值所以返回一个函数就是为了让他能够传值
+    //             const some = document.createElement(prop);
+    //             some.innerText = abc;
+    //             return some
+    //         }
+    //     }
+    // } );
+    // console.log( dom1.h1('123') );
+    // console.log( dom1.div('456') );
+    // console.log( dom1.span('span') );
+
+    //生成一个完整的解构 师不必贤与弟子
+    // const dom = new Proxy({}, {
+    //     get(target, property){
+    //         console.log(target, property);
+    //         return function(attrs = {}, ...children){
+    //             console.log(attrs, children);
+    //             const el = document.createElement(property);
+    //             for( let key in attrs ){
+    //                 el.setAttribute(key, attrs[key])
+    //             }
+    //             children.forEach( item => {
+    //                 if( typeof item === 'string' ){
+    //                     item = document.createTextNode(item);
+    //                 }
+    //                 el.append(item)
+    //             } )
+    //             return el;
+    //         }
+    //     }
+    // });
+    // const el = dom.div(
+    //     {},
+    //     'hello, my name is ',
+    //     dom.a({ href: '#' }, 'Mark'),
+    //     '. I like:',
+    //      dom.p(
+    //          {},
+    //          dom.span( {}, 'The Web' ),
+    //          dom.span( {}, 'Food' ),
+    //          dom.span( {}, '...actually' )
+    //      )
+    // );
+    // console.log(el);
+    // document.body.append(el);
+
+    // const el2 = dom.section(
+    //     {},
+    //     'hello, my name is ',
+    //     dom.a({ href: '#' }, 'Mark'),
+    //     '. I like:',
+    //      dom.ul(
+    //          {},
+    //          dom.li( {}, 'The Web' ),
+    //          dom.li( {}, 'Food' ),
+    //          dom.li( {}, '...actually' )
+    //      )
+    // );
+    // document.body.append(el2)
+
+
+
+    //set 设置 target源对象  prop设置的是源对象的哪个属性  value设置的值是什么
+    let proxy2 = new Proxy( {nickname: '小刚', age: 3}, {
+        set(target, prop, value) {
+            if( prop === 'age' && value <= 200){
+                target[prop] = value;
+            }
+        }
+    } );
+    proxy2.age = 201;
+    console.log(proxy2);
+
+    const oP = document.querySelector('p');
+    console.log(oP);
+    let someOne = new Proxy( {nickname: '小红'}, {
+        set(target, prop, value){
+            target[prop] = value;
+            oP.innerText = value
+        }
+    } );
+    // let someOne = {nickname: '小明'};
+    oP.innerText = someOne.nickname;
+    someOne.nickname = '小明';
+
+    //apply 给函数用的 当调用一个函数的时候，或者call，apply去执行一个函数的时候，会走到apply这一层
+    let fn = function () {//小明
+        console.log( this )
+    };
+    let someFn = new Proxy( fn, {
+        apply(target, ctx, args) {//target被执行的那个函数,ctx小明函数里边的this，args所有实参
+            console.log(target, ctx, args)
+            if( ctx === undefined ){
+                target.call({nickname: '小明'}, ...args)
+            }else{
+                target()
+            }
+        }
+    } )
+    someFn(1,2,3);
+    //通过Proxy里边的 apply可以重新定义函数的执行，apply和call
+    let someFn2 = new Proxy( function () { console.log(123) }, {
+        apply(target, ctx, args) {//target被执行的那个函数,ctx小明函数里边的this，args所有实参
+            console.log(target, ctx, args);
+            target();
+        }
+    } )
+    someFn2.call({ nickname: '小刚' })
+</script>
+</html>

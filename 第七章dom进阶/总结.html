@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		dom进阶总结
+		
+		1.节点层次
+			即文档划分成好几层,由多层节点构成的
+			
+			1.查看所有节点类型
+			元素.childNodes 	即查看改元素的所有子节点(包括换行,文字)，且用伪元素查看
+								可以通过下标选择查看第几个，但是无法修改
+								
+			2.查看所有元素节点		与childNodes相似，也是查看子节点，但是只查找元素节点,也可以通过下标查看具体元素
+			元素.children 		
+			注意该节点都是动态的
+			
+			firstChild
+			返回树节点的第一个节点,没有返回null
+			
+			lastChild
+			返回树节点的最后一个节点,没有返回null
+			
+			兄弟选择节点
+			.nextSibling 		表示当前的下一个
+			
+			.previousSibling 	当前的上一个
+			可链式操作
+			
+			以上4个均可加ELement进行选择元素
+			
+			
+			
+			3.判断元素是否有节点
+			元素.haschildNodes();
+			返回Boolean值,	true表示有一个或多个	false表示无
+			
+			4.查看长度
+			元素.length()
+			查看节点的长度
+			
+			5.查看节点类型
+				nodeName：查看返回该对象的标签名 		div,p
+				nodetype: 返回节点类型
+							元素类型 ==》节点类型
+							元素element ==》1
+							属性attr ==》2
+							文本text ==》3
+							注释comments ==》8
+							文档document ==》 9
+				nodevalue: 该属性返回或设置当前节点的值
+							注意: 对于文档本身,nodeValue返回null.对于text,comment节点,则返回节点的内容，对于属性节点返回属性的值。
+			6.操作节点
+				首先创建元素
+				 var ele_a=doucument.createELement('标签名');
+						ele_a.innerText='';	对标签内容操作
+				1.添加节点
+					appendChild(a)
+					该方法将一个节点添加到指定父节点列表末尾
+					
+				2.插入节点
+					insertBefore(a,b)
+					a:要插入的节点
+					b:参照节点
+					
+				3.替换节点
+					replaceChild(a,b)
+					a:要插入的节点
+					b:要替换的节点
+				
+				4.移除节点
+					.removeChild(a);
+					a:选择要移除的节点
+					
+					
+					
+					
+			
+			
+		dom操作
+		
+			
+			3.选取父节点
+				1.parentNode 	父节点
+				2.parentElement 	父元素
+				两者没区别
+				均可以获取当前元素的夫节点(元素)
+				css做不到
+			
+			
+			可以用console.dir();展开对象,查看对应属性等等
+			
+			
+			文档碎片
+			var fra= document.createDocumentFragment();
+			减少消耗性能
+			//用来保存多个js创建的标签，然后一次性添加进文档中
+			// 先把box1和box2添加到碎片里边 然后 把碎片添加到文档中
+			fragment.append( box1, box2 );
+			some.appendChild( fra );
+	</body>
+</html>

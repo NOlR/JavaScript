@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重新封装运动框架</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            border-style: solid;
+            /* transform: translate(100px,100px);设置transform样式的简单做法 -> 在背后用的是一个矩阵算法来完成 */
+            /* transform: matrix(1.5, 0, 0, 2, 100, 100); */
+            /* transform: matrix(1, 0, 0, 1, 0, 0); */
+        }
+        /* matrix[矩阵] 如果设置的transform样式是2d matrix(scaleX, some,some,scaley, translateX,translateY ) */
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    // 简易版封装结束
+    /*
+        大家去封装函数的时候尽量不要用箭头函数，箭头函数,声明出来以后不能变量提升：在调用一个函数之前，必须有这个函数,
+        为了在什么地方都可以去调用这个函数，不用担心是在他声明之前还是声明之后，就是用function,箭头函数最喜欢被当做回调函数使用;
+
+    */
+    /*
+        sport -> 让一个元素产生动画 -> requestAnimationFrame(callback)
+            参数：
+                ele ->  让哪个元素产生动画
+                attr -> 让元素的哪个属性发生改变
+                end -> 元素的这个属性变到哪里结束
+                time -> 用多长时间去移动这个盒子
+        动画逻辑：
+
+    */
+
+    //三目运算 ：判断;  判断什么 ？ 语句1 ： 语句2;  首先把要判断的东西转化为布尔值，如果为真，执行语句1，如果为假执行语句2
+
+    const some = [];
+    const abc = () => {console.log('我是abc函数')};
+    some ? abc() : console.log('some被转化为布尔值为假');
+
+    let some1 = 0;
+    
+    some1 ? '' : some1 = 1;
+    console.log( some1 );
+
+
+    let some2 = 6;
+
+    // some2 >= 5 ? '' : some2 = 6;
+    // console.log( some2 );
+
+    // some2 = some2 > 1 ? some2 : 11;
+    // console.log( some2 );
+
+
+    //复杂的三目运算 ： 如果some2在5和10之间，那么不用管他的值，否则赋值为1
+
+    some2 = some2 >= 10 ? 1 : ( some2 > 5 ? some2 : 1);
+    console.log(some2);
+    //凡是能用if解决的都能用三目来结局，凡是ifelse需要套多层的，三目也需要套多层
+
+
+
+    const box = document.querySelector('.box');
+
+    function sport(ele, attr, end, time) {
+
+        const initValue = getStyle(ele, attr);//获取元素attr属性的初始值
+        
+        let speed = ( parseFloat( end ) - initValue ) / time;// 总路程/时间 = 速度
+
+        let start = null;//动画的开始时间
+
+        let isTransform = false;//保存是否为transform样式
+
+        isTransform = attr === 'translateX' || attr === 'translateY' || attr === 'scaleX' || attr === 'scaleY' ? true : false;
+
+
+        // if( attr === 'translateX' || attr === 'translateY' || attr === 'scaleX' || attr === 'scaleY' ){
+        //     isTransform = true;//是设置transform样式
+        // }
+
+        function move( timeStamp ) {//规定元素如何运动 
+
+            //translate 和 scale 首先要把所有translate和scale的值都给获取一下
+            //每隔16.6毫秒去改变元素的transform属性然后再获取,因为今天直接使用的是矩阵，就可以加快浏览器的速度 -> 什么叫做性能优化啊！
+            const translateX_init = getStyle(ele, 'translateX'),
+                translateY_init = getStyle(ele, 'translateY'),
+                scaleX_init = getStyle(ele, 'scaleX'),
+                scaleY_init = getStyle(ele, 'scaleY');
+
+            if( start === null ) start = timeStamp;//只会在move函数第一次被调用的时候执行
+
+            let process = timeStamp - start;//process[进度]  动画运行了多长时间
+
+            if( isTransform ){//如果是transform样式
+
+                //通过矩阵来设置transform样式 -> matrix(1,2,3,4,5,6) 假如说要改变第5个值,其他值要保持不变
+                if( attr === 'scaleX' ){
+                    ele.style.transform = `matrix( ${ initValue + process * speed }, 0, 0, ${scaleY_init}, ${translateX_init}, ${translateY_init})`;
+                }else if( attr === 'scaleY' ){
+                    ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${initValue + process * speed}, ${translateX_init}, ${translateY_init})`;
+                }else if( attr === 'translateX' ){
+                    ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${initValue + process * speed}, ${translateY_init})`;
+                }else{//'translateY'
+                    ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${translateX_init}, ${initValue + process * speed})`;
+                }
+
+            }else{//如果不是transform样式
+                ele.style[attr] = `${ initValue + process * speed}px`;//时间乘以速度=总路程
+            }
+
+            //动画的结束
+            if( process < time ){
+                requestAnimationFrame(move);
+            }else{//动画结束
+
+                if( isTransform ){//如果为transform样式
+                    if( attr === 'scaleX' ){
+                        ele.style.transform = `matrix( ${ end }, 0, 0, ${scaleY_init}, ${translateX_init}, ${translateY_init})`;
+                    }else if( attr === 'scaleY' ){
+                        ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${end}, ${translateX_init}, ${translateY_init})`;
+                    }else if( attr === 'translateX' ){
+                        ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${end}, ${translateY_init})`;
+                    }else{//'translateY'
+                        ele.style.transform = `matrix( ${ scaleX_init }, 0, 0, ${scaleY_init}, ${translateX_init}, ${end})`;
+                    }
+                }else{//如果不是transform样式
+                    ele.style[attr] = `${end}px`;
+                }
+
+            }
+
+        };
+
+        requestAnimationFrame(move);//执行move动画 -> move函数会被传递一个实参[时间戳] : 表示动画是第几毫秒开始的
+
+    };
+    
+    //需求是先移动translateX再移动translteY 同步 + 异步相结合 = jq的思想一模一样 全球百分之96的网站都是用了jq 因为他非常强大和稳定
+    sport(box, 'translateX', 300, 1000);
+    sport(box, 'translateY', 300, 1000);
+    // sport(box, 'scaleX', 2, 1000);
+    // sport(box, 'scaleY', 2, 1000);
+    // sport(box, 'width', 300, 1000);
+    // sport(box, 'height', 300, 1000);
+    // sport(box, 'borderWidth', 10, 1000);
+    /*
+        获取元素的某个属性:
+            参数：
+                ele -> 获取哪个元素
+                attr -> 哪个属性
+        获取的逻辑：
+            首先判断一下是否为transform样式，如果是transform样式则通过其他手段获取
+            如果是transform之外的样式可以直接获取
+        返回这个元素的attr属性的值
+        //不论设置的是行内样式还是css样式 都可以通过 getComputedStyle这个函数获取,如果获取到的是none表示没有设置这个样式
+
+        在判断多个东西的东西 到底用||还是用&&
+          或  || 用在if里表示：只要满足一个条件就行
+          与  && 用户在if里边表示：要同时满足多个条件
+    */
+    // console.log( window.getComputedStyle(box).transform ); 
+    function getStyle(ele, attr) {
+        let result = 0;//用来存储最终获取到的结果
+        if( attr === 'translateX' || attr === 'translateY' || attr === 'scaleX' || attr === 'scaleY' ){
+            //要去获取transform样式了
+            let style = window.getComputedStyle(ele).transform.slice(7,-1).split(',');
+
+            if( style.length === 1 ){//用户没有设置
+                ele.style.transform = `matrix(1,0,0,1,0,0)`;//默认值，对元素没有任何影响
+                style = window.getComputedStyle(ele).transform.slice(7,-1).split(',');
+            }
+
+            switch( attr ){
+                case 'translateX' :
+                    result = style[4]
+                break;
+                case 'translateY' :
+                    result = style[5]
+                break;
+                case 'scaleX' :
+                    result = style[0]
+                break;
+                case 'scaleY' :
+                    result = style[3]
+                break;
+            }
+
+            result = parseFloat(result);
+        }else{//去获取transform之外的样式
+            result = parseFloat( window.getComputedStyle(ele)[attr] );
+        }
+        return result;
+    };
+    // console.log( getStyle( box, 'scaleX' ) );
+    //只要是可以用于计算的样式都可以做动画
+
+</script>
+</html>

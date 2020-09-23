@@ -1,0 +1,242 @@
+
+ul,li{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+
+body{
+	background-color: #ededed;
+}
+
+.wrapper{
+	 width: 1200px;
+	 margin: 50px auto;
+	 border-radius: 10px;
+	 background-color: white;
+	 box-shadow: 0px 0px 40px rgba(0,0,0,.1);
+	
+	
+	.left{
+		float: left;
+		width: 320px;
+		border-top: 10px solid #32c1fb;
+		box-sizing: border-box;
+		border-top-left-radius: 10px;	
+		.logo{
+			display: block;
+			margin: 50px;
+			width: 220px;
+			height: 60px;
+			img{
+				height: 100%;
+			}
+			margin-bottom: 10px;
+		}
+		.introduction{
+			
+			color: #888;
+			padding-left: 50px;
+			line-height: 30px;
+			font-weight: 300;
+		}
+		.nav{
+			margin-top: 25px;
+			position: relative;
+			.zuosanjiao{
+							
+				position: absolute;
+				left: 0px;
+				top: 15px;
+				
+				.s1{
+					border-bottom: 10px solid #ededed;
+					border-right: 10px solid transparent;
+				}
+				.s2{
+					border-top: 10px solid #ededed;
+					border-right: 10px solid transparent;
+				}
+			}
+			a {
+				
+				.navtitle{
+				color: #666;
+				font-weight: 600;
+				font-size: 18px;
+				padding-left: 50px;
+				line-height: 52px;
+				transition: 0.2s ease;
+					.xiasanjiao1{
+						position: absolute;
+						left: 145px;
+						top: 79px;
+						.s1{
+							float: left;
+							transition: 0.5s ease;
+							border-top: 5px solid #cacaca;
+							border-left: 5px solid transparent;
+						}
+						.s2{
+							float: left;
+							transition: 0.5s ease;
+							border-top: 5px solid #cacaca;
+							border-right: 5px solid transparent;
+						}
+						
+					}
+					.xiasanjiao2{
+						position: absolute;
+						left: 115px;
+						top: 130px;
+						.s1{
+							float: left;
+							transition: 0.5s ease;
+							border-top: 5px solid #cacaca;
+							border-left: 5px solid transparent;
+						}
+						.s2{
+							float: left;
+							transition: 0.5s ease;
+							border-top: 5px solid #cacaca;
+							border-right: 5px solid transparent;
+						}
+						
+					}
+					&:hover{
+						background-color: #f5f5f5;
+						color: black;
+					}
+					&:hover > .xiasanjiao1 >.s1 {
+						border-top: 5px solid #b1b1b1;
+					}
+					&:hover > .xiasanjiao1 >.s2 {
+						border-top: 5px solid #b1b1b1;
+					}
+					&:hover > .xiasanjiao2 >.s1 {
+						border-top: 5px solid #b1b1b1;
+					}
+					&:hover > .xiasanjiao2 >.s2 {
+						border-top: 5px solid #b1b1b1;
+					}
+				}
+				.home{
+					color: black;
+				}
+				
+			}	
+			
+		}
+		.avatar{
+			margin-top: 40px;
+			width: 260px;
+			height: 270px;
+			border-top: 10px solid #32c1fb;
+			border-right: 10px solid #8c53ff;
+			border-bottom: 10px solid #ddd;
+			border-radius: 0 240px 240px 0;
+			img{
+				display: block;
+				padding: 10px 10px 10px 0;
+				width: 250px;
+				height: 250px;
+				border-radius: 0 240px 240px 0;
+			}
+		}
+		
+		.self{
+			margin: 40px 0 40px 40px;
+			
+			h3{
+				color: #333;
+				font-size: 22px;
+				font-weight: 600;
+			}
+			.jieshao{
+				min-width: 220px;
+				max-width: 220px;
+				font-size: 16px;
+				font-weight: 300;
+				color: #888;
+			}
+		}
+		
+		.left_title1{
+			padding: 30px 50px 30px 50px;
+			border-top: 1px solid #eee;
+			border-bottom: 1px solid #eee;
+			P{
+				margin-top: 0px;
+				font-size: 16px;
+				font-weight: 600;
+			}
+			.title1{
+				
+				li{
+					span{
+						color: #999;
+						font-size: 13px;
+						margin-bottom: 15px;
+						font-weight: 300;
+						line-height: 1.4em;
+						vertical-align: baseline;
+					}
+				
+					i{
+						
+						font-size: 12px;
+						vertical-align: baseline;
+					}
+					margin-bottom: 15px;
+				}
+			}
+		}
+		.left_title2{
+			padding: 30px 50px;
+			P{
+				margin-top: 0px;
+				font-size: 16px;
+				font-weight: 600;
+			}
+			.title2{
+				
+				li{
+					span{
+						color: #999;
+						font-size: 13px;
+						margin-bottom: 15px;
+						font-weight: 300;
+						line-height: 1.4em;
+						vertical-align: baseline;
+					}
+				
+					i{
+						
+						font-size: 12px;
+						color: #999;
+						vertical-align: baseline;
+					}
+					margin-bottom: 15px;
+				}
+			}
+		}
+		
+	}
+	.middle{
+		float: left;
+		width: 80px;
+	}
+	.right{
+		float: left;
+		width: 800px;
+		
+	}
+	&::after{
+		content: "";
+		display: block;
+		clear: both;
+	}
+}

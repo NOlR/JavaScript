@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则2</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        ?{0,1} 匹配0个或者一个
+        +{1,} 匹配1个到无穷个
+        *{0,} 匹配零个到无穷个
+    */
+    //纠正： *加号也是这样  +不是 exec的时候是这样的，test可以不是()里边的内容开头
+    // let a = /(123)?/;//开头必须是123
+    // console.log( a.exec('张三123456') );
+    // let b = /(123)?4/;
+    // console.log( b.exec( '51234' ) );
+
+    //* +不是
+    // let c = /1?/;
+    // console.log( c.exec('4123') );//exec里边也必须是1开头
+    // console.log( c.test('41') );//true 不必是1开头
+
+    // let d = /2*/
+    // console.log( d.exec('23') );
+
+    /*
+        特殊字符：
+            \d 匹配一个数字
+            \D 必须不是数字 = [^0-9] /^/表示以什么什么开始 用在[^]表示取反
+            \s 匹配空格
+            \w 匹配一个单字符 [0-9a-zA-Z_]
+            \W 匹配非[0-9a-zA-Z_]  相当于[^0-9a-zA-Z_]
+            [\u4e00-\u9fa5] 匹配中文
+            . 匹配除了换行符之外的任意字符 \n
+            \ 转义，可以把正则里边有特殊含义的字符转义成普通字符
+    */
+    //量词必须是连贯的
+    // let reg1 = /\d{2,3}/;//相当于[0-9]
+    // let reg2 = /[0-9]{2,3}/;
+    // console.log( reg1.exec('hello 3 1 world') );
+    // console.log( reg2.exec('hello 5 1 world') );
+
+    // //1个数字后边可以是一个空格，然后再有两个连着的数组: 3 12 3 4
+    // let reg3 = /\d\s\d{1,2}/;
+    // console.log( reg3.exec('hello 3  2 3 world') );
+
+    // let str = 'hello 3    2 3';
+    // let str1 = 'hello 32 3';
+    // let reg4 = /\d\s\s\s\s\d/;//数字后边必须有4个空格
+    // console.log( reg4.exec(str) );
+
+    // let reg5 = /\d\s*\d\s*\d/;
+    // console.log( reg5.exec(str), reg5.exec(str1) );
+
+    // let reg6 = /\D/;//只匹配一个不是数字的字符
+    // console.log( reg6.test('hell'), reg6.exec('π') );
+    // let reg7 = /[^0-9]/;
+    // console.log( reg7.exec('π') );
+
+    // let reg8 = /[a-z]*/;//匹配任意个连续的小写字母
+    // console.log(reg8.exec('abCdefg'));
+
+    // let reg9 = /[A-Z]*/;//匹配任意多个连续的大写字母
+    // console.log(reg9.exec('AbCD'));
+
+    // let reg_a = /[a-zA-Z0-9_]*/;//匹配小写或者大写字母或者数字
+    // console.log( reg_a.exec('askdlfja_sAK_DJK_SDJ_ASKLN38971293klasdjrf') );
+
+    // let reg_b = /\w*/;
+    // console.log( reg_b.exec('askdlfja_sAK_DJK_SDJ_ASKLN38971293klasdjrf') );
+
+    // let reg_c = /\W*/;
+    // console.log( reg_c.exec('我**你个**') );
+
+    // //(一个中文跟零个或多个标点符号) 括号里边的东西可以出现0到多次
+    // let reg_d = /([\u4e00-\u9fa5][，！？。；\s]*)*/;//[\u4e00-\u9fa5][，！？。；\s]*表示一个中文后边跟0个或者多个其中之一的标点符号
+    // console.log( reg_d.exec('大家好，我 是非，著名不！专。业前？端讲师旱麓。龘，魑魅魍魉') );
+
+
+    // let some_reg = /.*/;
+    // console.log( some_reg.exec('火炎焱燚，水沝(ΦωΦ)淼㵘，㙓。𨰻茕茕 !asdfklj1243 孑立沆瀣一气，踽.踽独行醍醐灌顶。') );
+
+    //匹配1.x 1.
+    let reg_e = /1\.\d/;
+    console.log( reg_e.exec('1.75') );
+
+    let reg_f = /\^/;
+    console.log( reg_f.exec('^') )
+
+
+   //捕获
+    let reg_g = /(hello)\s\w/;
+    console.log( reg_g.exec('hello world') )
+    //非捕获 小括号里边的内容不再单独的去进行获取
+    let reg_h = /(?:hello)\s\w/;
+    console.log(reg_h.exec('hello world') )
+
+    //先行断言 
+    let reg_i = /旱麓(?=大帅比)/; //旱麓后边必须跟大帅比,但是捕获的时候只捕获旱麓
+    console.log( reg_i.exec('旱麓大帅比') )
+    //后置断言 
+    let reg_j = /(?<=hello) world/;//world前边必须是hello，否则捕获不到
+    console.log( reg_j.exec('hello world') )
+
+    //评论 -> 屏蔽脏字
+    //
+</script>
+</html>

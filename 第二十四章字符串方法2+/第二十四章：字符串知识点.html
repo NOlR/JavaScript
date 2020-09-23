@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串的其他方法和模板字符串</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        /* .box{
+            font-variant: small-caps;
+        } */
+    </style>
+</head>
+<body>
+    <div class="box">some</div>
+</body>
+<script>
+    //字符串的其他方法 includes indeOf lastIndexOf match endsWith startsWith
+    // let str = new String('hello');
+    // console.log(str);
+    // //str.toLowerCase()  str.toUpperCase()
+    // let str1 = 'hellO world';
+    // console.log( str1.toUpperCase(), str1 );
+    // //str.toLowerCase() 所有的字符都转化为小写
+    // let str2 = 'Hello World';
+    // console.log( str2.toLowerCase() );
+
+    // //padEnd(字符串的长度, '以什么样的字符串填充') padStartpadEnd(字符串的长度, '以什么样的字符串填充')
+    // let str3 = 'hello';
+    // console.log( str3.padEnd(100, 'some') )
+    // console.log( str3.padStart(10, 'world') )
+    // // console.log( str3.padStart(2, 'some') )
+
+    // //赋值字符串的方法
+    // let str4 = str3;
+    // console.log(str4);
+    // //repeat(数字) 重复多少遍
+    // let str5 = str3.repeat(10);
+    // console.log(str5);
+    // //slice(start, end) -> 从原字符串中提取一部分
+    // console.log( str5.slice(0, -2) );//end - start 4 -  0 = 4
+    // //一模一样的有一个 substring(start, end)
+    // console.log( str5.substring(1, 5) );
+    // //split('以什么为分隔')把字符串变成数组
+    // let str6 = 'hello world,hello world, hello world';
+    // console.log( str6.split('hello') );
+    // //search(正则) 返回找到的这个字符/字符串的下标 只能找一个如果没有返回-1
+    // let str7 = 'hello world,hello world,hello world,hello world';
+    // const reg2 = new RegExp('hello', 'g');
+    // console.log( str7.search(reg2) );
+    //indexOf lastIndexOf
+
+    //模板字符串 -> es6里边的字符串扩展
+    let str8 = 'hello world';
+    console.log( '<span>' + str8 + '</span>' );
+    //`字符串`  直接进行换行，不需要使用\进行转义
+    let str9 = `hello
+     world
+        some
+    abc
+                    999
+     `;
+    console.log(str9);
+    //不管是双引号还是单引号都可以直接包裹
+    let str_a = `tom say: 'hello jerry',"i'm tom"`;
+    console.log(str_a);
+    //如果需要在模板字符串里引入变量用 ${变量} 写在里边的任何数据都会被转化成为字符串
+    let arr = {nickname: '小明'};
+    console.log( `
+    <span>${str8}</span>
+    <span>${arr}</span>
+    ` );
+    //${}里边可以写表达式 
+    let abc = () => {123};
+    //先执行函数abc然后把结果转化为字符串再拼接到原字符串里边
+    console.log( `hello ${ true && false }` );
+    console.log( `hello ${(() => 789)()}` )
+    const arr_a = [1,2,3];
+    let some = `
+        ${arr_a.forEach( item => {
+            console.log(item)
+        } )}
+    `;
+    console.log(some);
+    //模板字符串可以嵌套模板字符串
+    const some_d = [
+        {nickname: '小明', age: 3},
+        {nickname: '小明', age: 3},
+        {nickname: '小明', age: 3},
+        {nickname: '小明', age: 3},
+        {nickname: '小明', age: 3},
+        {nickname: '小明', age: 3},
+        {nickname: '小明', age: 3}
+    ];
+    /*
+        <table>
+            <tr>
+                <td>小明</td>    
+                <td>3</td>  
+            </tr>    
+        </table>
+    */
+
+    console.log( some_d.map( item => 
+                `
+                    <tr>
+                        <td>${item.nickname}</td>
+                        <td>${item.age}</td>    
+                    </tr>
+                `
+             ).join('') )
+    
+    let new_str = `
+        <table>
+            ${ some_d.map( item => 
+                `
+                    <tr>
+                        <td>${item.nickname}</td>
+                        <td>${item.age}</td>    
+                    </tr>
+                `
+             ).join('') }
+        </table>
+    `;
+    console.log(new_str);
+    document.body.innerHTML = new_str;
+</script>
+</html>

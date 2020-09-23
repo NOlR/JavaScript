@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        table{
+            width: 500px;
+            margin: 50px auto;
+            border-collapse: collapse;
+        }
+        tr,td{
+            height: 40px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        p{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+    <p>
+        <!-- restore还原 -->
+        <button class="restore">还原</button>
+    </p>
+    <p>
+        <button class="high_to_low">分数从高低底排序</button>
+        <button class="low_to_high">分数从低到高排序</button>
+    </p>
+    <form class="form">
+        <input type="text" name="nickname" value="" placeholder="请输入姓名">
+        <input type="text" name="property" value="" placeholder="特点">
+        <input type="number" name="score" value="" placeholder="分数" min="0" max="100">
+        <button class="add_student">添加</button>
+    </form>
+    <form class="ranking">
+        <span>查看第</span>
+        <input class="start" type="number" min="1" value="" placeholder="开始">
+        <span>到第</span>
+        <input class="end" type="number" value="" min="1" placeholder="结束">
+        <span>同学</span>
+        <button class="confirm">确定</button>
+    </from>
+</body>
+<script>
+    /*
+        深拷贝：
+        浅拷贝：slice concat
+    */ 
+    var students = [
+        {
+            nickname: '_winner',
+            property: '大帅比',
+            score: 10
+        },
+        {
+            nickname: '-茂茂',
+            property: '大帅比',
+            score: 71
+        },
+        {
+            nickname: '不远千里か℡',
+            property: '大帅比',
+            score: 94
+        },
+        {
+            nickname: '一方',
+            property: '大帅比',
+            score: 42
+        },
+        {
+            nickname: '浪人',
+            property: '大帅比',
+            score: 15
+        },
+        {
+            nickname: '黎昊东',
+            property: '大帅比',
+            score: 21
+        },
+        {
+            nickname: 'Ricky星',
+            property: '大帅比',
+            score: 43
+        },
+        {
+            nickname: '旱麓',
+            property: '大帅比',
+            score: 100
+        },
+        {
+            nickname: '备忘鹿',
+            property: '大帅比',
+            score: 4
+        },
+        {
+            nickname: '王泽',
+            property: '大帅比',
+            score: 53
+        },
+        {
+            nickname: '小凡',
+            property: '大帅比',
+            score: 73
+        },
+        {
+            nickname: 'JavaScript',
+            property: '大帅比',
+            score: 61
+        }
+    ];
+    //render[渲染]
+    var thead = document.querySelector('thead');
+    /* obj一个对象，用来提供表头 ele把生成的标签追加到哪个元素里边 */
+    function render_head( obj, ele ) {
+        var tr = document.createElement('tr');//生成tr标签，用来存放th标签
+        console.log(obj, ele);
+        for(var key in obj){//遍历对象，拿到他里边的所有属性名，放到th标签里边
+            var th = document.createElement('th');//生成th标签
+            th.innerText = key;//设置th标签里边的文字
+            tr.append(th);//把th标签追加到tr标签里边
+        };
+        ele.append(tr);
+    };
+    render_head( students[0], thead );
+
+
+    /*
+        遍历数组
+            遍历的时候生成tr标签 -> 生成几行
+            循环的每一次都再遍历一遍对象，生成td标签，并且把对象里每个属性对应的值，放到
+            td标签里边
+        形参：
+            arr 提供数据的数组
+            ele 把数据渲染到哪个元素里边
+    */
+    var tbody = document.querySelector('tbody');
+    function render_body(arr, ele) {
+        var fragment = document.createDocumentFragment();
+        arr.forEach( item => {
+            var tr = document.createElement('tr');
+            for( var key in item ){
+                var td = document.createElement('td');
+                td.innerText = item[key];
+                tr.append(td);
+            };
+            fragment.append(tr);
+        } );
+        ele.innerHTML = '';
+        ele.append(fragment);
+    };
+    render_body(students, tbody);
+
+
+    /*
+        排序功能
+    */ 
+    var high_to_low = document.querySelector('.high_to_low'),
+        low_to_high = document.querySelector('.low_to_high');
+    //数据备份
+    var newStudents = [].concat(students);
+    //从高到低排序  a - b从小到大 b-a从大到小
+    high_to_low.onclick = function () {
+        newStudents.sort( (a, b) => b.score - a.score );//从大到小排序
+        render_body(newStudents, tbody);
+    };
+    //从低到高排序
+    low_to_high.onclick = function () {
+        newStudents.sort( (a, b) => a.score - b.score );//从小到大排序
+        render_body(newStudents, tbody);
+    };
+
+    //还原功能
+    var restore = document.querySelector('.restore');
+    restore.onclick = function () {
+        render_body(students, tbody);
+    };
+
+    //~~(Math.random()*100) + 1
+    /*
+        先获取三个input框里边的内容，生成一个对象
+        {
+            nickname: 'tony',
+            property: '大帅比',
+            score: 53
+        }
+        push到students这个数组里
+    */
+    //collectData[收集数据]
+    var collectData = document.querySelectorAll('.form > input'),
+        add_student = document.querySelector('.add_student'),
+        form = document.querySelector('form');
+    //添加按钮
+    add_student.onclick = function (e) {
+        e.preventDefault();
+        var obj = {};
+        collectData.forEach( (item,index) => {
+            if( item.value === '' ){
+                alert( item.name + ' 的值不能为空！' );
+                return;
+            }else{
+                obj[item.name] = item.value;
+            }
+        } );
+        var result = Object.keys(obj);
+        if( result.length === 3 ){
+            students.push(obj);
+        }
+        render_body(students, tbody);
+        form.reset();
+    };
+    
+
+    //查看第几名到第几名的同学
+    var rank = document.querySelector('.ranking'),
+        start = document.querySelector('.start'),
+        end = document.querySelector('.end'),
+        confirm = document.querySelector('.confirm');
+
+    confirm.onclick = function (e) {
+        e.preventDefault();
+        var result = newStudents.sort( (a, b) => b.score - a.score );
+        var start_value = parseInt( start.value);
+        var end_value = parseInt( end.value );
+        if( end_value <  start_value ){
+            alert('开始值必须小于结束值');
+            rank.reset();
+            return;
+        }
+        if( start_value > result.length || end_value > result.length ){
+            alert('区间错误，一共只有' + result.length + '个学生');
+            rank.reset();
+            return;
+        }
+        if( isNaN(start_value) ||  isNaN(end_value)){
+            alert('必须有开始值和结束值');
+            rank.reset();
+            return;
+        }
+        var some = result.slice( start_value - 1, end_value );
+        render_body(some, tbody);
+        rank.reset();
+    };
+
+
+
+    //求总分，求平均分，显示及格分以上的学员，显示优秀分以上的学员,显示特优的学员
+    //显示满分的学员
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise的继续学习</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //1.promise的res和rej里边可以继续传一个promise
+    // let p1 = new Promise( (res, rej) => {
+    //     setTimeout( () => {
+    //         rej( { code: -1, msg: '出错了' } )
+    //     }, 2000 )
+    // } );
+    // //p2 1秒钟之后成功，p2两秒钟之后失败
+    // //a promise的res里边传的参数是 b promise，那么a的成功或者失败取决于b
+    // let p2 = new Promise( (res, rej) => {
+    //     setTimeout( () => {
+    //         res( p1 )//res表示成功
+    //     }, 1000 )
+    // } )
+    // .then(
+    //     data => {
+    //         console.log(data)
+    //     },
+    //     err => {
+    //         console.log(err);
+    //     }
+    // );
+
+    //promise的catch方法 catch[捕捉] -> 捕捉promise的错误 
+    //catch可以取代then里边的第二个回调函数
+    //如果把promise的状态变为失败，然后又没有响应的处理措施，就会抛出一个红色错误(很安全)
+    // let p3 = new Promise( (res, rej) => {
+    //     setTimeout( () => {
+    //         rej( { code: -1, msg: '用户不存在' } )
+    //     }, 1000 )
+    // } )
+    // .then( data => { console.log(data) } )
+    // .catch( err => { 
+    //     if( err.msg === '用户不存在' ){
+    //         alert( err.msg )
+    //     }
+    // } );
+    
+    // let p4 = new Promise( (res, rej) => {
+    //     setTimeout( () => {
+    //         rej( { code: -1, msg: '用户不存在' } )
+    //     }, 1000 )
+    // } );
+    // //success成功 fail失败
+    // let success = p4.then( data => { console.log(data) } );
+    // //catch返回的依然是一个promise
+    // let fail = p4.catch( err => { 
+    //     if( err.msg === '用户不存在' ){
+    //         alert( err.msg )
+    //     }
+    //     return '456';
+    // } )
+    // .then( data => {
+    //     console.log(data)
+    // } )
+    // console.log( success, fail );
+
+    //在很多个promise环节中，只要有任何一个环节出错了，就都可以用catch来捕获
+    let p5 = new Promise( (res, rej) => {
+        res( { code: -1, msg: '成功' } )
+    } )
+    .then( abc => {//处理第一次成功
+        console.log(abc)
+        // throw new Error( JSON.stringify( { code: -1, msg: '第二个错误' } ) );
+        return abc
+    } )
+    .then( xyz => {//处理第二次成功
+        throw new Error( JSON.stringify({code: -1, msg: '第三个错误'}) )
+    } )
+    .catch( err => {
+        console.log(err)
+    } );
+
+    //Promise.all()把多个promise实例包装秤一个新的promise
+    // Promise.all( [promise1, promise2, promise3] )
+
+    // const baseUrl = 'http://localhost:3000';
+
+    // let some = [ `${baseUrl}/log`, `${baseUrl}/vi`, `${baseUrl}/download` ].map( item => request({ url: item }) );
+    
+    // let result = Promise.all( some )
+    // .then( data => {
+    //     console.log(data)
+
+    //     let jieguo = data.every( item => item === 'true' )
+
+    //     if( jieguo ){
+    //         console.log('歌曲正在下载')
+    //     }else{
+    //         alert( '权限不足不能下载' )
+    //     }
+
+    // } )
+    // .catch( err => {//只要有一个promise失败了，所有的都失败了
+    //     console.log(err)
+    // } );
+
+
+    //Promise.race( [promise1, promise2, promise3...] ) 赛跑 -> 谁第一名就听谁的
+    let haras = [1000, 1200, 1300].map( (item, index) => new Promise( (res, rej) => {
+        setTimeout( () => {
+            res(index + 1)
+        }, item )
+    } ) );
+
+    Promise.race( haras )
+    .then( data => {
+        console.log( `第${data}匹马获得了胜利` )
+    } );
+    
+
+    //Promise 是异步的， 定时器和延时器也是异步的 -> 大家都是异步的，谁先执行呢？
+    //Promise先执行  异步: 微 和 宏
+</script>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遍历数组</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        table{
+            width: 500px;
+            margin: 50px auto;
+            border-collapse: collapse;
+        }
+        tr,td{
+            line-height: 40px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        
+    </table>
+</body>
+<script>
+    //数组的遍历方法
+    //for for in
+    //forEach 方法 写法：arr.forEach( 函数 )
+    // var arr = [{name: '小明', age: 3}, {name: '小明', age: 4}, {name: '小明', age: 5}];
+
+    // var some = [1, 2, 3];
+    // console.log(some);
+
+    // some.forEach( (item, index, array) => {
+    //     array[index] *= 2;
+    // } );
+
+    // console.log(some);
+
+    // console.log(arr);
+    /*
+        浏览器会给我们传入的函数分配三个参数
+        第一个参数：数组里的每一项
+        第二个参数：每一项的下标
+        第三个参数： 原数组
+        特点：
+            1.没有返回值
+            2.不能通过item来操作简单数据类型，可以操作复杂数据类型
+            3.可以通过传入的函数去改变原数组 -> 不推荐
+    */
+    //不能操作简单数据类型，但是可以操作引用类型
+    // arr.forEach( (item, index, array) => {
+    // //    item *= 2;//item = item * 2
+    //     --item.age;
+    // } );
+    // console.log(arr);
+
+    //从后端拿数据然后通过js生成标签把内容添加到标签里，然后再渲染页面
+    var students = [
+        {
+            nickname: '_winner',
+            property: '大帅比',
+            socre: 80
+        },
+        {
+            nickname: '-茂茂',
+            property: '大帅比',
+            socre: 80
+        },
+        {
+            nickname: '不远千里か℡',
+            property: '大帅比',
+            socre: 80
+        },
+        {
+            nickname: '一方',
+            property: '大帅比',
+            socre: 80
+        },
+        {
+            nickname: '浪人',
+            property: '大帅比',
+            socre: 80
+        },
+        {
+            nickname: '黎昊东',
+            property: '大帅比',
+            socre: 80
+        },
+        {
+            nickname: 'Ricky星',
+            property: '大帅比',
+            socre: 80
+        },
+    ];
+
+    
+    /*
+        数组里边一共有7个对象，
+        遍历数组：
+            生成7个tr标签
+            同时： 遍历对象，生成td标签
+    */
+    //获取table标签
+    var table = document.querySelector('table');
+    //生成表头
+    var tr = document.createElement('tr');
+    for( var key in students[0] ){
+        var th = document.createElement('th');
+        th.innerText = key;
+        tr.append(th);
+    }
+    table.append(tr);
+    //创建文档碎片
+    var fragment = document.createDocumentFragment();
+    students.forEach( item => {//循环数组，生成tr标签
+        var tr = document.createElement('tr');
+        // console.log( '数组里的每一项为', item )
+        //遍历每一个对象，生成td标签
+        for( var key in item ){
+            // console.log('属性名为', key, '属性值为', item[key]);
+            var td = document.createElement('td');
+            td.innerText = item[key];
+            tr.append(td);
+        };
+        fragment.append( tr );
+    } );
+    // console.log(fragment);
+    //把文档碎片添加到table标签里边
+    table.append(fragment);
+
+    /*
+        arr.map( (item, index, array) => {} );
+        map方法会返回一个新的数组，数组里边的每一项需要我们自己返回
+        map可以通过item直接操作数组里边的每一项
+
+        map不改变原数组而返回新数组的优点：
+    */
+    var arr_a = [1,2,3,4,5];//原始数据
+    var result = arr_a.map( (item, index) => {
+        return item *= 2
+    } );
+    console.log(result);
+    console.log(arr_a);
+    console.log(arr_a === result);
+</script>
+</html>

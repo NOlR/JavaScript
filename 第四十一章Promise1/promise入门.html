@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        Promise[承诺] -> es6里边，处理异步返回值的一种解决方案，只能让我们以编写同步代码的风格去处理异步结果，并不能决定异步结果.
+        1.Promise是一个构造函数 new Promise( callback ) -> callback[回调函数]要做什么事情，返回一个Promise对象.
+        2.Promise本身是一个同步的，实例化之后会立即调用callback
+    */
+    // const p1 = new Promise( () => {
+        // console.log(1)//同步代码 -> 即可以写同步代码，也可以写异步代码，把同步代码写这里没有意义。
+        // setTimeout( () => {
+        //     console.log('我是promise里边的setTimeout')
+        // }, 1000 );
+    // } );
+
+    // const abc = () => {console.log(2)}
+    // abc();
+
+    // console.log( p1 );
+
+
+
+    // let data = 0;
+    
+    // setTimeout( () => {
+    //     data = 5;
+    //     console.log('setTimeout里边的data为:', data);
+    // }, 1000 );
+
+    // console.log('外边的data为:', data);
+
+    /*
+        promise版本,现在这种写法不ok
+        promise的回调函数的参数
+        promise里边的回调函数会被传入两个实参，这两个实参都是函数，并且是由JavaScript引擎提供的。
+
+        <pending>是promise的状态，pending正在进行中，resolved成功，        reject失败
+                                正在执行代码        代码执完了并且成功了    代码执行完了同时失败了
+
+        我在promise里边去写一个异步函数(ajax请求), 成功的拿到数据(resolved)，没拿到数据(reject);
+
+        data=0，我在promise里边写了一个延时器，过一秒种之后，data赋值为5。大于5就算成功，小于5就是失败
+
+        他现在之所以没有把状态变为成功或者失败，是因为我没有告诉他什么时候是成功，什么时候是失败。
+
+        1.resolve[成功] -> 函数，调用resolve表示成功
+        2.reject[失败] -> 函数，调用reject表示失败
+        之所以调用resolve和reject的时候把data传进去是想把他传递出去-> 传递出当前的promise
+
+        Promise.then[之后] -> 当Promise的状态从进行中变成了失败或者成功之后
+        Promise.then( callback1, callback2 ) -> callback1表示当Promise成功了之后要做什么事情，
+        callback2表示promise失败了之后要做什么事情
+
+        马儿跑：
+            从起点跑到终点,如果是第一名：奖励一堆草.如果不是第一名：不奖励一堆草。
+
+            promise里边的代码就相当于马儿正在跑，把失败或者成功的数据传出去.
+
+            比赛结束了之后要做什么事情呢？
+
+            prmose.then( callback1, callback2 );
+
+        1.第一种错误情况：结果没有达到我的预期。
+        2.第二种错误情况：代码本身错误了.通过try，catch也可以继续向下传递给callback2
+    */
+
+    let data = 0;
+
+    let promise = new Promise( (resolve, reject) => {//小明  
+
+        setTimeout( () => {
+            data = 4;
+
+            // try{抛出系统错误
+            //     throw new Error('你错了.');
+            // }catch(e){
+            //     reject(e)
+            // }
+
+            console.log('setTimeout里边的data为:', data);
+
+            if( data < 5 ){
+
+                //成功了之后要走then里边的第一个回调函数,data是传给了第一个回调函数
+                resolve(data)//决定了promise的状态，并且把data这个变量的值传递了出去
+
+            }else{
+
+                //失败之后走then的第二个回调函数, 把data传递给then的第二个回调函数
+                reject(`错误的原因是data为${data},他不小于5`)//决定了promise的状态，并且把data这个变量的值传递了出去
+
+            }
+        }, 1000 );
+
+    } );
+    let some = promise.then( abc => {
+
+        console.log('成功为:', abc);
+        return '我是some';
+
+    }, err => {//errquanpin[error] 表示错误
+
+        console.log(123)
+        console.log('错误为',err);
+        //如果想在代码错误了之后在这里做一些补救措施
+
+    } );
+
+    let ggg = some.then( xyz => {
+
+        console.log( '第二遍then执行了，上一个then传递过来的数据为',xyz );
+        return {nickname: '小明'};
+
+    }, err => {//捕获第一个then里边的代码运行错误
+
+        console.log('出错了');
+    } );
+
+    ggg.then( data => {
+        console.log('ggg这个then里边的数据为:', data)
+    } );
+
+
+
+
+    let p2 = new Promise( (resolve, reject) => {
+        const ajax = new XMLHttpRequest();
+    } );
+
+
+
+
+
+    // console.log(some);//是then返回的一个全新的promise对象
+
+
+
+
+
+
+
+
+
+    // console.log(promise);
+    // console.log( '外边的data为：',data );
+
+
+    // throw new Error('你错了.');//主动让代码运行错误
+</script>
+</html>

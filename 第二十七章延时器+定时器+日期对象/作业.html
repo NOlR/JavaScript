@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<p>
+		    <span>现在是: </span><a></a>
+		</p>
+		<p>
+		    <span>现在距离2020年12月17日还有:</span><a></a>
+		</p>
+		<p>
+		    <span>2019年12月11日下午三点半认识了你现在的对象</span>
+		    <p>距离你们两个相识已经过了:</p><a></a>
+		</p>
+		<script>
+			
+			let now=document.querySelectorAll("p")[0].querySelector("a");
+			let now_time=new Date();
+			let a;
+			setInterval(()=>{
+				a=new Date().toLocaleDateString();
+				a+=new Date().toLocaleTimeString();
+				now.innerText=a;
+			},1000);
+			
+			
+			let lastTime=document.querySelectorAll("p")[1].querySelector("a");
+			let setTime;
+			function setingTime(year,month,day){
+				time=new Date();
+				time.setFullYear(year);
+				time.setMonth(month+1);
+				time.setDate(day);
+				time.setHours(0);
+				time.setMinutes(0);
+				time.setSeconds(0);
+				time.setMilliseconds(0);
+				return time;
+			}
+			setTime=setingTime(2020,12,17);
+			//console.log(setTime);
+				function calculationTime(maxtime,mintime){
+					let result=maxtime-mintime;
+					let day=result/86400000;
+					let hour=(day-parseInt(day))* 86400000 / 3600000;
+					let minute=(hour-parseInt(hour))*60;
+					let scecond=(minute-parseInt(minute))*60;
+					let times=`${parseInt(day)}天${parseInt(hour)}小时${parseInt(minute)}分${parseInt(scecond)}秒`;
+					
+					return times;
+				};
+			console.log(calculationTime(setTime,now_time));
+			setInterval(()=>{
+				let nt=new Date();
+				lastTime.innerText=calculationTime(setTime,nt);			
+			},1000);
+			
+			
+			
+			let knowTime=document.querySelectorAll("a")[2];
+			setInterval(()=>{
+				let nt=new Date();
+				knowTime.innerText=calculationTime(nt,setingTime(2019,12,11));
+			},1000)	
+		</script>
+	</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一章：变量和数据类型</title>
+    <!-- 会停下来，去下载css代码 -->
+    <link rel="stylesheet" href="./index.css">
+    <style>
+        h1{
+            color: orange;
+        }
+    </style>
+    <!-- 
+        一般会在head标签里边引入,src -> source(资源) 
+        scr="路径" 和img标签的路径写法一模一样
+        一旦引入其他资源,就不要在script标签里边再写内容了
+        script标签没有限制，想写多少个就写多少个
+        停下来去下载js文件
+        如果去加载很多资源，那么页面中的内容会延时显示 -> 下载完成之后还要去解析
+        script两个属性：
+            defer 引入外部资源，走到这里会一边下载一边去解析后边的html代码
+            async 引入外部资源，走到这里会一边下载一边一边解析后边的html代码,走到</html>才会去解析这些js
+    -->
+    <!-- <script defer src="./index.js"></script> -->
+    <!-- <script async src="https://unpkg.com/swiper/js/swiper.js"> </script>  
+	<script async src="https://unpkg.com/swiper/js/swiper.min.js"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script defer src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+</head>
+<body>
+    <!-- 
+        前端(店面)，存储在数据库里边(后端操作数据库),前端告诉后端我要什么什么样的数据
+        wzker同学去鱼塘里边取，再送到前端
+        html & css
+        html 把内容包裹在标签里边
+        css 美化页面,通过美化标签来达到美化页面的效果
+        html里边的内容是我们用js去问后端要的，后端 -> 数据库 -> 发送给前端
+        JavaScript，分为三个部分：
+            1.ECMAScript -> 核心语法 (js应该如何写)  ECMA是一个组织，用来指定js这门语言
+            2.DOM 文档对象模型 -> html和css成为了js的傀儡
+            3.BOM 浏览器对象模型 -> js去操控浏览器
+        在正经的开发中:
+            html里边的内容都是通过js加进去的.
+
+        js和css一样即可以写在html文件里边，也可以写在外边。
+        css写在外边叫做外联
+        内联： script标签 ，写在所有的基础标签之后,永远是body标签的最后一个子元素
+                写在body和html之间,即便把script标签写在body下边，最后也会被解析
+                成为body的最后一个子元素
+            还可以写在head标签里
+    -->
+    <h1>hello world</h1>
+    <h2>23期js</h2>    
+    <!-- <script></script> -->
+</body>
+<script>
+    /*
+        只需要给内存起名字，然后在里边放数据
+        声明变量: 
+            var开头  + 变量名字 = 我们要存储的东西
+        console.log( 变量名 )在控制台中打印
+        内存：柜子 有很多很多的抽屉
+        变量名：抽屉的名字 里边放着我们存储的东西
+        声明变量用var var是一个关键字：在js中是有用的
+        = 赋值
+        变量的取名规则：
+            1.禁止使用中文
+            2.以字母、下划线(_)、美元符号($)开头，可以添加数字,不要以数字开头
+            3.如果名字中包含两个单词，第二个单词的首字母要大写 loveyou 驼峰命名
+            4.变量名要见名知意
+        关键字有很多，关键字不能当做变量名使用，这个变量里边保存的值有什么用就给他取什么样的名字
+        js中常见的报错有十几种 -> 1.把报错里经常出现的单词记下来
+        js严格区分大小写 Var 和 var不是同一个东西
+        保留字：现在还没有特殊的用途在以后会有特殊的用途
+    */
+   /*
+        Unexpected不希望出现的
+        token 标点符号，标记
+   */
+  /*
+    变量不能重复声明：重复声明，如果后边的初始化了会覆盖前边的。
+    初始化:在声明变量的时候直接给他赋值 -> 初始化
+    在取名字的时候要足够独特，永远不要去起相同的名字。
+    单行注释 //
+    多行注释 
+  */
+    // var handsome = '旱麓';
+    // console.log( handsome ); //旱麓 //去内存中找叫做旱麓的盒子，然后拿出他里边存储的值
+    // console.log( handsome );
+    // var handsome = '明阳';//覆盖发生在87行也就是说在87行之前 handsome这个变量里边的值依然是旱麓
+    // console.log( handsome );//wzker
+    // console.log( handsome );
+    // var abc = 123;
+    // console.log( abc );
+    // abc = 456;//直接赋值，覆盖前边的值
+    // console.log( abc );
+    // abc = 789;
+    // console.log( abc );
+    /*
+        数据:
+            简单数据类型的数据：Number(数字) String(字符串) Undefined(undeinfed)未定义 Null(null)没有对象的空指针
+                Boolean(布尔值) true false
+            复杂数据类型的数据 Array Object Function 
+    */
+    /*
+        Number(数字) 数字有最大值和最小值 1.7976931348623157e+308 能存储的最大值
+        e用在科学计数法中的 表示10 1.7976931348623157e+308 = 1.7976931348623157乘以308个10
+        最小小数值： 5e-324  10的平方 10的-1次方 10^2
+        最小值： -1.7976931348623157e+309
+    */
+    var num = 123456;
+    console.log( num );
+    var num_a = -1.7976931348623157e+309;
+    console.log( num_a );//Infinity[无穷大] 超出了js能处理的最大的数字 -Infinity[无穷小]
+    var num_b = -1;
+    console.log( num_b );
+    /*
+        在js中所有位数超过6位的，浏览器在处理的时候都会转为科学计数法
+        在js中小数叫做浮点数
+    */
+    var num_c = 123456700000000;
+    console.log( num_c );
+    var num_d = 3.4e8;//3.4e8  340000000
+    console.log( num_d );
+    var num_e = -3.4e8;//-3.4e8 -340000000
+    console.log( num_e );
+    /*
+        NaN ( Not a Number )不是一个数字 -> 属于数字类型
+    */
+   var num_f = NaN;
+   console.log( num_f );
+
+   /*
+        String 字符串 所有的字符都可以成为字符串
+        ....is not undefined 一个变量没有声明过
+        所有字符串都要被包裹在单引号或者双引号里边
+   */
+    var str = '旱麓';
+    console.log( str );
+    var str_a = '123';
+    console.log( str_a );
+    var str_b = "旱麓asdkljfの!%6?+_)(";
+    console.log( str_b );
+    //双引号和单引号都不能包含自己，但是可以包含彼此 identifier变量
+    var str_c = '汤姆说: "你好啊杰瑞",汤姆说:\n "你好啊杰瑞",汤姆说: "你好啊杰瑞",汤姆说: "你好啊杰瑞",汤姆说: "你好啊杰瑞",汤姆说: "你好啊杰瑞",汤姆说: "你好啊杰瑞",汤姆说: "你好啊杰瑞",汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"汤姆说: "你好啊杰瑞"';
+    var str_d = '门前一群鹅，嘘声吓入河，下河捉鹅医肚饿，吃完回家玩儿老婆门前一群鹅，嘘声吓入河，下河捉鹅医肚饿，吃完回家玩儿老婆;门前一群鹅，嘘声吓入河，下河捉鹅医肚饿，吃完回家玩儿老婆;';
+    //反斜杠可以让我们换行书写,同时在使用的时候是很多空格
+    console.log( str_c );
+    console.log( str_d );
+    //Boolean(布尔值) true[真] false[假]
+    //转账金额大于等于5000 短信验证，如果小于5000不用进行身份验证
+
+    //Undefined 未定义 undefined未定义 
+    var unde;//没有存储任何的值
+    console.log( unde );
+
+    //null 空 -> 一个没有对象的空指针
+    var some = null;//没有存储任何的值 ,我们声明了一个变量，这个变量用于以后保存对象。
+    console.log( some );
+
+    //简单数据类型之所以简单，是因为里边只能存储一种值
+    var str_e = 123;
+    console.log( str_e ); 
+    //复杂数据类型，可以在一个变量里边存储任意类型的值
+    var some_d = 'undefined null 123 true false 旱麓 NaN';
+    console.log( some_d );
+</script>
+</html>

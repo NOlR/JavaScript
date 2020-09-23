@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .container{
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .swiper-wrapper{
+            display: flex;
+            width: 100%;
+        }
+        .swiper-wrapper > .swiper-slide{
+            width: 100%;
+            flex-shrink: 0;
+            line-height: 200px;
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            font-weight: 600;
+            user-select: none;
+        }
+        .swiper-slide:nth-of-type(1){
+            background-color: orange;
+        }
+        .swiper-slide:nth-of-type(2){
+            background-color: purple;
+        }
+        .swiper-slide:nth-of-type(3){
+            background-color: #58a;
+        }
+        .transition{
+            transition: .4s ease-in;
+        }
+        .swiper-pagination{
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10px;
+        }
+        .span{
+            width: 20px;
+            height: 20px;
+            background-color: rgba(0, 0, 0, .2);
+            border-radius: 50%;
+        }
+        .span + .span{
+            margin-left: 10px;
+        }
+        .background{/*改变span标签的背景颜色*/
+            background-color: rgb(0, 255, 51) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">1</div>
+            <div class="swiper-slide">2</div>
+            <div class="swiper-slide">3</div>
+        </div>
+        <!-- 分页器容器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+</body>
+<script>
+    class Swiper {
+        constructor(className, options) {
+            this.nodelist = {
+                container: document.querySelector(className)
+            };
+            this.options = options;
+            this.init();
+        }
+        init() {//初始化：
+            //拿到实例化对象身上的几个元素
+            let {container} = this.nodelist;
+            this.nodelist.wrapper = container.querySelector('.swiper-wrapper');
+            let {wrapper} = this.nodelist;
+            this.nodelist.slides = wrapper.querySelectorAll('.swiper-slide');
+
+            Object.assign( this.options, {
+                width: -this.nodelist.container.offsetWidth,
+                maxMove: this.nodelist.container.offsetWidth * this.nodelist.slides.length,
+                index: 0,
+            } );
+
+            if( this.options.pagination ){
+                let {el, clickable = false} = this.options.pagination;
+                //如果有el属性，选中分页器容器,创建小的分页器
+                el ? Object.assign( this.nodelist, {
+                    pagination: document.querySelector(el)
+                } ) : '';
+                Swiper.addPagination.call(this)
+                //如果clickable为true 那么就给分页器绑定点击事件
+                clickable ? Swiper.addClick.call(this) : '';
+            }
+            
+            console.log(this)
+            Swiper.drag.call(this, this.nodelist.wrapper);
+        }
+        static drag(ele) {
+            let positionX = 0,
+                isClick = false;
+                this.options.moveX = 0;
+            ele.addEventListener('mousedown', e => {
+                e.stopPropagation();
+                this.nodelist.wrapper.classList.remove('transition');
+                positionX = e.clientX;
+                isClick = true;
+            })
+            document.addEventListener('mousemove', e => {
+                if( !isClick ) return;
+                e.stopPropagation();
+                this.options.moveX += e.clientX - positionX;
+                ele.style.transform = `translateX(${this.options.moveX}px)`;
+                positionX = e.clientX;
+            })
+            document.addEventListener('mouseup', e => {
+                e.stopPropagation();
+                this.nodelist.wrapper.classList.add('transition');
+                //判断，如果超过了宽度的一半，滑动到下一张，如果没有超过复原
+
+                const {index} = this.options;
+                const {spanList} = this.nodelist;
+                //清除上一个的背景颜色 
+                spanList[index].classList.remove('background');
+
+                //如果向左拖动的距离 < index * width + width / 3
+                if( this.options.moveX < (this.options.index * this.options.width + this.options.width / 3)  ){
+                    //如果向右拖动的距离大于了轮播图宽度的1/3 那么index++
+                    this.options.index = Math.min( this.options.index + 1, this.nodelist.slides.length - 1 );
+                }else if(this.options.moveX > (this.options.index * this.options.width + -this.options.width / 3)){//向右拖动的距离 > index * width + width / 3
+                    this.options.index = Math.max( this.options.index - 1, 0 );
+                }
+
+                spanList[this.options.index].classList.add('background');
+                this.options.moveX = this.options.index * this.options.width;
+                ele.style.transform = `translateX(${this.options.moveX}px)`;
+                isClick = false;
+            })
+        }
+
+        static addPagination() {//给轮播图容器添加分页器
+            //创造分页器，并添加到nodelinst的分页器属性里边
+            const fragment = document.createDocumentFragment();//文档碎片 开销很高
+
+            const {slides, pagination} = this.nodelist;//解构出滑块数量
+
+            slides.forEach( (item, num) => {//根据num决定给哪个span标签设置背景颜色
+                const {index} = this.options;
+                const span = document.createElement('span');
+                span.classList.add('span');//默认样式
+                num === index ? span.classList.add('background') : '';
+                fragment.append(span)
+            } );
+            pagination.append( fragment );
+            Object.assign( this.nodelist, {
+                spanList: document.querySelectorAll('.span')
+            } );
+        }
+
+        static addClick() {//给分页器添加点击事件
+            const {spanList, wrapper} = this.nodelist;
+            const {width} = this.options;
+            spanList.forEach( (item, num) => {
+
+                item.addEventListener( 'click', e => {
+                    e.stopPropagation();//把冒泡阻止掉
+                    spanList[this.options.index].classList.remove('background');
+                    this.options.index = num;
+                    spanList[this.options.index].classList.add('background');
+                    this.options.moveX = this.options.index * width;
+                    wrapper.style.transform = `translate(${this.options.moveX}px)`;
+                } )
+
+            }) 
+        }
+    }
+
+    /*
+        className 让哪个元素成为最大的容器
+        {
+            pagination: {//分页器配置
+                el: 哪个元素是分页器的总容器
+                clickable: true(可以点击) / fasle(不可以点击)
+            }
+        }
+    */
+    const mySwiper = new Swiper('.container',{
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+        }
+    });
+</script>
+</html>

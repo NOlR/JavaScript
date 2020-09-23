@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js动画</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            transform:translateX(0px) ;
+            transition: 1s linear;
+        }
+        .animate{
+            transform: translateX(100px);
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    //js 动画 通过类名的方式
+    const box = document.querySelector('.box');
+    // box.onclick = function () {
+    //     this.classList.add('animate')
+    // };
+    //requestAnimationFrame( callback ) 请求动画帧 request[请求]Animation【动画】 Frame[帧]
+    //callback 描述动画如何运作 
+    // function abc(timestamp){//timestamp[时间戳] -> abc这个函数被调用时候的时间
+    //     console.log(timestamp);
+    // }
+    // requestAnimationFrame(abc);//只执行一次 -> 回调函数
+
+
+
+    /*
+        第一次执行move 
+            move被传进去了一个时间戳
+            由于start和null相等，那么start被重新赋值为了timestamp -> 第一次执行的时间戳被start变量保留了下来
+            动画执行了 timestamp[每一次执行的时间] - start【开始时间】= 动画已经执行了多少毫秒
+            让box移动 （process / 10 = 数值）px
+            如果动画的运行时间少于2秒 继续请求动画帧 -> 再继续执行move函数 
+
+        如果用setInterval来做动画 时间必须写死:浪费性能
+        requestAnimationFrame时间间隔是不固定的，但是一定能让用户看到流畅的效果 -> 优点，节省性能
+    */
+    // let start = null,
+    //     num_a = 0;
+    // const move = timestamp => {
+    //     if(start === null) start = timestamp;//
+    //     let process = timestamp - start;//process[进度]
+
+    //     box.style.transform = `translate(${num_a += 2}px)`;//20 * 10 =200
+
+    //     if( process < 2000 ) requestAnimationFrame(move);
+    // };
+    // requestAnimationFrame(move);//会立马去执行move这个函数 我们要做什么样的动画就直接写在move里边
+    //在动画执行的期间 requestAnimationFrame 负责控制时间
+    //requestAnimationFrame能够保证用户在电脑上看到的一定是一个流畅的动画
+
+    // let num = 0;//每秒钟盒子移动60次，每次移动2px 每秒钟移动120px
+    // const abc = setInterval( () => {//小明
+    //     if( num > 200 ) clearInterval(abc);
+    //     box.style.transform = `translate(${num += 2}px)`;
+    // }, 1000 / 60 );//每隔16.666ms 执行一次小明函数 -> 做动画
+    // //假如说想让盒子移动两百像素之后就停下来 = 控制num的值
+
+        //可以通过控制动画运行的时间来控制xyz函数的调用
+        let start_time = null,
+                num_a = 0;//保存box移动了多少距离
+        const xyz = timestamp => {
+            if( start_time === null ) start_time = timestamp;//5,878ms
+
+            let process = timestamp - start_time;//动画运行了多少秒
+
+            box.style.transform = `translate(${num_a += 2}px)`;//20 * 10 =200
+
+            if( num_a < 200 ) requestAnimationFrame(xyz)
+            else box.style.transform = `translate(200px)`
+        };
+        requestAnimationFrame(xyz);
+
+        //requestAnimationFrame 只执行一次
+
+        //通过控制box的移动距离来控制xyz函数是否需要执行
+
+
+
+        //无缝轮播 -》 自动轮播 -》 时钟 setInterval requestAnimationFrame
+        //明天49的几率不放假 51的几率放假 51可能放一天
+
+
+
+
+        //文字钟表
+    const year = document.querySelector('.year'),
+        month = document.querySelector('.month'),
+        dates = document.querySelector('.date'),
+        day = document.querySelector('.day'),
+        hour = document.querySelector('.hour'),
+        minute = document.querySelector('.minute'),
+        second = document.querySelector('.second');
+    /*
+        写一个函数：
+            获取现在的时间 
+            填充span标签对应的日期
+        每隔一秒钟更新一下页面当中的内容 定时器：setInterval
+        延时器：setTimeout 只执行一次
+    */
+    const getTime = () => {
+        const date = new Date();//获取系统时间
+        year.innerText = date.getFullYear();
+        month.innerText = date.getMonth() + 1;//月份从0开始计数
+        dates.innerText = date.getDate();//date日期 day星期几
+        day.innerText = date.getDay();
+        hour.innerText = date.getHours();
+        minute.innerText = date.getMinutes();
+        second.innerText = date.getSeconds();
+    };
+    getTime();
+    setInterval(getTime, 1000);//1000ms = 1s
+
+
+    //倒计时 -> 2020年5月1日00:00:00[结束日期] 定时器 -> 更新现在距2020年5月1日还有多少天多少小时多少分多少秒
+    //结束时间
+    const end_time = new Date(2020,4,1,00,00,00);//月份从0开始计数，4 = 5月
+    //写一个函数 -> 获取现在的时间，同时计算出距离end_time有多久
+    const end_date = document.querySelector('.end_date'),
+    end_hour = document.querySelector('.end_hour'),
+    end_minute = document.querySelector('.end_minute'),
+    end_second = document.querySelector('.end_second');
+
+    // const endTime = () => {
+    //     const ends = end_time - new Date();//开始时间
+    //     const date = parseInt( ends / (24*60*60*1000) );
+    //     const hour = parseInt( (ends / (24*60*60*1000) - date) * 24 * 60 * 60 * 1000 / (60 * 60 * 1000) );
+    //     /*
+    //         (ends / (24*60*60*1000) - date) * 24 * 60 * 60 * 1000 / (60 * 60 * 1000) - hour 0.75小时
+    //         0.75小时 * 一小时有多少毫秒 / 一分钟有多少毫秒 = 多少分钟
+    //     */
+    //     const minute = parseInt( ( (ends / (24*60*60*1000) - date) * 24 * 60 * 60 * 1000 / (60 * 60 * 1000) - hour ) * 60 * 60 * 1000 / (60*1000) );
+        
+    //     const second = parseInt( ( ( (ends / (24*60*60*1000) - date) * 24 * 60 * 60 * 1000 / (60 * 60 * 1000) - hour ) * 60 * 60 * 1000 / (60*1000) - minute) * 60) ;
+    //     end_date.innerText = date;
+    //     end_hour.innerText = hour;
+    //     end_minute.innerText = minute;
+    //     end_second.innerText = second;
+    // };
+    // endTime();
+    // setInterval( endTime, 1000 );
+
+    const endTimes = () => {
+        const ends = end_time - new Date();//开始时间和结束时间相差的毫秒数
+        //总毫秒数 / 一天有多少毫秒 = 总天数 
+        //毫秒数 / 一天有多少毫秒
+        end_date.innerText = parseInt(ends / (24 * 60 * 60 * 1000));//天数
+        //总毫秒数 / 一小时有多少毫秒 = 总小时数 % 24
+        end_hour.innerText = parseInt(ends / (60 * 60 * 1000) % 24);//小时
+        //总毫秒数 / 一分钟有多少毫秒 = 一共多少分钟
+        // console.log( ends / (60 * 1000) % 60 )
+        end_minute.innerText = parseInt( ends / (60 * 1000) % 60 );
+        //总毫秒数 / 一秒钟有多少毫秒 = 一共剩余多少秒 % 60
+        // console.log( ends / 1000 % 60 )
+        end_second.innerText = parseInt( ends / 1000 % 60);
+    };
+    endTimes()
+    setInterval( endTimes, 1000 );
+    <section class="text-clock">
+        <p> <span class="year"></span> 年 <span class="month"></span> 月 <span class="date"></span> 日 星期:   <span class="day"></span> </p>
+        <p>
+            <span class="hour"></span>时
+            <span class="minute"></span>分
+            <span class="second"></span>秒
+        </p>
+    </section>
+
+    <section class="text-clock">
+        <span>距离2020年5。1假期还有： </span> <span class="end_date"></span> 天
+        <span class="end_hour"></span> 小时  <span class="end_minute"></span> 分钟
+        <span class="end_second"></span> 秒
+    </section>
+
+
+
+</script>
+</html>

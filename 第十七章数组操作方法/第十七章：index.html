@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组的方法</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+        .radius{
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    //声明数组的方法4种。
+    //构造函数
+    //API application interface 程序接口，接口 原生
+    // var arr = new Array(7);
+    // console.log(arr);
+    //第四种创建数组的方式 
+    // var arr_a = Array.of('str');
+    //字面量
+    // var arr_b = [7];
+    // var arr_c = Array(7);
+    var box = document.querySelector('.box');
+    // box.classList.add('radius');
+    //数组的方法 
+    /*
+        能够更改数组方法
+        不能更改数组的方法
+        代码的优雅：用新的API或者是写法来写,能用函数就用函数，缩进：一定要缩进。
+        es6 () => {} function (){}
+    */
+    // var arr = [1,2,3];
+
+    // console.log(arr);
+
+    //arr.push(value1,value2.....) push[推] value[值]
+    // var result = arr.push(4,5,6,7,{nickname: '小明'}, ['hello', 'world']);
+    // console.log(result);
+
+    //自己写一个push方法实现和原生js提供的push方法功能一样
+    //Array.isArray(arr)判断一个数据是不是数组，返回true或者false
+    // var some = [1,2,3];
+    // function push(arr){
+    //     //判断传进来的参数是不是一个数组
+    //     if( !Array.isArray(arr) ) return '参数必须是一个数组';
+
+    //     console.log(arguments);
+    //     //0 1 2 for循环走3遍
+    //     for( var i = 0,length = arguments.length; i < length - 1; i++ ){
+    //         arr[arr.length] = arguments[i + 1];
+    //     };
+    //     return arr.length;
+    // };
+    // console.log( push(some, 4, 5, 6,{nickname: '小明'}) );
+
+    // var some_a = [1,2,3];
+    // console.log(some_a);
+    //能够改变数组的方法全都自己封装一下
+
+    //pop方法不支持传参 从尾部去删除数组的最后一项，并且返回
+    //arr.pop()从数组的后边去删除数组里边的数据，pop只能删除一个,把被删除的那一项返回出去
+    // var some = [1,2,'hello world'];
+    // console.log(arr);
+    // console.log( arr.pop(2) );
+    // console.log(arr);
+    //参数：被删除的数组, 支持删除多项的pop方法
+    // function pop(arr) {
+    //     var result = arr[arr.length - 1];//先把数组的最后一项保留下来
+    //     arr.length = arr.length - 1;//通过改变数组的长度这种方法去从后边删除数组的最后数据
+    //     return result;//把被删除的那一项返回出去
+    // };
+    // console.log( pop(some) );
+
+    //shift() unshift()
+    //shift()删除数组里的第0项并返回
+    var some_a = [ {nickname:'小明'}, 2, 3, 4];
+    console.log(some_a);
+    var result = some_a.shift();
+    console.log(some_a, result);
+
+    //unshift(value1, value2....)从前边添加
+    var arr = [1,2,3];
+    console.log( arr );
+    console.log( arr.unshift(-1,0.1,0.2,0.3) );
+    console.log( arr );
+    
+</script>
+</html>

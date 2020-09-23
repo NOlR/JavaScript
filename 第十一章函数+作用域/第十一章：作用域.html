@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作用域</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //作用域规定了我们在什么地方可以访问什么变量
+    //es5中只有函数作用域和全局作用域[作用域也是一个对象], es5只要不在函数里边去声明一个变量，这个变量就是全局
+    // var a = [1,2,3];
+    // console.log( window.a ===  a );
+    // function fn(){
+    //     console.log('我是函数fn');
+    // };
+    // window.fn();
+    // //全局作用域就是window对象, Global对象，所有在全局声明的变量都挂载在Global对象上
+
+    // function some() {//这个花括号就是函数的作用域
+    //     var num = 1;
+    //     console.log( num );
+    // };
+    // some(); 
+
+    // // console.log( num );//num没有定义
+
+    // var num_a = 456;
+    // function add(){//首先在add的作用域里边找num_a这个变量，一直往上找，如果找到了就是用，如果找到全局还没有找到就报错
+    //     console.log( num_a );
+    // };
+    // add();
+
+
+    function abc() {
+        var str = '健身器材';
+    };
+
+    function xyz() {
+        console.log( str );
+    };
+    // xyz();
+
+    // console.log(str);
+    //全局作用域 可不可以使用局部作用域里边的变量: 不能使用
+    //局部作用域 可以使用局部作用域的变量吗： 不可以
+    //局部作用域 可以访问全局作用域,可以访问所有的父作用域
+    //就近原则
+    // var str_d = '我是外边的字符串';
+    // function fn_c() {
+    //     var str_d = '我是里边的字符串';
+    //     console.log( str_d );
+    // };
+    // fn_c();
+
+    //var 声明变量会存在变量提升 -》 把这个变量提升到当前作用域的顶层
+    //js是解释型语言 编译型语言 再执行之前就先被转为了二进制代码
+    //var some_a; undefined
+    console.log( some_a );
+    var some_a = 'some_a';
+    console.log( some_a );
+
+    //函数表达式在进行变量提升的时候会把整体都提升上去
+    fn_a();
+    function fn_a(){
+        console.log('我是fu_a函数');
+    };
+    fn_a();
+
+    //函数声明
+    // fn_b();
+    var fn_b = function () {console.log( '我是函数fn_b' )};
+    fn_b()
+    // console.log(some_a);
+
+    var num_b = 123;
+    function fn_num(){
+        console.log( num_b );
+        var num_b = 2;//变量提升
+    };
+    fn_num();
+
+
+    var hanlu = 1;
+    function test(){//var hanlu
+        console.log( '第一次hanlu的值为:', hanlu );//1
+
+        hanlu = 4;//hanlu = 4
+        console.log( '第二次hanlu的值为:', hanlu );//4
+
+        // var hanlu;
+        console.log( '第三次hanlu的值为:', hanlu );//4
+    };
+    test();
+    console.log( hanlu );
+
+    //嵌套的作用域 函数套函数
+    var some_text = '我是外边的some_text';
+    function bugu() {
+
+        function inner(){//inner[里边的]
+            var some_text = '我是inner里的some_text';
+            console.log( some_text );
+        }
+        inner();
+
+        function inner_2() {
+            console.log( some_text );
+        };
+        inner_2();
+    };
+    bugu();
+    // inner2();
+
+    //永远取一个足够独特的变量名
+    var some_b = 123;
+    console.log( some_b );
+    function aaa() {
+        var some_b = 456;
+        console.log( window.some_b );
+    };
+    aaa();
+    //this 和 闭包
+</script>
+</html>

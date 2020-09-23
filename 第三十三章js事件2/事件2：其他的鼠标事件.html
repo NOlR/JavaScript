@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <section class="box"></section>
+    <!-- <input type="text">
+    <textarea name="" id="" cols="30" rows="10"></textarea> -->
+</body>
+<script>
+    /*
+        其他的鼠标事件
+            和点击有关的：
+                mousedown -> 当鼠标按下
+                mouseup -> 鼠标抬起
+            移入移出：
+                mouseenter -> 鼠标进入元素
+                mousemove -> 鼠标在元素里移动
+                mouseleave -> 鼠标离开元素
+            滚轮事件：
+                mousewheel -> 鼠标的滚轮
+    */
+    // const box = document.querySelector('.box');
+    // box.onmouseenter = e => {
+    //     console.log('鼠标进入了box')
+    // }
+    // box.onmousemove = e => {
+    //     console.log('鼠标在box里滑动')
+    // }
+    // box.onmouseleave = e => {
+    //     console.log('鼠标抛弃了box')
+    // }
+    /*
+        wheelDelta -> 向下滚还是向上滚 
+        wheelDelta > 0 向下滚动
+        wheelDelta < 0 向上滚动
+    */
+
+    // box.onmousewheel = e => {//wheel[滚动]
+    //     if( e.wheelDelta > 0 ){
+    //         console.log('向下滚动')
+    //     }else{
+    //         console.log('向上滚动')
+    //     }
+    // }
+
+    // const input = document.querySelector('input');
+    // input.onfocus = e => {//focus[焦点]
+    //     console.log('你选中了input框')
+    // }
+    // input.onblur = e => {//blur[失去焦点]
+    //     console.log('你放弃了input框')
+    // }
+
+
+    //js里边和元素用鼠标和键盘交互的所有事件，所有元素都可以使用包括document和window
+    // console.dir(input)
+    // console.dir(box)
+
+    // //只要选中了页面的可视区域或者标签页都表示当前页面获取了焦点
+    // //当当前页面获取焦点的时候，开启setInterval
+    // window.onfocus = e => {
+    //     console.log('你正在浏览当前页面')
+    // };
+    // //只要选中了页面的非可视区域或者其他标签页都表示当前页面失去了焦点
+    // //当当前页面失去焦点的时候，清除clearInterval
+    // window.onblur = e => {
+    //     console.log('你离开了当前页面')
+    // };
+    //不管鼠标的哪一个键按下了都能触发mousedown button: 0[左击] 1[鼠标滚轮点击] 2[右击]
+    // box.onmousedown = e => {
+    //     e.stopPropagation();
+    //     //把左击，右击和滑轮点击浓缩到一起 
+    //     e.button === 0 ? console.log('左击') : ( e.button === 1 ? console.log('滚轮') : console.log('右击') );
+    //     // if( e.button === 0 ){
+    //     //     console.log('左击');
+    //     // }else if( e.button === 1 ){
+    //     //     console.log('滚轮');
+    //     // }else{
+    //     //     console.log('右击');
+    //     // }
+    // };
+    // box.onmouseup = e => {
+    //     //把左击，右击和滑轮点击的抬起事件浓缩到一起 
+    //     e.button === 0 ? console.log('左击抬起') : ( e.button === 1 ? console.log('滚轮抬起') : console.log('右击抬起') );
+    // }
+
+    /*
+        移动端的专属事件：
+            touchstart -> 手按下
+            touchmove -> 滑动
+            ontouchend -> 当触摸结束
+            touchcancel -> 触摸被意外终止，正在刷今日头条,突然接到了旱麓的电话,电话页面会变到最上层，覆盖了今日头条，
+            触摸意外终止。
+
+        TouchEvent -> 触摸事件对象
+            changedTouches和touches，他们两个完全一毛一样
+                length属性：几根手机进行了触摸 -> 可以通过判断length来看有几根手机进行了触摸
+            
+    */
+    // box.ontouchstart = e => {//手机按下的那一刻
+    //     console.log(e)
+    // }
+    // // box.ontouchmove = function (e) {//手指在整个页面里边滑动
+    // //     console.log(e)
+    // // }
+    // // box.ontouchend = e => {//手机按下的那一刻
+    // //     console.log(e)
+    // // }
+    // box.ontouchcancel = e => {
+    //     console.log('手指意外离开了')
+    // }
+
+
+
+
+    //鼠标拖着元素跑
+    const box = document.querySelector('.box');
+    /*
+        思路：
+            事件监听 : 鼠标按下[box]，移动[document]，鼠标抬起[document]
+        拖动元素跑的前提是：选中了这个元素,假如鼠标没有在box里边按下，那么document的mousemove什么都不做
+
+        拖着元素跑，需要知道什么？
+            鼠标按下的坐标 
+            鼠标滑动时候的坐标 
+            移动的距离
+    */
+    let click = false,//鼠标默认没有在box里边按下
+        position = {x:0, y: 0},//初始的x和y坐标
+        moveX = 0,//水平方向移动的距离
+        moveY = 0;//竖直方向移动的距离
+
+    box.addEventListener( 'mousedown', e => {//鼠标按下
+        e.preventDefault();
+        e.stopPropagation();
+        click = true;//鼠标在box里按下，让click变为true
+        position = { x: e.clientX, y: e.clientY }//记录鼠标按下的坐标
+    } )
+
+    document.addEventListener( 'mousemove', e => {//鼠标滑动
+        e.preventDefault();
+        e.stopPropagation();
+        if( !click ) return;
+        moveX += e.clientX - position.x;
+        moveY += e.clientY - position.y;
+        console.log(moveX,moveY)
+        e.target.style.transform = `matrix(1,0,0,1,${moveX},${moveY})`;
+        position = { x: e.clientX, y: e.clientY };
+    } )
+
+    document.addEventListener( 'mouseup', e => {//鼠标抬起
+        e.preventDefault();
+        e.stopPropagation();
+        click = false;
+    } )
+</script>
+</html>

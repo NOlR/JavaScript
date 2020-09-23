@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js事件2</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+        }
+        .box1{
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+    <!-- 所有能用div的地方都可以换成section -->
+    <section class="box"></section>
+    <section class="box1"></section>
+    <a href="https://www.baidu.com" target="_blank">点击进入百度</a>
+</body>
+<script>
+    /*
+        js事件:
+            0级事件和2级事件包括：ui事件及交互事件
+                0级事件:事件绑定以on开头+事件名称
+                2级事件:事件监听 元素.addEventListener('事件的名称', callback)
+                3级事件
+    */
+    const box = document.querySelector('.box');
+    /*
+        点击事件：click contextmenu【contextmenu：上下文菜单 鼠标的右键】 dblclick左键双击
+    */
+    // document.onclick = e => {//就相当于给body绑定了点击事件
+    //     console.log('点击了document')
+    // }
+    // box.onclick =  e => {
+    //     e.stopPropagation();//阻止冒泡
+    //     console.log(e.target);//调用函数的主体对象
+    // };
+
+    //a标签的跳转属于默认事件
+    // const oA = document.querySelector('a');
+    // oA.onclick = e => {
+    //     e.preventDefault();//阻止默认事件
+    //     console.log(123);
+    // }
+    //事件监听也存在冒泡和默认事件
+    // box.addEventListener( 'click', e => {
+    //     // e.stopPropagation();
+    //     console.log(123)
+    // } )
+    // document.addEventListener( 'click', e => {
+    //     console.log('我是document')
+    // },true )//true表示在捕获阶段执行,从上往下传递
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+        绑定或监听多个会不会覆盖：
+            0级事件：事件绑定 -> 不能重复绑定,事件绑定本质上是给对象的属性赋值，重复赋值，后边的会覆盖前边的
+            2级事件: 事件监听 -> 不能重复绑定同一个callback
+            在事件监听的时候通过函数的地址来确定是不是同一个函数，如果不是同一个函数，都执行
+        注销事件：
+            0级:通过重新赋值为null来注销事件
+            2级：Element.removeEventListener('取消什么事件的监听', 取消哪个callback) 
+    */
+    // box.onclick =  e => {
+    //     e.stopPropagation();//阻止冒泡
+    //     console.log('旱麓同学跑去告老师');//调用函数的主体对象
+    // };
+    // const xiyan = () => {
+    //     console.log('兮颜同学跑去告老师');
+    // };
+    // box.addEventListener('click', xiyan);
+    // box.addEventListener('click', xiyan);
+    // box.addEventListener( 'click', e => {//flying
+    //     console.log('flying');
+    // } );
+    // box.onclick = null;
+
+    // const wzker = e => {//wzker
+    //     console.log('wzker');
+    //     // console.log(arguments.callee)//arguments里的callee指向了函数本身
+    //     // box.removeEventListener( 'click', arguments.callee )
+    // };
+    // box.addEventListener( 'click', wzker );
+    // box.removeEventListener( 'click',wzker  );//移出wzker对box点击事件的监听
+
+    // let noir = null;
+    // box.addEventListener( 'click', function (e) {//小明函数
+    //     noir = arguments.callee;
+    //     console.log( 123 );
+    // } );
+    
+    // const purple = document.querySelector('.box1');
+    // purple.addEventListener('click', e => {
+    //     if( noir !== null ){
+    //         box.removeEventListener('click', noir);
+    //         console.log('box现在不能再被点击了')
+    //     }
+    // });
+
+    /*
+        0级事件[绑定]
+        2级事件[监听]
+            共同点：
+                都存在冒泡和默认事件，也都可以通过event[事件对象]来阻止冒泡和默认事件
+            不同点：
+                0级不能重复绑定，后边绑的会覆盖前边绑的
+                2级不能重复绑定同一个函数，不同函数可以重复监听并且都有效
+
+                2级事件比0级事件多了一个捕获阶段：从上到下
+
+                移出事件函数的方式不同
+                    0级直接赋值为null
+                    2级removeEventListener
+    */
+</script>
+</html>

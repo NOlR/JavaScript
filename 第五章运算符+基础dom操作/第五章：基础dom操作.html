@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基础dom操作</title>
+    <style>
+        /* 找到类名为box的这个标签[元素] */
+        .box{
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            background-color: orange;
+        }
+        span{
+            color: #58a;
+            font-size: 20px;
+        }
+        #container span{
+            color: purple;
+        }
+        #container > .box:nth-child(1) > span{
+            color: red;
+        }
+        .box > .box2{}
+    </style>
+</head>
+<body>
+    <!-- container(容器) -->
+    <!-- <div id = "container">
+        <div class="box">
+            <span>-1</span>
+        </div>
+        <div class="box">0</div>
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+        <div class="box">6</div>
+    </div> -->
+    <!-- .some .box > .some -->
+    <!-- <div class="box">
+        <div class="some">1</div>
+    </div>
+    <div class="box every">2</div>
+    <div class="box">3</div> -->
+
+
+
+    <div class="box box1">
+        <div class="box box2">我是box2</div>
+    </div>
+    <div class="abc"></div>
+
+</body>
+<script>
+    //dom => Document Object Module -> 文档对象模型
+    //允许js操作 html 和 css;
+
+    //操作html和css之前 要先得到html和css
+
+    // 通过css选择器获取 ,页面中的所有html和css都掌握在document手中
+    console.log( typeof document );//object  我们需要通过document这个对象来获取html和css
+    
+    //query[查询] Selector[选择器]
+    //querySelector只能获取第一个找到的元素  document.querySelector('选择器')
+    // var box = document.querySelector('.box');//我要找到类名为box的这个元素
+    // console.log( box );
+    // //document.querySeletorAll('选择器');
+    // var boxs = document.querySelectorAll('.box');
+    // console.log( boxs );//NodeList[所有找到的元素]
+    // console.log( boxs.length );
+    // console.log( boxs[1] );
+
+    // //获取到一个标签之后，他的所有后代元素都可以获取到
+    // var container = document.querySelector('#container');
+    // console.log( container );
+    // // console.log( container );
+    //'#container > .box:nth-child(1) > span' css选择器
+    // var span = document.querySelector('#container > .box:nth-child(1) > span');
+    // console.log( span );
+
+    // var box_s = document.querySelectorAll('div');
+    // console.log( box_s );
+    //获取后代元素 可以使用链式操作
+    // var some = document.querySelector('.box').querySelector('.some');
+
+
+    var box3 = document.querySelector('.box1');
+    console.log(box3);
+    //通过box3这个标签来获取他的子元素
+    var box2 = document.querySelector('.box1').querySelector('.abc');//null没找到
+    console.log(box2);
+</script>
+</html>

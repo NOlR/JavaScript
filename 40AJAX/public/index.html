@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax封装</title>
+</head>
+<body>
+    hello everyone!
+</body>
+<script>
+    /*
+        1.实例化
+        2.open
+        3.send
+        4.监听readystate的变化
+
+        withCredentials -> 是否携带凭证(cookie)
+
+        自定义中断时间: 3秒钟之内要是请求没有完成就不请求了
+        xhr.timeout
+        ontimeout -> 超时 会打断ajax的执行
+
+        ajax的特点：它是一个异步的,send是异步
+    */
+   //实例化一个ajax对象
+    // let data = 0;
+    // let xhr = new XMLHttpRequest();
+    // xhr.withCredentials = true;//携带cookie，默认不携带cookie
+    // xhr.timeout = 3000;//超时的单位是ms 1s = 1000ms
+    // xhr.open( 'get', 'http://localhost:3000/wanzhangbh?wife=石原里美' );
+    // xhr.send(null);
+    // xhr.onreadystatechange = function () {
+    //     // if( xhr.readyState === 3 ){
+    //     //     xhr.abort()//打断ajax对象
+    //     // }
+    //     if( xhr.readyState === 4 ){
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             data = xhr.responseText;
+    //             console.log('40行的数据为:', data);
+    //             //在使用过之后，赋值为null
+    //             // xhr = null;
+    //         }
+    //     }
+    // }
+    // xhr.ontimeout = function (){//如果ajax超时了就会走这个函数
+    //     console.log('请求超时，请检查你的网络状态')
+    //     alert('请求超时，请检查你的网络状态')
+    // }
+
+    // console.log('49行的data为:', data);
+
+
+    // xhr.onload = function () {
+    //     if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //         console.log(xhr.responseText)
+    //     }
+    // }
+    // xhr.onerror = function () {
+    //     console.log(xhr.status)//如果出错看一下http的状态
+    // }
+    // console.log(1);
+
+    // let data = 0;
+    // data = 5;
+    // console.log(data);
+    
+
+    //如果发送的是json格式，需要序列化一下，同时要设置请求头，把内容类型设置为json
+    //formData
+    // const obj = ['hello', 'world'];
+    // let xhr = new XMLHttpRequest();
+    // xhr.open( 'post', 'http://localhost:3000/concat' );
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+    // xhr.send(JSON.stringify(obj));
+    // xhr.onreadystatechange = function () {
+    //     if( xhr.readyState === 4 ){
+    //         if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+    //             data = xhr.responseText;
+    //             console.log('40行的数据为:', data);
+    //             //在使用过之后，赋值为null
+    //             // xhr = null;
+    //         }
+    //     }
+    // }
+
+    /*
+        request: 请求 -> 发送ajax请求
+        参数：
+            options:配置参数
+                {
+                    url: 请求地址,
+                    method: 用什么方式发送数据,get post put delete
+                    withCredentials: false/true,//是否要携带凭证
+                    timeout: 超时时间,
+                    handleTimeout: function, 超时之后你要做什么事情
+                    data: {},你要发送的数据
+                    dataType: 要发送的数据类型,
+                    success: function 请求成功之后要做什么事情
+                    error: function  请求失败之后要做什么事情
+                }
+        1.实例化一个ajax对象 axios jq默认用的就是get
+        2.在open之前检测一下用户有没有传进来method(请求方式)，如果没有传默认设置为get
+        3.在open之后，设置timeout和withCredentials。
+        4.发送请求
+                1.发送get请求
+                    (一) 没有传data：他自己在路由里边已经把参数传好了或者不传参数
+                    (二) 传了data，1.而且路由里边没有？，我们需要帮他拼接一下。2.路由里边有?，误传
+        ajax的错误并不会打断代码的执行。
+                
+    */
+    function request(options) {
+        let xhr = new XMLHttpRequest();
+        //如果没有传请求方式，默认设置为'get'，有就设置为传进来的方式
+        let method = options.method === undefined ? 'get' : options.method;
+
+        //设置超时时间
+        xhr.timeout = options.timeout === undefined ? 0 : options.timeout;
+        xhr.onerror = options.error ? options.error : '';
+        //判断是否有超时函数，有的话绑上，没有就什么都不做
+        xhr.ontimeout = options.handleTimeout === undefined ? null : options.handleTimeout;
+        
+        //是否携带cookie
+        xhr.withCredentials = options.withCredentials === undefined ? false : options.withCredentials;
+
+        if( method.toUpperCase() === 'GET' ){//发送get请求
+
+             if( options.data !== undefined ){//如果发送get请求的时候有data属性
+
+                if( options.url.includes('?') ){//有问号，不用帮他拼接问号
+
+                    let str = dataToString(options.data);
+                    xhr.open(method, `${options.url}${str}`);
+
+                }else{//没有问好，我们需要帮他拼接问号
+
+                    let str = dataToString(options.data);
+                    xhr.open(method, `${options.url}?${str}`);
+
+                }
+            }else{//没有传data
+                xhr.open(method, options.url);
+            }
+            xhr.send(null);
+
+        }else{//发送post请求
+            xhr.open(method, options.url);
+
+            if( options.data !== undefined ){//发送数据
+                let dataType = options.dataType === undefined ? 'FORMDATA' : options.dataType;
+                if( dataType.toUpperCase() === 'JSON' ){//发送JSON格式的数据
+
+                    //设置请求头
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+
+                    xhr.send( JSON.stringify(options.data) );
+
+                }else{//默认发送formData
+
+                    xhr.send(options.data);
+
+                }
+
+            }else{//不发送数据
+                xhr.send(null);
+            }
+        }
+
+        xhr.onreadystatechange = function () {
+            if( xhr.readyState === 4 ){
+                if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+                    options.success ? options.success(xhr.responseText) : '';//请求到数据之后如果有函数要执行就执行，如果没有就什么都不做
+                }
+            }
+        }
+
+        function dataToString(data) {
+            let str = '';
+            for( let key in options.data ){
+                str += `${key}=${options.data[key]}&`
+            }
+            str = str.slice(0,-1);
+            return str;
+        }
+    };
+    let formData = new FormData();
+    formData.append('nickname', '小明');
+    formData.append('sex', 'boy');
+    let obj = {
+        nickname: '小明',
+        age:3 
+    }
+    //防呆不防傻
+    request(
+        { 
+            method: 'post', 
+            url: 'http://localhost:3000/conca',
+            data: obj,
+            success: data => {
+                console.log(data);
+            },
+            error: () => {//http状态码
+                console.log('出错了')
+            }
+        }
+    );
+    
+    // const obj = {
+    //             nickname: '小明',
+    //             age: 3,
+    //             sex:"boy"
+    //         };
+    //把这个对象转换成 nickname=小明&age=3
+    // let str = '';
+    // for( let key in obj ){
+    //     str += `${key}=${obj[key]}&`
+    //     console.log(str)
+    // }
+    setTimeout( () => {
+        console.log(1)
+    }, 2000 )
+</script>
+</html>

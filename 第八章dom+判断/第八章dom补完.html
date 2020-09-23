@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            background-color: orange;
+        }
+        .some{
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .else{
+            transform: translate(100px, 100px);
+        }
+        .a58{
+            color: #58a;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .container{
+            /* width: 100px; */
+            height: 100px;
+            margin-top: 50px;
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+    <!-- https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585670924822&di=40f293a2b051bf00500b0c1a7afde7e4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201801%2F17%2F20180117110234_qvhbw.png -->
+    <!-- https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585670911919&di=2dc0fa927be70598e23037db7e3e00ef&imgtype=0&src=http%3A%2F%2Fimages.1626.com%2Fpublic%2Fupload%2Fzixun%2F2017%2F11%2F06%2F15%2Fa006d4a0e29f3cb29a29dc3f6f698b64.jpg -->
+    <!-- <div class="box">1</div>
+    <img 
+        id="baby" 
+        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585670924822&di=40f293a2b051bf00500b0c1a7afde7e4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201801%2F17%2F20180117110234_qvhbw.png" 
+        alt="小姐姐"
+        width="300px"
+        height="300px"
+    >
+    <input type="text">
+    <div class="container" style="width: 100px;height:300px;"></div> -->
+</body>
+<script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 操作一个元素的类名
+
+    //className保存这标签的类名
+    // var ele_a = document.querySelector('.box');
+    // console.dir( typeof ele_a.className );//string
+
+    //可以通过 元素.className 去修改元素的类名
+    // ele_a.className = 'some';//赋值
+    // ele_a.className += ' some';
+
+    //判断一个对象像不像数组最重要的是看他有没有length属性
+    //value '所有类名' length'一共有几个类名'
+    // console.log( ele_a.classList );
+    //contains 包含 看看这个元素是否包含了这个类名
+    // var result = ele_a.classList.contains('box');
+    // console.log( result );//true 有box这个类名
+
+    //add 添加 可以操作多个
+    // ele_a.classList.add( 'else', 'some' );
+    //删除 可以操作多个
+    // ele_a.classList.remove( 'some', 'else' );
+
+    //toggle 开关 -> 有就删除，没有就添加 -> 一次只能操作一个
+    // ele_a.classList.toggle('some');
+    // ele_a.classList.toggle('else');
+
+    //replace('旧类名', '新类名') 用新类名替换旧类名
+    // ele_a.classList.replace( 'some', 'a58');
+
+    //操作所有有效属性
+    // var img = document.querySelector('img');
+    // console.log(img.src);
+    //修改
+    // img.src = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585670911919&di=2dc0fa927be70598e23037db7e3e00ef&imgtype=0&src=http%3A%2F%2Fimages.1626.com%2Fpublic%2Fupload%2Fzixun%2F2017%2F11%2F06%2F15%2Fa006d4a0e29f3cb29a29dc3f6f698b64.jpg';
+    // img.alt = 'angelababy';
+    // img.id = 'angela';
+    // console.log(img.width, img.height);
+    // img.width = 500;
+    // img.height = 500;
+
+    // var input = document.querySelector('input');
+    // input.type = 'number';
+
+
+
+    // var container = document.querySelector('.container');
+    //无法通过元素的style属性去获取元素写在css里的样式 获取到的是行内样式
+    // console.log( container.style);
+    //通过js修改元素的css样式只能通过 元素.style.css属性 去设置 -> js的样式优先
+    // container.style.width = '400px';
+    //css background-color -表示减号
+    // container.style.backgroundColor = 'orange';
+    
+    //style也可以设置多条样式
+    // container.style = 'width:400px;height:400px;background-color:#58a;';
+    //cssText css文本 -> 给元素同时设置多条属性，直接用cssText
+    // container.style.cssText = 'width:400px;height:400px; \
+    // background-color:#58a;';
+    // container.style += 'animation-name: roll';
+    // container.style.cssText += 'animation-name: roll';
+
+    // container.style.cssText = 'width:400px;height:400px; \
+    // background-color:#58a;';
+    // container.style.animationName = '';
+    //元素.style.removeProperty('属性名称') 删除某条属性
+    // container.style.removeProperty('animation-name');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //获取标签： query get
+    //children [获取所有子元素] childNodes[获取所有子节点](文本节点+元素)
+    //parentNode parentElement -> 获取父元素
+    //兄弟元素： nextSibling nextElementSibling Sibling[兄弟]
+    //previousSibling   previousElementSibling          previous[上一个，前一个]
+    //innerHTML 
+    //document.createElement('标签名') -> 创造标签
+    // var div = document.createElement('div');
+    // div.innerText = '我是js创建的div';
+    // console.log( div );
+    //append()添加多个 appendChild() 添加多个并且返回元素
+    // document.body.appendChild(div);
+    //文档碎片 -> document.createDocumentFragment()  createDocumentFragment[创造文档碎片]
+    //insetBefore(插入谁，在哪个元素之前插入) replaceChild(新元素，旧元素)  remove
+
+
+
+
+
+
+
+
+
+</script>
+</html>

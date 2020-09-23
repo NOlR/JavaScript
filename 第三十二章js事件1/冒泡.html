@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style:none;
+        }
+        section{
+            margin: 0 auto;
+        }
+        .big{
+            width: 200px;
+            height: 200px;
+            background-color: orange;
+        }
+        .middle{
+            width: 150px;
+            height: 150px;
+            background-color: purple;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            /* padding: 20px; */
+            /* border: 10px solid purple; */
+            background-color: #58a;
+            /* transform: translate(100px, 2000px); */
+        }
+        .some{
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            margin: 50px auto;
+        }
+        .little{
+            width: 50px;
+            height: 50px;
+            background-color: cyan;
+        }
+        .disappear{
+            opacity: 0;
+        }
+        section{
+            transition: 0.5s linear;
+        }
+    </style>
+</head>
+<body>
+    <section class="big">
+        <section class="middle">
+            <section class="box">
+                <div class="little"></div>
+            </section>
+        </section>
+    </section>
+
+    <div class="some">
+
+    </div>
+
+    <!-- <p class="font">放入的文字为:</p>
+
+    <form>
+        <input type="submit" value="提交">
+    </form> -->
+
+</body>
+<script>
+
+    const input = document.querySelector('input'),
+        oP = document.querySelector('p');
+
+    //无论何时写事件的时候把冒泡和默认事件给阻止了 -> 大部分的事件都存在冒泡和默认行为
+    // input.onclick = function (e) {//在点击input的时候页面刷新了 -> 默认行为
+    //     e.stopPropagation();
+    //     e.preventDefault();//阻止了刷新页面这一默认事件
+    //     oP.innerText += '123';
+    //     return false;
+    // }
+    /*
+        所有的标签都可以使用点击事件
+        document,window -> 也可以使用点击事件
+
+        点击文档和window的时候被点击的目标都是body =》 没必要重复绑定
+    */
+    // document.onclick = e => {
+    //     // console.log(e.target);
+    //     console.log(1)
+    // }
+    // window.onclick = e => {
+    //     // console.log(e.target);
+    //     console.log('点击了window')
+    // }
+
+    /*
+        事件冒泡: 当点击到页面中的某个元素的时候，点击事件会一层一层向上传递
+            只和自己的祖先元素有关 -> 父元素，父元素的父元素等等等等
+            在所有浏览器里边，冒泡都有
+
+        阻止冒泡：e.stopPropagation(); -> stop[停止] Propagation[冒泡]
+        阻止默认事件:
+            1.e.preventDefault(); -> prevent[阻止] Default[默认]
+            2.return false -> 阻止
+        蓝色盒子：向上冒泡 -> 紫色盒子 -> 橙色盒子
+    */
+    // const big = document.querySelector('.big'),
+    //     midlle = document.querySelector('.middle'),
+    //     box = document.querySelector('.box'),
+    //     little = document.querySelector('.little');
+
+    // big.onclick = function (e) {//大盒子
+    //     e.stopPropagation();//只阻止big的冒泡
+    //     this.classList.toggle('disappear');
+    // }
+
+    // midlle.onclick = function (e) {//中盒子
+    //     e.stopPropagation();//只阻止big的冒泡
+    //     this.classList.toggle('disappear');
+    // }
+
+    // box.onclick = function (e) {//box
+    //     // e.stopPropagation();//只阻止big的冒泡
+    //     this.classList.toggle('disappear');
+    // }
+
+    // little.onclick = function (e) {//小盒子
+    //     e.stopPropagation();//只阻止big的冒泡
+    //     this.classList.toggle('disappear');
+    // }
+
+
+    // const some = document.querySelector('.some');
+    // some.onclick = function (e) {
+    //     console.log('我是粉色的元素')
+    // }
+
+    
+
+    /*
+        2级事件：所有0级事件都可以写成2级事件的形式 -> 事件监听
+            add[添加] event[事件] listener[监听]
+            元素.addEvenetListener('事件名称', callback, 是否捕获事件) callback -> 处理事件的回调函数
+            true捕获
+            false不捕获
+
+        2级事件也存在冒泡
+            如果想要阻止冒泡依然是通过事件对象阻止
+    */
+    const big = document.querySelector('.big'),
+        midlle = document.querySelector('.middle'),
+        box = document.querySelector('.box'),
+        little = document.querySelector('.little');
+
+    /*
+        ture捕获阶段执行 -> 从上到下去触发事件
+        冒泡：从下到上
+
+        如果捕获阶段执行了事件函数，冒泡阶段就不会再执行
+
+        如果想让一个事件的执行是从上到下，可以开启捕获
+
+        2级事件和0级事件的共同点：
+            事件对象是一样的
+            都有冒泡
+
+        区别：
+            2级比0级多了一个捕获阶段
+            0级事件叫做：事件绑定 写法 -> on+事件名称
+            2级事件叫做：事件监听 写法 -> addEventListener('事件名称')
+
+        事件移除
+    */
+
+    // big.addEventListener('click', function(e) {
+    //     // e.stopPropagation();
+    //     console.log('橙色');
+    // })
+
+    // midlle.addEventListener('click', function(e) {
+    //     // e.stopPropagation();
+    //     console.log('紫色');
+    // })
+
+    // box.addEventListener('click', function(e) {
+    //     // e.stopPropagation();
+    //     console.log('蓝色');
+    // })
+
+    // little.addEventListener('click', function(e) {
+    //     // e.stopPropagation();
+    //     console.log('靛青色');
+    // })
+
+
+
+</script>
+</html>

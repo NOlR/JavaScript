@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for循环补完</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //for循环补完 -> 相似的事情
+    //1 2 3 4 -> 1 2 4 3 , 2 4 3 , 2 4 3
+    // for( var i = 0; i <= 100; i++ ){
+    //     console.log(i)
+    // };
+    // var arr = [1,2,3,4,5,6];
+    // var length = arr.length;
+    //数组的长度只获取了一次
+    // for( var i = 0,length = arr.length; i < length; i++ ){
+    //     console.log( arr[i] );
+    // };
+    // console.log( arr );
+
+    // var some = 'some',
+    //    fn = 'fn';
+    // console.log( some, fn );
+
+    //写了一个循环去找到数组里的每一项，就叫做遍历
+    // var arr_a = ['你', '好', 'hello', 'world', 'abc'];
+    //找了5次数组的长度
+    // for( var a = 0; a < arr_a.length; a++ ){
+    //     console.log( arr_a[a] );
+    // };
+
+    // var str = 'hello wolrd';
+    // for( var b = 0,str_length = str.length; b < str_length; b++ ){
+    //     console.log( str[b] )
+    // }
+
+
+    // var obj = {nickname: '小明', age: 3, hobbies: ['sing', 'jump', 'rap','basketball']};
+    // for( var c = 0; c < 3; c++  ){
+    //     console.log( obj[c] );
+    // };
+    //for in -> 专门用来遍历对象的
+    //key是变量名
+    // for( var key in obj ){
+    //     console.log(key);//key是属性名
+    //     console.log(obj[key]);
+    //     // console.log( obj.key );//obj的key属性
+    // };
+    // console.log(key);
+
+
+    // var arr_c = ['sing', 'jump', 'rap','basketball'];
+    // for( var item in arr_c ){
+    //     console.log( arr_c[item] );
+    // };
+
+
+
+    //continue[继续] break[打断]
+    
+
+
+
+
+    var obj = {nickname: '小明', age: 3, hobbies: ['sing', 'jump', 'rap','basketball']};
+    //如果obj的属性值为简单数据类型直接打印值，如果为对象，把对象展开
+    // for( var key in obj ){
+    //     if( typeof obj[key] === 'object'){//判断每一项是不是对象
+    //         for( var item in obj[key] ){
+    //             // console.log( item );
+    //             console.log( obj[key][item] );
+    //         }
+    //     }else{//如果是简单数据类型直接打印纸
+    //         console.log( obj[key] );
+    //     }
+    // };
+
+    //continue[继续] break[打断] 如果i等于10，就让for循环停下来
+    // for( var i = 0; i < 20; i++ ){
+    //     // console.log(i);
+    //     // break;
+    //     if( i === 10 ) break
+    //     console.log(i);
+    // };
+
+    //continue 打断某一次
+    // for( var y = 0; y < 10; y++ ){
+    //     if( y === 5 ) continue
+    //     console.log(y);
+    // };
+
+    // for( var a = 0; a < 4; a++ ){//4
+    //     for( var b = 0; b < 4; b++ ){//b = 0 b = 1 0 2 3
+    //         if( b === 1 ) continue;
+    //         console.log( 'b的值为:', b );
+    //     }
+    // };
+
+    // var num = 0;
+    // for( var c = 0; c < 5; c++ ){//5
+    //     for( var d = 0; d < 5; d++ ){//0 1 3 4 
+    //         if( d === 2 ) continue
+    //         num++
+    //     }
+    // }
+    // console.log(num);
+    
+    //abc是for循环的名字
+    some:
+    for( var e = 0; e < 4; e++ ){//4
+        if( e === 1 ) continue some
+        console.log(e);
+    };
+    
+    //给for循环绑定一个label -》 给for循环起一个名字 
+    ming:
+    for( var a = 0; a < 4; a++ ){//4
+        for( var b = 0; b < 4; b++ ){//4
+            if( b === 1 ) continue ming;
+            console.log( 'b的值为:', b );
+        }
+    };
+
+</script>
+</html>

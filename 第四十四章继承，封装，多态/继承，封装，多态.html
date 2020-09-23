@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>继承，封装，多态</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //o o 面向对象, oo语言就是面向对象编程。
+    //封装一个函数用于创建对象，给对象特殊的方法，同时这些方法只创建一次。
+    //工厂模式
+    // function createPerson(nickname, age, favorColor){
+    //     return {
+    //         nickname: nickname,
+    //         age: age,
+    //         favorColor: favorColor,
+    //         introduce: function () {
+    //             console.log( `hello, i am ${this.nickname},今年${this.age}岁，喜欢${this.favorColor}` )
+    //         }
+    //     }
+    // };
+    // console.dir( createPerson )
+    // const afei = createPerson('阿飞', 3, 'skyblue');
+    // const yinshi = createPerson('银时', 4, 'pink');
+    // console.log( afei, yinshi );
+    // afei.introduce();
+    // yinshi.introduce();
+    
+    //函数的首字母大写
+    //function声明的函数都有原型属性
+    /*
+        new 做的事情：
+        1.在执行Handsome函数的时候，执行我们写的代码之前，会创造一个新的对象
+        2.把Handsome的this指向这个新的对象(Handsome执行期间)
+        3.执行Handsome里边我们写的代码
+        4.返回创造的这个对象
+        ECMAScript里边，只有prototype，浏览器厂家在进行创造的时候，为了做区分，搞了一个__proto__
+        原型：prototype
+        原型：__proto__
+        对象：的__proto__属性来自于创造他的构造函数的prototype
+    */
+    // function Handsome(nickname, age, favorColor) {
+    //     this.nickname = nickname;
+    //     this.age = age;
+    //     this.favorColor = favorColor;
+    // };
+    // // console.dir(Handsome)
+    // Handsome.prototype.introduce = function () {//this指向调用函数的主体对象
+    //     console.log( `hello, i am ${this.nickname},今年${this.age}岁，喜欢${this.favorColor}` )
+    // };
+    // Handsome.prototype.beigushi = function () {
+    //     console.log( `${this.nickname}开始背诵古诗：床前明月光，疑是地上霜。` )
+    // }
+    // const afei1 = new Handsome('阿飞', 3, 'skyblue');
+    // const yinshi1 = new Handsome('银时', 4, 'pink');
+    // // afei1.introduce();
+    // // afei1.beigushi();
+    // // yinshi1.introduce();
+    // console.log( afei1, yinshi1 );
+    // /*
+    //     在创建afei1的时候，先创建一个对象({})
+    //     在这次Handsome函数执行完成之前，this都是指向这个新对象
+    //     执行Handsome里边的代码，给这个对象添加nickname,age,favorColor属性
+    //     把创建的对象返回出去
+    // */
+    // let obj = {nickname:"小明"};
+    // let some = obj;//obj把地址告诉了some
+    // console.log(obj);
+    /*
+        构造函数(Abc)的原型属性是一个对象{
+            introduce: function () {}
+        },它相当于一个仓库，用来放一些公用的方法.
+        谁有权去访问Abc的原型呢？
+        所有使用Abc构造函数实例化出来的对象都有权访问.
+    */
+    
+    // function Man(nickname, age, favorColor) {
+    //     this.nickname = nickname;
+    //     this.age = age;
+    //     this.favorColor = favorColor;
+    // };
+    // Man.prototype = {
+    //     constructor: Man,
+    //     introduce: function () {//this指向调用函数的主体对象
+    //         console.log( `hello, i am ${this.nickname},今年${this.age}岁，喜欢${this.favorColor}` )
+    //     },
+    //     beigushi: function () {
+    //         console.log( `${this.nickname}开始背诵古诗：床前明月光，疑是地上霜。` )
+    //     }
+    // };
+
+    // const hanlu = new Man('旱麓', 5, 'orange');
+    // const wanzhang = new Man( '万章', 6, '石原里美色' )
+    // console.log(hanlu, wanzhang )
+    // hanlu.introduce();
+    // wanzhang.beigushi();
+
+    // //缺点：
+    // let obj = {nickname:"小明", age: 3, favorColor: 'skyblue'};
+    // console.log(obj);
+    // for( let key in obj ){
+    //     console.log(`${key}的值为${obj[key]}`)
+    // };
+    // for( let k in hanlu ){
+    //     console.log(`${k}的值为${hanlu[k]}`)
+    // };
+    // //for in循环本来就能够遍历到原型：可以变遍历出来原型上所有的可枚举属性
+    // const fragment = document.createDocumentFragment();
+    // for( let key in obj ){
+    //     const div = document.createElement('div');
+    //     div.innerText = `${key}： ${obj[key]}`
+    //     fragment.append(div)
+    // }
+    // document.body.append(fragment);
+
+    // const fragment1 = document.createDocumentFragment();
+    // for( let key in hanlu ){
+    //     const div = document.createElement('div');
+    //     div.innerText = `${key}： ${hanlu[key]}`
+    //     fragment1.append(div)
+    // }
+    // document.body.append(fragment1);
+
+    // //因此需要把原型身上的属性定义成不可枚举属性： Object.defineProperties(obj, {配置对象})
+    // function Rich(nickname, age, favorColor) {
+    //     this.nickname = nickname;
+    //     this.age = age;
+    //     this.favorColor = favorColor;
+    // };
+
+    // Object.defineProperties( Rich.prototype, {//给某个对象定义多个属性
+    //     //属性名是什么
+    //     introduce: {//配置对象
+    //         value: function () {//this指向调用函数的主体对象
+    //             console.log( `hello, i am ${this.nickname},今年${this.age}岁，喜欢${this.favorColor}` )
+    //         },
+    //         enumerable: false,//不可枚举
+    //         writable: true//可以修改
+    //     },
+    //     beigushi: {
+    //         value: function () {//this指向调用函数的主体对象
+    //             console.log( `${this.nickname}开始背诵古诗：床前明月光，疑是地上霜。` )
+    //         }
+    //     }
+    // } );//定义多个属性  
+    // const han = new Rich('韩安然', 18, 'skyblue');
+    // const bei = new Rich( '备忘鹿', 19, '女色' );
+    // han.introduce();
+    // bei.beigushi();
+    // console.log( han, bei )
+
+    // const fragment2 = document.createDocumentFragment();
+    // for( let key in han ){
+    //     const div = document.createElement('div');
+    //     div.innerText = `${key}： ${han[key]}`
+    //     fragment2.append(div)
+    // }
+    // document.body.append(fragment2);
+
+    // const fragment3 = document.createDocumentFragment();
+    // for( let key in bei ){
+    //     const div = document.createElement('div');
+    //     div.innerText = `${key}： ${bei[key]}`
+    //     fragment3.append(div)
+    // }
+    // document.body.append(fragment3);
+
+    //1.动态性,可以去更改原型
+    // function Rich(nickname, age, favorColor) {
+    //     this.nickname = nickname;
+    //     this.age = age;
+    //     this.favorColor = favorColor;
+    // };
+    // Object.defineProperties( Rich.prototype, {//a
+    //     introduce: {
+    //         value: function () {
+    //             console.log( `hello, i am ${this.nickname},今年${this.age}岁，喜欢${this.favorColor}` )
+    //         },
+    //         enumerable: false,
+    //         writable: true
+    //     }
+    // } ); 
+    // const han = new Rich('韩安然', 18, 'skyblue');
+    // const bei = new Rich( '备忘鹿', 19, '女色' );
+    // han.introduce()
+    // bei.introduce()
+    // // Rich.prototype.some = function () {
+    // //     console.log('some')
+    // // }
+    // // han.some()
+    // // bei.some()
+    // console.log(han, bei)
+
+    // Rich.prototype = {//b
+    //     some: function () {
+    //         console.log('我是Rich构造函数原型的新方法：some')
+    //     }
+    // };
+    // console.dir(Rich)
+    // // console.dir( Rich.prototype === han.__proto__ );
+    // console.log(han.some)
+    // console.log(bei.some)
+
+
+    // let arr = [1,2,3];
+    // Array.prototype.forEach = function () {
+    //     console.log('我是新的forEach')
+    // }
+    // arr.forEach();
+
+    // let obj = {nickname: '小明'};
+    // let abc = obj;//abc和obj都指向小明对象
+
+    // obj = {nickname: '小刚'}
+    
+    // console.log(obj, abc);
+
+
+    //2.所有引用类型的原型都是Object的prototype,Object是原型的最后一站.
+    //原型链：如果要去一个变量里边找属性，先找私有属性，找不到去找原型，找原型的原型，如果一直找到原型的终点:
+    //Object.prototype还找不到，那就真的找不到了，某则都可以使用.
+    // let arr = [1,2,3];
+    // console.log(arr);
+    // console.log( arr.hasOwnProperty(0) );
+
+    //原型的原型上的属性可以使用吗
+
+    //通过原型链(查找规则)我们可以实现继承:
+    // function Afei(nickname) {//创造小阿飞
+    //     this.nickname = nickname;
+    // };
+    // Object.defineProperty( Afei.prototype, 'chat', {
+    //     value: function () {
+    //         console.log( `我是${this.nickname},我很擅长聊天。` )
+    //     }
+    // } );
+    // const afei1 = new Afei('小阿飞');
+    // afei1.chat();
+    // console.log(afei1);
+
+
+    // function Hanlu(nickname) {//创造小阿飞
+    //     this.nickname = nickname;
+    // };
+    // Object.defineProperty( Hanlu.prototype, 'coding', {
+    //     value: function () {
+    //         console.log( `我是${this.nickname},我很擅长写代码。` )
+    //     }
+    // } );
+    // const hanlu1 = new Hanlu('韩晓璐')
+    // hanlu1.coding();
+
+    // function Wanzhang() {};//给阿飞和旱麓提供共同拥有的方法
+    // Object.defineProperties( Wanzhang.prototype, {
+    //     chat: {
+    //         value:function () {
+    //             console.log(`${this.nickname}擅长聊天.`)
+    //         }
+    //     },
+    //     coding: {
+    //         value:function () {
+    //             console.log( `${this.nickname}擅长写代码.` )
+    //         }
+    //     }
+    // } );
+    // let wanzhang = new Wanzhang();
+    // console.log(wanzhang)
+
+    //阿飞和旱麓实例化出来的对象不但要会写代码和聊天，还要有自己的特点
+
+    // function Afei(nickname) {//创造小阿飞
+    //     this.nickname = nickname;
+    // };
+
+    // //继承
+    // Afei.prototype = new Wanzhang();//把Afei构造函数的prototype重新赋值为一个实例化出来的Wanzhang对象
+
+    //阿飞构造函数的原型(prototype)就是new Wanzhang,实例化出来的万章原型上有coding和chat方法
+    //也就是阿飞构造函数的原型(prototype)的原型(__prpto__)上有coding和chat方法
+
+    //多态
+    // Afei.prototype.earnMoney = function () {
+    //     console.log(`我是Afei实例化出来的对象${this.nickname},我超会赚钱。`)
+    // }
+    // const afei1 = new Afei('小阿飞');
+    // afei1.chat()
+    // afei1.coding()
+    // afei1.earnMoney()
+    // console.log(afei1)
+    // console.log(afei1.__proto__.__proto__ === Wanzhang.prototype);
+
+
+    // function Hanlu(nickname) {//创造小阿飞
+    //     this.nickname = nickname;
+    // };
+    // Hanlu.prototype = new Wanzhang();
+    // Object.defineProperty( Hanlu.prototype, 'makePoem',  {
+    //     value: function () {
+    //         console.log(`我是Hanlu构造函数生成出来的对象${this.nickname}，比较会写诗`)
+    //     }
+    // });
+    // const hanlu2 = new Hanlu('韩小小鹿');
+    // console.log(hanlu2)
+    // hanlu2.coding()
+    // hanlu2.chat()
+    // hanlu2.makePoem()
+
+    //面向对象的三大特点：封装，多态，继承
+
+
+    //圣杯模式 -> 继承多个
+    function A(){}//用来提供喝水方法，吃饭方法
+    Object.defineProperties( A.prototype, {
+        drink: {
+            value:function () {
+                console.log(`${this.nickname}喝水`)
+            },
+            writable: true
+        },
+        eat: {
+            value:function () {
+                console.log(`${this.nickname}吃饭`)
+            },
+            writable: true
+        },
+    } );
+
+    function B() {}//用来提供睡觉和做梦两个方法
+    //先用B去继承A
+    B.prototype = new A();
+    Object.defineProperties( A.prototype, {
+        sleep: {
+            value:function () {
+                console.log(`${this.nickname}睡觉`)
+            },
+            writable: true
+        },
+        dream: {
+            value:function () {
+                console.log(`${this.nickname}做梦`)
+            },
+            writable: true
+        },
+    } );
+    console.log( new B() )
+
+    //一会要找一个东西去继承B: 效果这个对象有喝水，吃饭，睡觉，做梦
+    function C(nickname) { this.nickname = nickname}
+    C.prototype =  new B();
+    Object.defineProperties( C.prototype, {
+        xinei: {
+            value:function () {
+                console.log(`${this.nickname}系内`)
+            },
+            writable: true
+        }
+    } );
+    let c =  new C('余小c');
+    console.log(c);
+    c.dream()
+    c.drink()
+    c.xinei()
+    c.sleep()
+</script>
+</html>

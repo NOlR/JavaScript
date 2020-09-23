@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise版本的ajax</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //Promise版本的ajax封装 success {} [] formdata 文件(把文件转成二进制发送，base64格式发送)
+    /*
+        promise( (resolve, reject) => {
+            resolve()主动[手动]的把状态变成成功 -> 404 用户不存在
+            reject() -> 主动把状态变为失败
+        } )
+        .then( callback1, callback2 ) then返回的也是一个promise
+        .then( callback1, callback2 )
+    */
+   /*
+        {
+            url,
+            method,
+            timeout,
+            handleTimeout,
+            withCredentials,
+            data,
+            dataType -> post请求默认使用的是formData
+        }
+   */
+    // const ajax = new Promise( (res, rej) => {
+    //     const xhr = new XMLHttpRequest();
+    // } )
+    // ajax()
+    //要在Promise外表包裹一层 -> 调用外层函数，再去创建promise
+   function request(options) {//request请求
+
+        return new Promise((res, rej) => {
+            let method = options.method || 'get';
+            let xhr = new XMLHttpRequest();//创建ajax
+            xhr.timeout = options.timeout || 0;
+            xhr.ontimeout = options.handleTimeout || null;
+            xhr.withCredentials = options.withCredentials || null;
+
+            if( method.toUpperCase() === 'GET' ){
+            
+                if( options.data ){//在传了数据(data)的情况下
+                    let query = dataToString(options.data);
+
+                    if( options.url.includes('?') ){
+                        xhr.open( method, `${options.url}${query}` )
+                    }else{
+                        xhr.open( method, `${options.url}?${query}` )
+                    }
+
+                }
+                xhr.send(null);
+            }
+            
+            if( method.toUpperCase() === 'POST' ){
+
+                xhr.open( method, options.url );
+
+                if( options.data ){//如果使用post请求而且要发送数据
+
+                    if( options.dataType.toUpperCase() === 'JSON' ){//如果是json格式，需要设置请求头
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+
+                        xhr.send( JSON.stringify(data) );
+                    }else{  
+                        xhr.send(data)
+                    }
+
+                }else{//如果发送post请求且没有携带数据
+                    send( null );
+                }
+
+            }
+
+            xhr.onload = () => {
+                if( xhr.status >= 200 && xhr.status < 300 || xhr.status === 304 ){
+                    resolve( xhr.response )
+                }else{
+                    reject( xhr.status )
+                }
+            }
+
+        })
+        function dataToString(xyz) {
+            let str = '';
+            for( let key in obj ){
+                str += `${key}=${obj[key]}&`
+            }
+            str = str.slice(0, -1);
+            return str;
+        }
+   };
+    console.log( request({}) );
+    // const obj = {nickname: '小明', age: 3, some: 'abc'};//nickname=小明&age=3
+    // let str = '';
+    // for( let key in obj ){
+    //     str += `${key}=${obj[key]}&`
+    // }
+    // str = str.slice(0, -1)
+    // console.log(str);
+</script>
+</html>

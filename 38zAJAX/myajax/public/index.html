@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<p>谁能想到，自甘堕落的咸鱼也有一鸣惊人的理想</p>
+		<input class="username" type="text" name="user" placeholder="请输入用户名" />
+		<input class="userpwd" type="text" name="pwd" placeholder="请输入密码" />
+		<button>提交</button>
+		<p></p>
+		<script>
+			window.onload=()=>{
+				const user=document.querySelector('.username');
+				const pwd=document.querySelector('.userpwd');
+				const btn=document.querySelector('button');
+				const font=document.querySelectorAll('p')[1];
+				//console.log(user,pwd,btn);
+				
+				btn.addEventListener("click",e=>{
+					e.stopPropagation();
+					e.preventDefault();
+					let uid=user.value.trim();
+					let upwd=pwd.value.trim();
+					const xhr=new XMLHttpRequest();
+					//console.log(uid,upwd);
+					xhr.open('get',`http://localhost:2020/article/?user=${uid}&pwd=${upwd}`);
+					xhr.send(null);
+					xhr.onreadystatechange=function(){
+						if(xhr.readyState==4){
+							if(xhr.status>=200 && xhr.status<300 || xhr.status===304){
+								font.innerText=xhr.responseText;
+							}else{
+								console.log(xhr.status);
+							}
+						}
+					}
+					console.log(xhr);
+				})
+			}
+		</script>
+	</body>
+</html>

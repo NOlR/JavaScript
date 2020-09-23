@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			class Abc{
+				constructor(name) {
+				    this.name=name;
+				}
+				sume(){
+					console.log("some方法");
+					Abc.qwq.call(this);
+				}
+				static qwq(){
+					console.log(this.name);
+				}
+			}
+			let abc=new Abc("aaa");
+			console.log(abc);
+			abc.sume();
+		</script>
+	</body>
+</html>

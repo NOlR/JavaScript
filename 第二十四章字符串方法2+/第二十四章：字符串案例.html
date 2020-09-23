@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串案例</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        p{
+            text-indent: 2em;
+        }
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。 <span>这是</span> 一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。这是一首简单的小情歌。
+    </p>
+    <section>
+        <span>查找</span>
+        <input class="search-input" type="text">
+        <button class="search">搜索</button>
+    </section>
+    <section>
+        <span>把</span>
+        <!-- origin[起源] 原数据 -->
+        <input class="origin" type="text" placeholder="原始数据">
+        <span>替换为</span>
+        <input class="now" type="text" placeholder="现在的数据">
+        <button class="confirm">确定</button>
+    </section>
+    <section>
+        <button class="restore">还原</button>
+    </section>
+</body>
+<script>
+    const searchInput = document.querySelector('.search-input'),//输入框
+        search = document.querySelector('.search'),//点击按钮
+        oP = document.querySelector('p');
+
+    /*
+        点击搜索按钮，
+        获取oP的innerHTML，
+        使用replace，把被所搜的文字，替换成用span标签包裹起来的文字，然后设置样式
+    */
+    let search_str = []; 
+    search.onclick = function () {
+        let value = searchInput.value.trim();//获取到的用户输入的值
+        
+        if( value === '' ){
+            alert('不能搜索空值');
+            searchInput.value = '';
+            return;
+        }
+        //保存上一次搜索的字符
+        search_str.push(value);
+        let html = oP.innerHTML;//获取oP的innerHTML
+        const reg = new RegExp(value, 'g');
+        //已经替换过的字符串
+        let newString = html.replace(reg, '<span class="red">' + value + '</span>');
+        if(newString === oP.innerHTML){
+            alert('搜索的内容不存在');
+            searchInput.value = '';
+            return;
+        }
+        oP.innerHTML = newString;
+        searchInput.value = '';
+    };
+
+    //替换功能
+    const origin = document.querySelector('.origin'),
+        now = document.querySelector('.now'),
+        confirm = document.querySelector('.confirm');//确定按钮
+    /*
+        replace[替换]
+        获取原始数据和现在的数据,
+        需要获取p标签的innerHTML,
+        使用replace(正则, '被替换成什么数据')
+        清空两个input标签里边的value值
+    */ 
+   //写箭头函数 写普通function函数,如果要用到this就使用function函数
+    confirm.onclick = () => {
+        let old_data = origin.value.trim(),
+            now_data = now.value.trim();
+        //old和now任意一个出现了空字符直接打断函数执行
+        if( old_data.value === '' || now_data.value === '' ) return;
+        if( !oP.innerHTML.includes(old_data) ) return;
+        const reg = new RegExp(old_data, 'g');//全局搜索old_data
+        const newHTML = oP.innerHTML.replace(reg, now_data);
+        oP.innerHTML = newHTML;
+        origin.value = '';
+        now.value = '';
+    };
+
+    //还原
+    const restore = document.querySelector('.restore');
+    /*
+        把原来标红的字还原成不标红 -> 把span标签给去掉
+        获取oP的innerHTML 把<span class="red">简单</span> 替换成 简单
+    */ 
+    restore.onclick = () => {
+        if( search_str.length === 0 ) return;
+        //删除数组的最后一项，数组的长度会-1，并且返回被删除的那个数据
+        const str = search_str.pop();
+        const reg = new RegExp('<span class="red">'+str+'</span>', 'g');
+        oP.innerHTML = oP.innerHTML.replace(reg, str);
+
+    };
+</script>
+</html>

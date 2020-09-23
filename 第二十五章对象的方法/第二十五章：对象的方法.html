@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象的方法</title>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    //字符串的方法，数组的方法 对象的方法
+    //对象有三种创建的方式 Array.of();
+    // const obj = { nickname: '小明' };//字面量的创建方式
+    // const obj_a = new Object({ nickname: '小刚'});
+    // const obj_b = Object( { nickname: '小红' } );
+    // console.log( obj, obj_a, obj_b );
+
+    // obj.syaName = () => {//this在声明的时候就决定了，并且不能改 -> 父级作用域的this
+    //     console.log(this.nickname);//指向调用函数的主体对象
+    // };
+    // obj.syaName();
+    // //找对象身上的属性，如果没有这个属性不会报错，而是会返回一个undef
+    // console.log( obj.age );//obj.age属性的值为undefined
+    
+    // // obj.age = undefined;
+    // //用对象的属性时，如果值为undefined那么可能是这个属性的值就是undefined
+    // //也可能压根就没有这个属性 in
+    // console.log('age' in obj);//obj里边没有age属性
+
+    // obj.nickname = '小小明';
+    // obj.some = 'some';//添加some属性然后赋值为'some'
+
+    // const str = 'undefined';
+    // obj[str] = '我是str';
+    // //.操作符把str变成了'str'字符串
+    // obj.str = 'str2';
+
+    // //对象的方法 Object.defineProperty(给哪个对象定义属性, '属性名是什么', {属性值的配置}) define[定义] Property[属性]
+    // //给object定义属性  
+    // /*
+    //     属性值的配置:
+    //         {
+    //             value: '属性值是什么',
+    //             writable: true/false, 是否可写 默认为false
+    //             ennumerable: true/ fasle, 是否可枚举 默认为false
+    //             configurable: true/ false 是否可改配置 (锁) 默认为false
+    //         }
+    //         configurable是一把关上就打不开的锁
+    // */
+    // const a = { nickname: 'a' };
+    // Object.defineProperty(a, 'age', {
+    //     value: 123
+    // });
+    // a.age = 456;
+    // console.log(a);
+    // //不能够被遍历到的属性成为不可枚举属性 枚举(遍历)
+    // // for( let key in a){
+    // //     console.log(key);//key是对象里的属性
+    // // };
+    // // for( let key in obj ){
+    // //     console.log(key);
+    // // };
+    // console.log( a.age );
+    // const box = document.querySelector('.box');
+    // box.innerText = a.age;
+
+
+    // //查看对象里某个属性的具体配置 Object.getOwnPropertyDescriptor(哪个对象，哪个属性) getOwnPropertyDescriptor得到独有属性的描述
+    // console.log( Object.getOwnPropertyDescriptor(a, 'age') ); //a的age属性的配置对象 
+
+    // Object.defineProperty( a, 'some', {
+    //     value: [1,2,3],
+    //     writable: true,
+    //     enumerable: false,//不可遍历（枚举）
+    //     configurable: true //锁是开着的
+    // } );
+    // a.some = 123;
+
+    // //如果我们想要改some属性的配置
+    // Object.defineProperty( a, 'some', {//因为some属性已经有了，现在是在改some属性的配置
+    //     enumerable: true,//不可遍历（枚举）
+    // } );
+    
+
+    // Object.defineProperty( a, 'abc', {
+    //     value: 'abc',
+    //     writable: false,//可写
+    //     enumerable: true,//可遍历
+    //     configurable: false//锁已经关上了 -> 不能够再更改配置了
+    // } );
+    //去把enumerable 关掉  redefine[重新定义]
+    //锁关上时，如果原来可写，能够改成不可写，如果原来不可写，不能改成可写
+    // Object.defineProperty( a, 'abc', { 
+    //     writable: true,//把原来的fasle变为true -> 报错因为锁一旦锁住就不能再打开
+    // } );
+    // Object.defineProperty( a, 'abc', {
+    //     configurable: true,//把原来的fasle变为true -> 报错因为锁一旦锁住就不能再打开
+    // } );
+    // Object.defineProperty( a, 'abc', {
+    //     enumerable: false,//把原来的true变为false -> 报错因为锁是锁住的
+    // } );
+    //以后学原型的时候会用到
+
+    //Object.getOwnPropertyDescriptor(obj, '属性名'); -> 获取某个对象的某个私有属性的详细配置
+    const obj1 = { nickname: '小明' };
+    console.log(Object.getOwnPropertyDescriptor(obj1, 'nickname'));
+    //私有属性 -> 我们手动给对象添加的属性都叫做私有属性
+    
+    //同时定义多个私有属性 Object.defineProperties(obj, {})
+    const b = { nickname: '小明' };
+    Object.defineProperties( b, {//这个对象的属性名就是b里边私有属性的属性名
+        abc: {//abc属性的配置对象
+            value: 'abc',
+            writable: true
+        },
+        xyz: {
+            value: 'xyz'
+        }
+    } );
+    console.log(b);
+    //如果想查看所有私有属性的配置对象 使用 Object.getOwnPropertyDescriptors(obj)
+    console.log( Object.getOwnPropertyDescriptors(b) );
+
+    const arr1 = [2,3];
+    Object.defineProperty(arr1, 0, {//也可以通过下标来定义
+        value: 'some'
+    });
+    console.log(arr1);
+
+    //Object.freeze(obj) 冻结一个对象 -> 不能添加新的属性，不能修改原来属性的值，也不能更改原来属性的配置
+    const obj3 = { nickname: '小刚' };
+    Object.freeze(obj3);
+    console.log(obj3);
+    obj3.nickname = 3;
+    delete obj3.nickname;
+    //被冻住的话原来是什么样就是什么样
+    //只要被冻住就不能解冻
+    //Object.isFrozen(obj) -> 判断是否被冻住
+    console.log( Object.isFrozen(obj3) );
+    const box = document.querySelector('.box');
+    box.innerText = obj3.nickname;
+    //万物皆对象 -> 正确
+    console.log( Object.isFrozen(123) )
+    console.log( Object.isFrozen('123') )
+    console.log( Object.isFrozen(true) )
+    console.log( Object.isFrozen(false) )
+    console.log( Object.isFrozen(undefined) )
+    console.log( Object.isFrozen(null) )
+</script>
+</html>

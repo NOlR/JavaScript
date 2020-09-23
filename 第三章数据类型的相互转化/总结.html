@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		数据类型的相互转化总结
+		<hr />
+		数据类型主要分为
+			数字
+			字符串
+			Boolean
+			object
+			undefined
+			null
+			NaN
+		
+		数字转值
+			1.字符串			
+							1.使用Number()转化
+							变为数字本身的字符串形式 
+							如num=123 -> '123'
+							
+							2.使用parseint()转化
+							功能与Number()相同,但是后面还有参数
+							parseint('100',2);
+							则用二进制编译100，结果为4
+							如果遇到浮点数则只取整数部分
+							可以解析字符串,如果字符串首字为数字，则会一直向右解析遇到非数字字符停下,如果首字为字符则返回NaN
+							
+							parsefloat('1002.2')
+							转化为浮点数数字
+							如果遇到两个小数点则遇到第一个停止返回输出结果
+							和parseint一样也可解析字符串
+							
+					
+			
+			2.Boolean 	0 和 NaN转化时值为false
+							其他都为true
+			
+			3.object 	Number({qwq:"123"})
+						转对象时结果为NaN不管是否为空
+						
+						Number([])
+						转数组时为空则返回0 含值则返回NaN
+			
+			4.undefined 转为数字为NaN
+			
+			5.null 		转为数字为0
+			
+		字符串转值
+		
+			1.Boolean 	''或""(空字符串)转结果为false
+						其他均为true
+			
+			2.object 	不管时数组还是对象
+						结果都为[object object]
+			
+			3.undefined 结果为字符串本身('undefined')
+			
+			4.null 		同undefined
+			
+			5.NaN 		同undefined
+			
+			6.数字		同undefined
+			
+		Boolean转值
+		
+			1.数字		true为1
+						false为0
+						
+			2.object 	object(包括数组)转Boolean都为true
+			
+			3.undefined 值为false
+			
+			4.null 		同undefined
+			
+			5.NaN 		同undefined
+			
+			6.字符串		字符串true 或 false
+	</body>
+	
+</html>
